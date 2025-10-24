@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGS - Historial de Monitoreos</title>
+    <title>SGS - Qinspecciones</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
@@ -64,6 +64,14 @@
             font-size: 24px;
         }
 
+        .sidebar .user .info {
+            font-size: 12px;
+        }
+
+        .sidebar .user .info .name {
+            font-weight: 500;
+        }
+
         .sidebar .nav {
             margin-top: 15px;
             padding: 0;
@@ -79,6 +87,12 @@
             text-decoration: none;
             transition: all 0.3s;
             cursor: pointer;
+            font-size: 13px;
+        }
+
+        .sidebar .nav li a i {
+            font-size: 16px;
+            width: 20px;
         }
 
         .sidebar .nav li a:hover {
@@ -140,7 +154,7 @@
         /* Content */
         .content {
             flex: 1;
-            padding: 20px;
+            padding: 15px;
             width: 100%;
         }
 
@@ -148,51 +162,21 @@
             background: white;
             border-radius: 6px;
             box-shadow: 0 6px 10px -4px rgba(0,0,0,0.15);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            border: none;
         }
 
         .card-content {
-            padding: 20px;
+            padding: 15px;
         }
 
         .card-content label {
             font-family: Muli, Arial, sans-serif;
-            font-size: 14px;
+            font-size: 11px;
             color: #252422;
             font-weight: normal;
             margin-bottom: 5px;
-        }
-
-        .btn-nuevo {
-            background-color: #66615B;
-            border-color: #66615B;
-            color: white;
-            padding: 10px 18px;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: normal;
-        }
-
-        .btn-nuevo:hover {
-            background-color: #57534e;
-        }
-
-        .btn-buscar {
-            background-color: #ef8157;
-            border-color: #ef8157;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: normal;
-        }
-
-        .btn-buscar:hover {
-            background-color: #e96342;
+            text-transform: uppercase;
         }
 
         .form-control {
@@ -201,128 +185,344 @@
             padding: 6px 12px;
             font-size: 14px;
             background-color: #ebe7e0;
+            height: 38px;
+            width: 100%;
         }
 
         .form-control:focus {
             outline: none;
             border-color: #51cbce;
             background-color: #ebe7e0;
+            box-shadow: none;
         }
 
-        .table {
-            margin-top: 20px;
-            width: 100%;
+        .mb-3 {
+            margin-bottom: 0.8rem;
         }
 
-        .table thead th {
-            border-bottom: 2px solid #ddd;
-            color: #252422;
-            font-weight: 500;
-            font-size: 11px;
-            text-transform: uppercase;
-            padding: 12px 8px;
-            font-family: Muli, Arial, sans-serif;
-        }
-
-        .table tbody td {
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 14px;
-            padding: 12px 8px;
-            font-family: Muli, Arial, sans-serif;
-            color: #252422;
-        }
-
-        .table-hover tbody tr:hover {
-            background-color: #f9f9f9;
-        }
-
-        /* Footer */
-        .footer {
-            background: white;
-            border-top: 1px solid #e3e3e3;
-            padding: 15px 20px;
-            margin-top: auto;
-            text-align: right;
-        }
-
-        .footer .copyright {
-            color: #9A9A9A;
-            font-size: 14px;
-            margin: 0;
-        }
-
-        .footer a {
-            color: #51cbce;
-            text-decoration: none;
-        }
-
-        /* Mobile Sidebar Toggle */
-        .navbar-toggle {
-            display: none;
-        }
-
-        .view {
-            display: none;
-        }
-
-        .view.active {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-        }
-
-        /* Info Cliente Styles */
-        .info-cliente-row {
-            display: none;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #e0e0e0;
-        }
-
-        .info-cliente-row.show {
+        .mb-3 label {
             display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Buttons */
+        .btn-buscar {
+            background-color: #ef8157;
+            border-color: #ef8157;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: normal;
+            height: 38px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .btn-buscar:hover {
+            background-color: #e96342;
+        }
+
+        .btn-opciones {
+            background-color: #ef8157;
+            border-color: #ef8157;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: normal;
+            height: 38px;
+            width: 100%;
+        }
+
+        .btn-opciones:hover {
+            background-color: #e96342;
+        }
+
+        .btn-limpiar {
+            background-color: #a49e93;
+            color: white;
+            border: none;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .btn-limpiar:hover {
+            background-color: #8a847c;
+        }
+
+        .btn-opciones i {
+            margin-left: 5px;
+        }
+
+        /* Document Cards */
+        .document-card {
+            margin-bottom: 10px;
+        }
+
+        .document-card .card-body {
+            padding: 15px 20px;
+        }
+
+        .document-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .document-title-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .document-oi {
+            font-size: 18px;
+            font-weight: 600;
+            color: #252422;
+        }
+
+        .document-oi-label {
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .document-actions-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .badge-status {
+            background-color: #e0e0e0;
+            color: #66615B;
+            padding: 6px 15px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .document-info-line {
+            display: flex;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 10px; /* Espacio reducido entre elementos para que quepan en una línea */
+            font-size: 12px; /* Tamaño de fuente más pequeño para los elementos generales */
+            color: #66615B;
+        }
+
+        .document-info-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Ocultar iconos de OL y Cliente */
+        .document-info-item.ol-item i,
+        .document-info-item.cliente-item i {
+            display: none;
+        }
+
+        /* OL y Cliente con letra más grande y en la misma línea */
+        .document-info-item.ol-item,
+        .document-info-item.cliente-item {
+            font-size: 15px; /* Tamaño de fuente más grande para OL y Cliente */
+        }
+
+        /* Elemento para forzar un salto de línea en flexbox */
+        .flex-break {
+            flex-basis: 100%;
+            height: 0; /* No ocupa espacio vertical */
+        }
+        /* El campo cliente ya no fuerza un salto de línea */
+
+        .document-info-item i {
+            color: #9a9a9a;
+            font-size: 14px;
+        }
+
+        .info-label-inline {
+            font-weight: 600;
+            color: #666666;
+        }
+
+        .info-value-inline {
+            color: #66615B;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            width: 120px;
+        }
+
+        .dropdown-menu-custom {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+
+        .dropdown-menu-custom.show {
+            display: block;
+        }
+
+        .dropdown-item-custom {
+            color: #66615B;
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+            cursor: pointer;
+            font-size: 13px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item-custom:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item-custom:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Badges */
+        .badge {
+            border-radius: 10px;
+            padding: 3px 8px;
+            font-size: 9px;
+            font-weight: 500;
+            text-transform: uppercase;
+            line-height: 1.2;
+            margin: 0 2px;
+            display: inline-block;
+        }
+
+        .badge-success {
+            background-color: #6bd098;
+            color: #ffffff;
+        }
+
+        .badge-warning {
+            background-color: #ef8157;
+            color: #ffffff;
+        }
+
+        .badge-info {
+            background-color: #51cbce;
+            color: #ffffff;
+        }
+
+        .badge-secondary {
+            background-color: #a49e93;
+            color: #ffffff;
+        }
+
+        /* Pagination */
+        .pagination-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 6px 10px -4px rgba(0,0,0,0.15);
+        }
+
+        .pagination-info {
+            color: #66615B;
+            font-size: 12px;
+            font-family: Muli, Arial, sans-serif;
+        }
+
+        .pagination-info select {
+            display: inline-block;
+            width: auto;
+            height: 28px;
+            padding: 2px 6px;
+            margin: 0 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #ebe7e0;
+            font-size: 12px;
+        }
+
+        .pagination .page-link {
+            border: 1px solid #ddd;
+            color: #66615B;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin: 0 2px;
+            background-color: white;
+            font-size: 12px;
+        }
+
+        .pagination .page-link:hover {
+            background-color: #51cbce;
+            border-color: #51cbce;
+            color: white;
+        }
+
+        .pagination .page-item.disabled .page-link {
+            background-color: #f5f5f5;
+            border-color: #ddd;
+            color: #999;
         }
 
         /* Responsive */
         @media (max-width: 991px) {
             .sidebar {
-                left: -200px;
+                transform: translate3d(-200px, 0, 0);
             }
 
             .sidebar.show {
-                left: 0;
+                transform: translate3d(0, 0, 0);
             }
 
             .main-panel {
-                width: 100%;
                 margin-left: 0;
-            }
-
-            .navbar-toggle {
-                display: block;
-            }
-
-            .content {
-                padding: 15px;
-            }
-
-            .card-content {
-                padding: 15px;
+                width: 100%;
             }
         }
 
-        @media (max-width: 768px) {
-            .table {
-                font-size: 12px;
-            }
+        /* Scrollbar styling */
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
 
-            .table thead th,
-            .table tbody td {
-                padding: 8px 4px;
-            }
+        .sidebar::-webkit-scrollbar-track {
+            background: #5a5550;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #7a7570;
+            border-radius: 4px;
         }
     </style>
 </head>
+
 <body>
     <div class="wrapper">
         <!-- Sidebar -->
@@ -330,838 +530,603 @@
             <div class="logo">
                 <h2>SGS</h2>
             </div>
+
             <div class="user">
                 <i class="fa fa-user-circle"></i>
-                <span>gnunovero</span>
+                <div class="info">
+                    <div class="name">ARIEL ENRIQUE</div>
+                    <div>DIAPRESMONT</div>
+                </div>
             </div>
+
             <ul class="nav">
                 <li>
-                    <a><i class="fas fa-home"></i> <span>Inicio</span></a>
+                    <a href="#inicio">
+                        <i class="fa fa-home"></i>
+                        <span>INICIO</span>
+                    </a>
                 </li>
-                <li class="active" id="menuAgua">
-                    <a onclick="verAgua()"><i class="fas fa-tint"></i> <span>Ingresos de Agua</span></a>
-                </li>
-                <li id="menuAire">
-                    <a onclick="verAire()"><i class="fas fa-wind"></i> <span>Ingresos de Aire</span></a>
+                <li class="active">
+                    <a href="#recepcion">
+                        <i class="fa fa-inbox"></i>
+                        <span>RECEPCIÓN DE MUESTRAS DE AIRE</span>
+                    </a>
                 </li>
                 <li>
-                    <a><i class="fas fa-sign-out-alt"></i> <span>Salir</span></a>
+                    <a href="#documentos">
+                        <i class="fa fa-file-alt"></i>
+                        <span>DOCUMENTOS DE AIRE</span>
+                    </a>
                 </li>
             </ul>
         </div>
 
-        <!-- Vista Agua -->
-        <div id="aguaView" class="view active">
-            <div class="main-panel">
-                <nav class="navbar">
-                    <button class="btn-menu navbar-toggle" onclick="toggleSidebar()">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <h5>Historial de Monitoreos - Agua</h5>
-                </nav>
+        <!-- Main Panel -->
+        <div class="main-panel">
+            <!-- Navbar -->
+            <nav class="navbar">
+                <button class="btn-menu" aria-label="Toggle sidebar">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <h5>Búsqueda y Recepción de Muestras</h5>
+            </nav>
 
-                <div class="content">
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="row mb-3">
-                                <div class="col-12 text-right">
-                                    <button onclick="nuevoIngreso('agua')" class="btn-nuevo">
-                                        <i class="fa fa-plus"></i> Nuevo Ingreso de Agua
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-3 col-6 mb-3">
-                                    <label>Estado</label>
-                                    <select class="form-control">
-                                        <option>Todos</option>
-                                        <option>Por Ingresar</option>
-                                        <option>Recepcionado</option>
-                                        <option>Finalizado</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3 col-6 mb-3">
-                                    <label>Desde</label>
-                                    <input type="text" class="form-control" value="05/09/2025" placeholder="DD/MM/YYYY">
-                                </div>
-                                <div class="col-md-3 col-6 mb-3">
-                                    <label>Hasta</label>
-                                    <input type="text" class="form-control" value="05/10/2025" placeholder="DD/MM/YYYY">
-                                </div>
-                                <div class="col-md-3 col-6 mb-3">
-                                    <label>Folio</label>
-                                    <input type="text" class="form-control" placeholder="N° Folio">
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-2 col-6 mb-3">
-                                    <label>Matriz</label>
-                                    <select class="form-control">
-                                        <option>Todos</option>
-                                        <option>Agua</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-2 col-6 mb-3">
-                                    <label>Tipo</label>
-                                    <select class="form-control">
-                                        <option>Todos</option>
-                                        <option>Puntual</option>
-                                        <option>Compuesta</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-2 col-6 mb-3">
-                                    <label>ETFA</label>
-                                    <select class="form-control">
-                                        <option>Todos</option>
-                                        <option>NO ETFA</option>
-                                        <option>ETFA</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4 col-6 mb-3">
-                                    <label>Proyectos</label>
-                                    <select class="form-control">
-                                        <option>Todos</option>
-                                        <option>Codelco Distrito Norte</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-2 col-12 mb-3">
-                                    <label>&nbsp;</label>
-                                    <button class="btn-buscar form-control">
-                                        <i class="fa fa-search"></i> Buscar
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>FOLIO</th>
-                                            <th>PROYECTO</th>
-                                            <th>MATRIZ</th>
-                                            <th>TIPO</th>
-                                            <th>FECHA DE ENVÍO</th>
-                                            <th>ESTADO</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>2025-001</td>
-                                            <td>CODELCO División El Teniente</td>
-                                            <td>Agua</td>
-                                            <td>Puntual</td>
-                                            <td>01/10/2025</td>
-                                            <td><span style="color: #4caf50;">Completado</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2025-003</td>
-                                            <td>CODELCO Chuquicamata</td>
-                                            <td>Agua</td>
-                                            <td>Puntual</td>
-                                            <td>03/10/2025</td>
-                                            <td><span style="color: #2196f3;">Pendiente</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <footer class="footer">
-                    <div class="copyright">
-                        © 2025, made by <a href="#">SGS TI</a>
-                    </div>
-                </footer>
-            </div>
-        </div>
-
-        <!-- Vista Aire -->
-        <div id="aireView" class="view">
-            <div class="main-panel">
-                <nav class="navbar">
-                    <button class="btn-menu navbar-toggle" onclick="toggleSidebar()">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <h5>Historial de Monitoreos - Aire</h5>
-                </nav>
-
-                <div class="content">
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="row mb-3">
-                                <div class="col-12 text-right">
-                                    <button onclick="nuevoIngreso('aire')" class="btn-nuevo">
-                                        <i class="fa fa-plus"></i> Nuevo Ingreso de Aire
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Primera fila de filtros -->
-                            <div class="row">
-                                <div class="col-md-3 col-6 mb-3">
-                                    <label>Tipo de Muestreo</label>
-                                    <select class="form-control">
-                                        <option>Todos</option>
-                                        <option>FILTRO</option>
-                                        <option>MPS</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3 col-6 mb-3">
-                                    <label>Desde</label>
-                                    <input type="text" class="form-control" value="05/09/2025" placeholder="DD/MM/YYYY">
-                                </div>
-                                <div class="col-md-3 col-6 mb-3">
-                                    <label>Hasta</label>
-                                    <input type="text" class="form-control" value="05/10/2025" placeholder="DD/MM/YYYY">
-                                </div>
-                                <div class="col-md-3 col-6 mb-3">
-                                    <label>Folio</label>
-                                    <input type="text" class="form-control" placeholder="N° Folio">
-                                </div>
-                            </div>
-
-                            <!-- Segunda fila de filtros -->
-                            <div class="row">
-                                <div class="col-md-2 col-6 mb-3">
-                                    <label>Matriz</label>
-                                    <select class="form-control">
-                                        <option>Todos</option>
-                                        <option>AIRE_MP_FILTRO_47MM</option>
-                                        <option>AIRE_MP_FILTRO_HVOL</option>
-                                        <option>AIRE_MP_FILTRO_37MM</option>
-                                        <option>POLVO_SEDIMENTABLE</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-2 col-6 mb-3">
-                                    <label>Estado</label>
-                                    <select class="form-control">
-                                        <option>Todos</option>
-                                        <option>Por Ingresar</option>
-                                        <option>Recepcionado</option>
-                                        <option>Finalizado</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3 col-6 mb-3">
-                                    <label>Buscar OL</label>
-                                    <input type="text" class="form-control" placeholder="Buscar OL">
-                                </div>
-                                <div class="col-md-3 col-6 mb-3">
-                                    <label>Proyecto</label>
-                                    <input type="text" class="form-control" placeholder="Buscar proyecto">
-                                </div>
-                                <div class="col-md-2 col-12 mb-3">
-                                    <label>&nbsp;</label>
-                                    <button class="btn-buscar form-control">
-                                        <i class="fa fa-search"></i> Buscar
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Tabla de resultados -->
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>OL</th>
-                                            <th>FOLIO</th>
-                                            <th>CLIENTE</th>
-                                            <th>PROYECTO</th>
-                                            <th>MATRIZ</th>
-                                            <th>TIPO</th>
-                                            <th>FECHA ENVÍO</th>
-                                            <th>ESTADO</th>
-                                            <th>CANTIDAD MUESTRAS</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>801598</td>
-                                            <td>
-                                                <a href="#" style="color: #51cbce; text-decoration: none;">
-                                                    <i class="fa fa-search" style="margin-right: 5px;"></i>15842
-                                                </a>
-                                            </td>
-                                            <td>CORP NACIONAL DEL COBRE DE CHILE</td>
-                                            <td>Antofagasta Minerals</td>
-                                            <td>POLVO_SEDIMENTABLE</td>
-                                            <td>MPS</td>
-                                            <td>04/10/2025</td>
-                                            <td><span style="color: #4caf50;">Finalizado</span></td>
-                                            <td>15</td>
-                                        </tr>
-                                        <tr>
-                                            <td>802105</td>
-                                            <td>
-                                                <a href="#" style="color: #51cbce; text-decoration: none;">
-                                                    <i class="fa fa-search" style="margin-right: 5px;"></i>15901
-                                                </a>
-                                            </td>
-                                            <td>ANTOFAGASTA MINERALS S.A.</td>
-                                            <td>Proyecto Minera Los Pelambres</td>
-                                            <td>AIRE_MP_FILTRO_47MM</td>
-                                            <td>FILTRO</td>
-                                            <td>05/10/2025</td>
-                                            <td><span style="color: #ff9800;">Recepcionado</span></td>
-                                            <td>8</td>
-                                        </tr>
-                                        <tr>
-                                            <td>803421</td>
-                                            <td>
-                                                <a href="#" style="color: #51cbce; text-decoration: none;">
-                                                    <i class="fa fa-search" style="margin-right: 5px;"></i>15796
-                                                </a>
-                                            </td>
-                                            <td>MINERA ESCONDIDA LTDA</td>
-                                            <td>Monitoreo Ambiental Q3</td>
-                                            <td>AIRE_MP_FILTRO_HVOL</td>
-                                            <td>FILTRO</td>
-                                            <td>02/10/2025</td>
-                                            <td><span style="color: #2196f3;">Por Ingresar</span></td>
-                                            <td>12</td>
-                                        </tr>
-                                        <tr>
-                                            <td>801645</td>
-                                            <td>
-                                                <a href="#" style="color: #51cbce; text-decoration: none;">
-                                                    <i class="fa fa-search" style="margin-right: 5px;"></i>15823
-                                                </a>
-                                            </td>
-                                            <td>CORP NACIONAL DEL COBRE DE CHILE</td>
-                                            <td>División Chuquicamata</td>
-                                            <td>AIRE_MP_FILTRO_37MM</td>
-                                            <td>FILTRO</td>
-                                            <td>03/10/2025</td>
-                                            <td><span style="color: #4caf50;">Finalizado</span></td>
-                                            <td>20</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <footer class="footer">
-                    <div class="copyright">
-                        © 2025, made by <a href="#">SGS TI</a>
-                    </div>
-                </footer>
-            </div>
-        </div>
-
-        <!-- Vista Nuevo Ingreso -->
-        <div id="nuevoView" class="view">
-            <div class="main-panel">
-                <nav class="navbar">
-                    <button class="btn-menu navbar-toggle" onclick="volver()">
-                        <i class="fas fa-arrow-left"></i>
-                    </button>
-                    <h5>Ficha de Pre-Ingreso <span id="tipoIngreso"></span></h5>
-                </nav>
-
-                <div class="content">
-
-
-                    <!-- Card de Información General del Cliente -->
-                    <div class="card">
-                        <div class="card-content">
-                            <h5 style="color: #ef8157; font-size: 16px; margin-bottom: 20px;">Información general del cliente</h5>
-                            
-                            <!-- Selector de Cliente -->
-                            <div class="row">
-                                <div class="col-md-12 mb-3">
-                                    <label>Cliente</label>
-                                    <select class="form-control" id="selectCliente" onchange="mostrarInfoCliente()">
-                                        <option value="">Seleccione un cliente</option>
-                                        <option value="codelco">CORP NACIONAL DEL COBRE DE CHILE</option>
-                                        <option value="antofagasta">ANTOFAGASTA MINERALS S.A.</option>
-                                        <option value="escondida">MINERA ESCONDIDA LTDA</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- Información del Cliente (se muestra después de seleccionar) -->
-                            <div id="infoClienteContainer" class="info-cliente-row">
-                                <!-- RUT y Nombre -->
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <strong>RUT:</strong> <span id="clienteRut">-</span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <strong>Nombre:</strong> <span id="clienteNombre">-</span>
-                                    </div>
-                                </div>
-
-                                <!-- Selector de OL -->
-                                <div class="row mb-3">
-                                    <div class="col-md-12">
-                                        <label>Orden de Laboratorio (OL)</label>
-                                        <select class="form-control" id="selectOL" onchange="mostrarADC()">
-                                            <option value="">Seleccione una OL</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <!-- ADC Responsable -->
-                                <div class="row" id="adcContainer" style="display: none;">
-                                    <div class="col-md-12">
-                                        <strong>ADC Responsable:</strong> <span id="adcResponsable">-</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h5 style="color: #ef8157; font-size: 16px; margin: 0;">Paso 1 - General</h5>
-                                <span style="font-size: 14px; color: #666;">Fecha: 05/10/2025</span>
-                            </div>
-                            
-                            <!-- ETFA y Contacto en una línea -->
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label>ETFA</label>
-                                    <div>
-                                        <label style="margin-right: 20px;">
-                                            <input type="radio" name="etfa" checked> NO ETFA
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="etfa"> ETFA
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label>Contacto</label>
-                                    <select class="form-control">
-                                        <option>Seleccionar</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- Tipo Muestreo -->
-                            <div class="form-group mb-3">
-                                <label>Tipo Muestreo</label>
-                                <div>
-                                    <label style="margin-right: 20px;">
-                                        <input type="radio" name="tipo" checked> Puntual
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="tipo"> Compuesta
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- Matriz -->
-                            <div class="form-group mb-3">
-                                <label>Matriz</label>
-                                <select class="form-control" id="matriz">
-                                    <option>Seleccione Matriz</option>
-                                    <option>Agua</option>
-                                    <option>Aire</option>
+            <!-- Content -->
+            <div class="content">
+                <!-- Filters Card -->
+                <div class="card">
+                    <div class="card-content">
+                        <!-- Primera fila de filtros -->
+                        <div class="row">
+                            <div class="col-md-3 col-6 mb-3" id="filter-tipo-muestreo-wrapper">
+                                <label>Tipo de Muestreo</label>
+                                <select id="filter-tipo-muestreo" class="form-control">
+                                    <option>Todos</option>
+                                    <option>FILTRO</option>
+                                    <option>MPS</option>
                                 </select>
                             </div>
-
-                            <!-- Preservancia y N° Envases en una línea -->
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label>Preservancia</label>
-                                    <select class="form-control">
-                                        <option>Si</option>
-                                        <option>No</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label>N° Envases</label>
-                                    <input type="number" class="form-control" value="1">
-                                </div>
+                            <div class="col-md-3 col-6 mb-3" id="filter-desde-wrapper">
+                                <label>Desde</label>
+                                <input type="date" id="filter-desde" class="form-control">
                             </div>
-
-                            <!-- Lugar de monitoreo y Opciones en una línea -->
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label>Lugar de monitoreo</label>
-                                    <select class="form-control">
-                                        <option>Seleccionar</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label>&nbsp;</label>
-                                    <button class="btn" style="background: none; border: 2px solid #ef8157; color: #ef8157; padding: 8px 20px; border-radius: 20px; width: auto;">Opciones ~</button>
-                                </div>
+                            <div class="col-md-3 col-6 mb-3" id="filter-hasta-wrapper">
+                                <label>Hasta</label>
+                                <input type="date" id="filter-hasta" class="form-control">
+                            </div>
+                            <div class="col-md-3 col-6 mb-3" id="filter-folio-wrapper">
+                                <label>Folio (OI)</label>
+                                <input type="text" id="filter-folio" class="form-control" placeholder="N° Folio">
                             </div>
                         </div>
-                    </div>
 
-                    <div class="card">
-                        <div class="card-content">
-                            <h5 style="color: #ef8157; font-size: 16px; margin-bottom: 20px;">Paso 2 - Servicios</h5>
-                            
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label>Servicios</label>
-                                    <div style="position: relative;">
-                                        <div onclick="toggleDropdown('servicios')" style="background-color: #5fb3b3; color: white; padding: 12px 20px; border-radius: 25px; cursor: pointer; font-size: 14px; font-family: Muli, Arial, sans-serif;">
-                                            <span id="serviciosText">Seleccione Servicios</span> <i class="fas fa-chevron-down" style="float: right; margin-top: 3px;"></i>
-                                        </div>
-                                        <div id="serviciosDropdown" style="display: none; position: absolute; top: 50px; left: 0; right: 0; background: white; border: 1px solid #ddd; border-radius: 8px; max-height: 300px; overflow-y: auto; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                                            <div style="padding: 10px;">
-                                                <input type="text" id="searchServicios" placeholder="Buscar..." style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 10px;">
-                                            </div>
-                                            <div onclick="selectServicio('Amoniaco ( EWD_ME272007 )')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">Amoniaco ( EWD_ME272007 )</div>
-                                            <div onclick="selectServicio('Cloruro ( EWD_SM4110B )')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">Cloruro ( EWD_SM4110B )</div>
-                                            <div onclick="selectServicio('Fluoruro ( EWD_SM4110B )')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">Fluoruro ( EWD_SM4110B )</div>
-                                            <div onclick="selectServicio('Manganeso total ( EWD_MEMET2007 )')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">Manganeso total ( EWD_MEMET2007 )</div>
-                                            <div onclick="selectServicio('Cloro Libre Residual ( EWD_ME332007 )')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">Cloro Libre Residual ( EWD_ME332007 )</div>
-                                            <div onclick="selectServicio('Surfactantes aniónicos (SAAM) ( EW_SM5540B_DET )')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">Surfactantes aniónicos (SAAM) ( EW_SM5540B_DET )</div>
-                                            <div onclick="selectServicio('Nitrato ( EWD_SM4110B )')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">Nitrato ( EWD_SM4110B )</div>
-                                            <div onclick="selectServicio('Color (Color verdadero) ( EWD_ME242007 )')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">Color (Color verdadero) ( EWD_ME242007 )</div>
-                                            <div onclick="selectServicio('Cromo total ( EWD_MEMET2007 )')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">Cromo total ( EWD_MEMET2007 )</div>
-                                            <div onclick="selectServicio('Magnesio total ( EWD_MEMET2007 )')" style="padding: 10px 15px; cursor: pointer;">Magnesio total ( EWD_MEMET2007 )</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <label>Planes</label>
-                                    <div style="position: relative;">
-                                        <div onclick="toggleDropdown('planes')" style="background-color: #5fb3b3; color: white; padding: 12px 20px; border-radius: 25px; cursor: pointer; font-size: 14px; font-family: Muli, Arial, sans-serif;">
-                                            <span id="planesText">Seleccione Planes</span> <i class="fas fa-chevron-down" style="float: right; margin-top: 3px;"></i>
-                                        </div>
-                                        <div id="planesDropdown" style="display: none; position: absolute; top: 50px; left: 0; right: 0; background: white; border: 1px solid #ddd; border-radius: 8px; max-height: 300px; overflow-y: auto; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                                            <div style="padding: 10px;">
-                                                <input type="text" id="searchPlanes" placeholder="Buscar..." style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 10px;">
-                                            </div>
-                                            <div onclick="selectPlan('CDTEN_024_A')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">CDTEN_024_A</div>
-                                            <div onclick="selectPlan('CDTEN_032_A_B')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">CDTEN_032_A_B</div>
-                                            <div onclick="selectPlan('CDTEN_033_A')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">CDTEN_033_A</div>
-                                            <div onclick="selectPlan('CDTEN_037_A')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">CDTEN_037_A</div>
-                                            <div onclick="selectPlan('CDAND_071_A')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">CDAND_071_A</div>
-                                            <div onclick="selectPlan('CDAND_132_A')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">CDAND_132_A</div>
-                                            <div onclick="selectPlan('CCHU_007_A')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">CCHU_007_A</div>
-                                            <div onclick="selectPlan('CCHU_008_A')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">CCHU_008_A</div>
-                                            <div onclick="selectPlan('CDDRT_001_A')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">CDDRT_001_A</div>
-                                            <div onclick="selectPlan('CCHU_005_A')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">CCHU_005_A</div>
-                                            <div onclick="selectPlan('CCHU_019_A')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">CCHU_019_A</div>
-                                            <div onclick="selectPlan('CCHU_020_A')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">CCHU_020_A</div>
-                                            <div onclick="selectPlan('CCHU_021_A')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">CCHU_021_A</div>
-                                            <div onclick="selectPlan('CCHU_022_A')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">CCHU_022_A</div>
-                                            <div onclick="selectPlan('CCHU_023_A')" style="padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">CCHU_023_A</div>
-                                            <div onclick="selectPlan('CCHU_024_A')" style="padding: 10px 15px; cursor: pointer;">CCHU_024_A</div>
-                                        </div>
-                                    </div>
+                        <!-- Segunda fila de filtros -->
+                        <div class="row">
+                            <div class="col-md-2 col-6 mb-3">
+                                <label>Matriz</label>
+                                <select class="form-control">
+                                    <option>Todos</option>
+                                    <option>AIRE_MP_FILTRO_47MM</option>
+                                    <option>AIRE_MP_FILTRO_HVOL</option>
+                                    <option>AIRE_MP_FILTRO_37MM</option>
+                                    <option>POLVO_SEDIMENTABLE</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 col-6 mb-3" id="filter-estado-wrapper">
+                                <label>Estado</label>
+                                <select id="filter-estado" class="form-control">
+                                    <option>Todos</option>
+                                    <option>Por Ingresar</option>
+                                    <option>Recepcionado</option>
+                                    <option>Finalizado</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 col-6 mb-3" id="filter-ol-wrapper">
+                                <label>Buscar OL</label>
+                                <input type="text" id="filter-ol" class="form-control" placeholder="Buscar OL">
+                            </div>
+                            <div class="col-md-3 col-6 mb-3" id="filter-proyecto-wrapper">
+                                <label>Proyecto</label>
+                                <input type="text" id="filter-proyecto" class="form-control" placeholder="Buscar proyecto">
+                            </div>
+                            <div class="col-md-2 col-12 mb-3">
+                                <label>&nbsp;</label>
+                                <div class="button-group">
+                                    <button class="btn-buscar">
+                                        <i class="fa fa-search"></i> Buscar
+                                    </button>
+                                    <button class="btn-limpiar" title="Limpiar filtros">
+                                        <i class="fa fa-undo"></i>
+                                    </button>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-content">
-                            <h5 style="color: #ef8157; font-size: 16px; margin-bottom: 20px;">Paso 3 - Puntos de Muestreo</h5>
-                            
-                            <div class="row mb-3">
-                                <div class="col-md-8">
-                                    <label>Punto de Muestreo</label>
-                                    <select class="form-control">
-                                        <option>Seleccione un punto de muestreo</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4 d-flex align-items-end" style="gap: 10px;">
-                                    <button style="background: none; border: 2px solid #ef8157; color: #ef8157; width: 45px; height: 45px; border-radius: 50%; font-size: 20px; cursor: pointer;">+</button>
-                                    <button style="background: none; border: 2px solid #ef8157; color: #ef8157; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-size: 14px;">Masivo</button>
-                                </div>
-                            </div>
-
-                            <div class="table-responsive mb-3">
-                                <table class="table" style="background-color: white;">
-                                    <thead>
-                                        <tr>
-                                            <th>PUNTO DE MUESTREO</th>
-                                            <th>Fecha/Hora Muestreo</th>
-                                            <th>Lugar de Monitoreo/Dirección</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="3" style="text-align: center; padding: 20px; color: #999;">No hay puntos agregados</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label>Responsable de Muestreo</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label>Fecha Transporte</label>
-                                    <input type="text" class="form-control" value="05/10/2025">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label>Hora Transporte</label>
-                                    <input type="time" class="form-control" value="21:38">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Observaciones de terreno</label>
-                                <textarea class="form-control" rows="3"></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card" id="paso4">
-                        <div class="card-content">
-                            <h5 style="color: #ef8157; font-size: 16px; margin-bottom: 15px;">Paso 4 - Archivos de envases</h5>
-                            <p style="font-size: 14px; margin-bottom: 15px;">En esta sección se debe subir el archivo de envases proporcionado por SGS</p>
-                            <input type="file" class="form-control" style="padding: 5px;">
-                            <div class="form-group mt-3">
-                                <label>Comentarios</label>
-                                <textarea class="form-control" rows="3"></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-content">
-                            <h5 style="color: #ef8157; font-size: 16px; margin-bottom: 20px;" id="titulo5">Paso 5 - Generación de JOB</h5>
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="job"> Generar un JOB para la totalidad de los puntos ingresados
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="job"> Generar un JOB por punto ingresado
-                                </label>
-                            </div>
-                            <button class="btn" style="background: #5fb3b3; color: white; border: none; padding: 10px 30px; border-radius: 20px; display: block; margin: 20px auto;" onclick="enviar()">Enviar Pre-Ingreso</button>
                         </div>
                     </div>
                 </div>
 
-                <footer class="footer">
-                    <div class="copyright">
-                        © 2025, made by <a href="#">SGS TI</a>
+                <!-- Document List -->
+                <div id="documentList">
+                    <!-- Document 1 -->
+                    <div class="card document-card" 
+                         data-oi="213210" 
+                         data-tipo-muestreo="FILTRO" 
+                         data-ol="700415" 
+                         data-estado="Por Ingresar" 
+                         data-matriz="AIRE_MP_FILTRO_HVOL"
+                         data-enviado="2025-12-23">
+                        <div class="card-body">
+                            <div class="document-card-header">
+                                <div class="document-title-section">
+                                    <span class="document-oi">
+                                        <span class="document-oi-label">OI</span> 213210
+                                    </span>
+                                    <span class="badge badge-info">FILTRO</span><span class="badge badge-success">MP10</span>
+                                </div>
+                                <div class="document-actions-header">
+                                    <span class="badge-status">Por Ingresar</span>
+                                    <div class="dropdown">
+                                        <button class="btn-opciones">
+                                            Opciones <i class="fa fa-caret-down"></i>
+                                        </button>
+                                        <div class="dropdown-menu-custom">
+                                            <a class="dropdown-item-custom" href="#" data-action="recepcionar">Recepcionar</a>
+                                            <a class="dropdown-item-custom" href="#" data-action="verDetalle">Ver detalle</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="document-info-line">
+                                <div class="document-info-item ol-item">
+                                    <i class="fa fa-cube"></i>
+                                    <span><span class="info-label-inline">OL:</span> <span class="info-value-inline">700415</span></span>
+                                </div>
+                                <div class="document-info-item cliente-item">
+                                    <i class="fa fa-user"></i>
+                                    <span><span class="info-label-inline">Cliente:</span> <span class="info-value-inline">MINERA ESCONDIDA LTDA</span></span>
+                                </div>
+                                <div class="flex-break"></div> <!-- Fuerza un salto de línea aquí -->
+                                <div class="document-info-item">
+                                    <i class="fa fa-hands"></i>
+                                    <span><span class="info-label-inline">Muestreado por:</span> <span class="info-value-inline">SGS</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar"></i>
+                                    <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">23-12-2025</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar-check"></i>
+                                    <span><span class="info-label-inline">Recepción:</span> <span class="info-value-inline">pendiente</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-layer-group"></i>
+                                    <span><span class="info-label-inline">Matriz:</span> <span class="info-value-inline">AIRE_MP_FILTRO_HVOL</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-vial"></i>
+                                    <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">20</span></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </footer>
-            </div>
-        </div>
-    </div>
+
+                    <!-- Document 2 -->
+                    <div class="card document-card"
+                         data-oi="213211"
+                         data-tipo-muestreo="MPS"
+                         data-ol="801598"
+                         data-estado="Recepcionado"
+                         data-matriz="POLVO_SEDIMENTABLE"
+                         data-enviado="2025-12-22">
+                        <div class="card-body">
+                            <div class="document-card-header">
+                                <div class="document-title-section">
+                                    <span class="document-oi">
+                                        <span class="document-oi-label">OI</span> 213211
+                                    </span>
+                                    <span class="badge badge-info">MPS</span>
+                                </div>
+                                <div class="document-actions-header">
+                                    <span class="badge-status">Recepcionado</span>
+                                    <div class="dropdown">
+                                        <button class="btn-opciones">
+                                            Opciones <i class="fa fa-caret-down"></i>
+                                        </button>
+                                        <div class="dropdown-menu-custom">
+                                            <a class="dropdown-item-custom" href="#" data-action="recepcionar">Recepcionar</a>
+                                            <a class="dropdown-item-custom" href="#" data-action="verDetalle">Ver detalle</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="document-info-line">
+                                <div class="document-info-item ol-item">
+                                    <i class="fa fa-cube"></i>
+                                    <span><span class="info-label-inline">OL:</span> <span class="info-value-inline">801598</span></span>
+                                </div>
+                                <div class="document-info-item cliente-item">
+                                    <i class="fa fa-user"></i>
+                                    <span><span class="info-label-inline">Cliente:</span> <span class="info-value-inline">CODELCO CHILE</span></span>
+                                </div>
+                                <div class="flex-break"></div> <!-- Fuerza un salto de línea aquí -->
+                                <div class="document-info-item">
+                                    <i class="fa fa-hands"></i>
+                                    <span><span class="info-label-inline">Muestreado por:</span> <span class="info-value-inline">Cliente</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar"></i>
+                                    <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">22-12-2025</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar-check"></i>
+                                    <span><span class="info-label-inline">Recepción:</span> <span class="info-value-inline">23-12-2025</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-layer-group"></i>
+                                    <span><span class="info-label-inline">Matriz:</span> <span class="info-value-inline">POLVO_SEDIMENTABLE</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-vial"></i>
+                                    <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">15</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Document 3 -->
+                    <div class="card document-card"
+                         data-oi="213209"
+                         data-tipo-muestreo="FILTRO"
+                         data-ol="700416"
+                         data-estado="Por Ingresar"
+                         data-matriz="AIRE_MP_FILTRO_47MM"
+                         data-enviado="2025-12-20">
+                        <div class="card-body">
+                            <div class="document-card-header">
+                                <div class="document-title-section">
+                                    <span class="document-oi">
+                                        <span class="document-oi-label">OI</span> 213209
+                                    </span><span class="badge badge-info">FILTRO</span><span class="badge badge-success">MP10</span>
+                                </div>
+                                <div class="document-actions-header">
+                                    <span class="badge-status">Por Ingresar</span>
+                                    <div class="dropdown">
+                                        <button class="btn-opciones">
+                                            Opciones <i class="fa fa-caret-down"></i>
+                                        </button>
+                                        <div class="dropdown-menu-custom">
+                                            <a class="dropdown-item-custom" href="#" data-action="recepcionar">Recepcionar</a>
+                                            <a class="dropdown-item-custom" href="#" data-action="verDetalle">Ver detalle</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="document-info-line">
+                                <div class="document-info-item ol-item">
+                                    <i class="fa fa-cube"></i>
+                                    <span><span class="info-label-inline">OL:</span> <span class="info-value-inline">700416</span></span>
+                                </div>
+                                <div class="document-info-item cliente-item">
+                                    <i class="fa fa-user"></i>
+                                    <span><span class="info-label-inline">Cliente:</span> <span class="info-value-inline">MINERA ESCONDIDA LTDA</span></span>
+                                </div>
+                                <div class="flex-break"></div> <!-- Fuerza un salto de línea aquí -->
+                                <div class="document-info-item">
+                                    <i class="fa fa-hands"></i>
+                                    <span><span class="info-label-inline">Muestreado por:</span> <span class="info-value-inline">Cliente</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar"></i>
+                                    <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">20-12-2025</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar-check"></i>
+                                    <span><span class="info-label-inline">Recepción:</span> <span class="info-value-inline">pendiente</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-layer-group"></i>
+                                    <span><span class="info-label-inline">Matriz:</span> <span class="info-value-inline">AIRE_MP_FILTRO_47MM</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-vial"></i>
+                                    <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">15</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Document 4 -->
+                    <div class="card document-card"
+                         data-oi="213208"
+                         data-tipo-muestreo="FILTRO"
+                         data-ol="700416"
+                         data-estado="Por Ingresar"
+                         data-matriz="AIRE_MP_FILTRO_37MM"
+                         data-enviado="2025-12-19">
+                        <div class="card-body">
+                            <div class="document-card-header">
+                                <div class="document-title-section">
+                                    <span class="document-oi">
+                                        <span class="document-oi-label">OI</span> 213208
+                                    </span>
+                                    <span class="badge badge-info">FILTRO</span><span class="badge badge-secondary">MP2.5</span>
+                                </div>
+                                <div class="document-actions-header">
+                                    <span class="badge-status">Por Ingresar</span>
+                                    <div class="dropdown">
+                                        <button class="btn-opciones">
+                                            Opciones <i class="fa fa-caret-down"></i>
+                                        </button>
+                                        <div class="dropdown-menu-custom">
+                                            <a class="dropdown-item-custom" href="#" data-action="recepcionar">Recepcionar</a>
+                                            <a class="dropdown-item-custom" href="#" data-action="verDetalle">Ver detalle</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="document-info-line">
+                                <div class="document-info-item ol-item">
+                                    <i class="fa fa-cube"></i>
+                                    <span><span class="info-label-inline">OL:</span> <span class="info-value-inline">700416</span></span>
+                                </div>
+                                <div class="document-info-item cliente-item">
+                                    <i class="fa fa-user"></i>
+                                    <span><span class="info-label-inline">Cliente:</span> <span class="info-value-inline">MINERA ESCONDIDA LTDA</span></span>
+                                </div>
+                                <div class="flex-break"></div> <!-- Fuerza un salto de línea aquí -->
+                                <div class="document-info-item">
+                                    <i class="fa fa-hands"></i>
+                                    <span><span class="info-label-inline">Muestreado por:</span> <span class="info-value-inline">Cliente</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar"></i>
+                                    <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">19-12-2025</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar-check"></i>
+                                    <span><span class="info-label-inline">Recepción:</span> <span class="info-value-inline">pendiente</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-layer-group"></i>
+                                    <span><span class="info-label-inline">Matriz:</span> <span class="info-value-inline">AIRE_MP_FILTRO_37MM</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-vial"></i>
+                                    <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">12</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Document 5 -->
+                    <div class="card document-card"
+                         data-oi="213207"
+                         data-tipo-muestreo="MPS"
+                         data-ol="801599"
+                         data-estado="Recepcionado"
+                         data-matriz="POLVO_SEDIMENTABLE"
+                         data-enviado="2025-12-18">
+                        <div class="card-body">
+                            <div class="document-card-header">
+                                <div class="document-title-section">
+                                    <span class="document-oi">
+                                        <span class="document-oi-label">OI</span> 213207
+                                    </span>
+                                    <span class="badge badge-info">MPS</span>
+                                </div>
+                                <div class="document-actions-header">
+                                    <span class="badge-status">Recepcionado</span>
+                                    <div class="dropdown">
+                                        <button class="btn-opciones">
+                                            Opciones <i class="fa fa-caret-down"></i>
+                                        </button>
+                                        <div class="dropdown-menu-custom">
+                                            <a class="dropdown-item-custom" href="#" data-action="recepcionar">Recepcionar</a>
+                                            <a class="dropdown-item-custom" href="#" data-action="verDetalle">Ver detalle</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="document-info-line">
+                                <div class="document-info-item ol-item">
+                                    <i class="fa fa-cube"></i>
+                                    <span><span class="info-label-inline">OL:</span> <span class="info-value-inline">801599</span></span>
+                                </div>
+                                <div class="document-info-item cliente-item">
+                                    <i class="fa fa-user"></i>
+                                    <span><span class="info-label-inline">Cliente:</span> <span class="info-value-inline">CODELCO CHILE</span></span>
+                                </div>
+                                <div class="flex-break"></div> <!-- Fuerza un salto de línea aquí -->
+                                <div class="document-info-item">
+                                    <i class="fa fa-hands"></i>
+                                    <span><span class="info-label-inline">Muestreado por:</span> <span class="info-value-inline">SGS</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar"></i>
+                                    <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">18-12-2025</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar-check"></i>
+                                    <span><span class="info-label-inline">Recepción:</span> <span class="info-value-inline">19-12-2025</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-layer-group"></i>
+                                    <span><span class="info-label-inline">Matriz:</span> <span class="info-value-inline">POLVO_SEDIMENTABLE</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-vial"></i>
+                                    <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">25</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- Fin de documentList -->
+
+                <!-- Pagination -->
+                <div class="pagination-wrapper">
+                    <div class="pagination-info">
+                        Mostrando <span id="pagination-count">5</span> de <span id="pagination-total">5</span>
+                    </div>
+                    <ul class="pagination mb-0">
+                        <li class="page-item disabled"><a class="page-link" href="#">‹</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">›</a></li>
+                    </ul>
+                </div>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        let tipo = 'agua';
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebar = document.getElementById('sidebar');
+            const btnMenu = document.querySelector('.btn-menu');
+            const btnBuscar = document.querySelector('.btn-buscar');
+            const btnLimpiar = document.querySelector('.btn-limpiar');
+            const filterForm = document.querySelector('.card-content');
+            const documentCards = document.querySelectorAll('.document-card');
+            const paginationCount = document.getElementById('pagination-count');
+            const paginationTotal = document.getElementById('pagination-total');
 
-        // Base de datos simulada de clientes y OLs
-        const clientesData = {
-            codelco: {
-                nombre: 'CORP NACIONAL DEL COBRE DE CHILE',
-                rut: '61704000-K',
-                ols: [
-                    { codigo: '801598', adc: 'kpizarro' },
-                    { codigo: '801645', adc: 'mrodriguez' },
-                    { codigo: '801702', adc: 'jgonzalez' }
-                ]
-            },
-            antofagasta: {
-                nombre: 'ANTOFAGASTA MINERALS S.A.',
-                rut: '96.955.310-7',
-                ols: [
-                    { codigo: '802105', adc: 'lmartinez' },
-                    { codigo: '802156', adc: 'cdiaz' },
-                    { codigo: '802198', adc: 'alopez' }
-                ]
-            },
-            escondida: {
-                nombre: 'MINERA ESCONDIDA LTDA',
-                rut: '79.691.790-6',
-                ols: [
-                    { codigo: '803421', adc: 'rcastillo' },
-                    { codigo: '803478', adc: 'psanchez' },
-                    { codigo: '803512', adc: 'fmorales' }
-                ]
-            }
-        };
-
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('show');
-        }
-
-        function verAgua() {
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            document.getElementById('aguaView').classList.add('active');
-            document.getElementById('menuAgua').classList.add('active');
-            document.getElementById('menuAire').classList.remove('active');
-            tipo = 'agua';
-            if (window.innerWidth <= 991) {
-                document.getElementById('sidebar').classList.remove('show');
-            }
-        }
-
-        function verAire() {
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            document.getElementById('aireView').classList.add('active');
-            document.getElementById('menuAire').classList.add('active');
-            document.getElementById('menuAgua').classList.remove('active');
-            tipo = 'aire';
-            if (window.innerWidth <= 991) {
-                document.getElementById('sidebar').classList.remove('show');
-            }
-        }
-
-        function nuevoIngreso(t) {
-            tipo = t;
-            
-            // Si es aire, redirigir a página separada
-            if (t === 'aire') {
-                window.location.href = 'ficha-preingreso-aire.html';
-                return;
-            }
-            
-            // Continuar con flujo normal para agua
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            document.getElementById('nuevoView').classList.add('active');
-            
-            // Actualizar título con tipo de ingreso
-            const tipoTexto = 'de Agua';
-            document.getElementById('tipoIngreso').textContent = tipoTexto;
-            
-            const matrizSelect = document.getElementById('matriz');
-            matrizSelect.value = 'Agua';
-            
-            document.getElementById('paso4').style.display = 'block';
-            document.getElementById('titulo5').textContent = 'Paso 5 - Generación de JOB';
-
-            // Resetear el formulario de cliente
-            resetearCliente();
-        }
-
-        function resetearCliente() {
-            document.getElementById('selectCliente').value = '';
-            document.getElementById('infoClienteContainer').classList.remove('show');
-            document.getElementById('adcContainer').style.display = 'none';
-        }
-
-        function mostrarInfoCliente() {
-            const clienteSelect = document.getElementById('selectCliente');
-            const clienteKey = clienteSelect.value;
-            
-            if (!clienteKey) {
-                document.getElementById('infoClienteContainer').classList.remove('show');
-                return;
+            // --- Lógica de Filtros ---
+            function resetFilters() {
+                // Resetear todos los inputs y selects del formulario
+                filterForm.querySelectorAll('input, select').forEach(field => {
+                    if (field.type === 'text' || field.type === 'date') {
+                        field.value = '';
+                    } else if (field.tagName === 'SELECT') {
+                        field.selectedIndex = 0;
+                    }
+                });
+                // Volver a aplicar los filtros (que ahora están vacíos) para mostrar todo
+                applyFilters();
             }
 
-            const cliente = clientesData[clienteKey];
-            
-            // Mostrar RUT y Nombre
-            document.getElementById('clienteRut').textContent = cliente.rut;
-            document.getElementById('clienteNombre').textContent = cliente.nombre;
-            
-            // Llenar selector de OLs
-            const selectOL = document.getElementById('selectOL');
-            selectOL.innerHTML = '<option value="">Seleccione una OL</option>';
-            
-            cliente.ols.forEach(ol => {
-                const option = document.createElement('option');
-                option.value = ol.codigo;
-                option.setAttribute('data-adc', ol.adc);
-                option.textContent = ol.codigo;
-                selectOL.appendChild(option);
+            function applyFilters() {
+                const filters = {
+                    tipoMuestreo: document.getElementById('filter-tipo-muestreo').value,
+                    folio: document.getElementById('filter-folio').value.toLowerCase(),
+                    estado: document.getElementById('filter-estado').value,
+                    ol: document.getElementById('filter-ol').value.toLowerCase(),
+                    desde: document.getElementById('filter-desde').value, // Formato YYYY-MM-DD
+                    hasta: document.getElementById('filter-hasta').value, // Formato YYYY-MM-DD
+                };
+
+                let visibleCount = 0;
+
+                documentCards.forEach(card => {
+                    const cardData = {
+                        tipoMuestreo: card.dataset.tipoMuestreo,
+                        folio: card.dataset.oi.toLowerCase(),
+                        estado: card.dataset.estado,
+                        ol: card.dataset.ol.toLowerCase(),
+                        enviado: card.dataset.enviado, // Formato YYYY-MM-DD
+                    };
+
+                    const showCard = 
+                        (filters.tipoMuestreo === 'Todos' || filters.tipoMuestreo === cardData.tipoMuestreo) &&
+                        (filters.estado === 'Todos' || filters.estado === cardData.estado) &&
+                        (cardData.folio.includes(filters.folio)) &&
+                        (cardData.ol.includes(filters.ol)) &&
+                        // Comprobación de fechas (funciona con strings en formato YYYY-MM-DD)
+                        (!filters.desde || cardData.enviado >= filters.desde) &&
+                        (!filters.hasta || cardData.enviado <= filters.hasta);
+
+                    if (showCard) {
+                        card.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // Actualizar contador de paginación
+                const total = documentCards.length;
+                paginationCount.textContent = visibleCount;
+                paginationTotal.textContent = total;
+            }
+
+            // --- Lógica del Sidebar ---
+            if (btnMenu) {
+                btnMenu.addEventListener('click', () => {
+                    sidebar.classList.toggle('show');
+                });
+            }
+
+            document.querySelectorAll('.sidebar .nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector('.sidebar .nav li.active')?.classList.remove('active');
+                    this.parentElement.classList.add('active');
+                    
+                    // Cerrar sidebar en móvil al seleccionar una opción
+                    if (window.innerWidth <= 991 && sidebar.classList.contains('show')) {
+                        sidebar.classList.remove('show');
+                    }
+                });
             });
-            
-            // Mostrar el container de información
-            document.getElementById('infoClienteContainer').classList.add('show');
-            
-            // Ocultar ADC hasta que se seleccione una OL
-            document.getElementById('adcContainer').style.display = 'none';
-            document.getElementById('adcResponsable').textContent = '-';
-        }
 
-        function mostrarADC() {
-            const selectOL = document.getElementById('selectOL');
-            const selectedOption = selectOL.options[selectOL.selectedIndex];
-            
-            if (!selectOL.value) {
-                document.getElementById('adcContainer').style.display = 'none';
-                return;
-            }
-            
-            const adc = selectedOption.getAttribute('data-adc');
-            document.getElementById('adcResponsable').textContent = adc;
-            document.getElementById('adcContainer').style.display = 'block';
-        }
-
-        function volver() {
-            tipo === 'agua' ? verAgua() : verAire();
-        }
-
-        function enviar() {
-            alert('Pre-Ingreso enviado exitosamente!');
-            volver();
-        }
-
-        function toggleDropdown(tipo) {
-            const dropdown = document.getElementById(tipo + 'Dropdown');
-            const isVisible = dropdown.style.display === 'block';
-            
-            // Cerrar todos los dropdowns
-            document.getElementById('serviciosDropdown').style.display = 'none';
-            document.getElementById('planesDropdown').style.display = 'none';
-            
-            // Abrir/cerrar el seleccionado
-            dropdown.style.display = isVisible ? 'none' : 'block';
-        }
-
-        function selectServicio(value) {
-            document.getElementById('serviciosText').textContent = value;
-            document.getElementById('serviciosDropdown').style.display = 'none';
-        }
-
-        function selectPlan(value) {
-            document.getElementById('planesText').textContent = value;
-            document.getElementById('planesDropdown').style.display = 'none';
-        }
-
-        // Cerrar dropdowns al hacer clic fuera
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('[onclick*="toggleDropdown"]') && 
-                !event.target.closest('#serviciosDropdown') && 
-                !event.target.closest('#planesDropdown')) {
-                document.getElementById('serviciosDropdown').style.display = 'none';
-                document.getElementById('planesDropdown').style.display = 'none';
-            }
-        });
-
-        // Función de búsqueda para servicios
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchServicios = document.getElementById('searchServicios');
-            if (searchServicios) {
-                searchServicios.addEventListener('input', function(e) {
-                    const searchText = e.target.value.toLowerCase();
-                    const items = document.querySelectorAll('#serviciosDropdown div[onclick*="selectServicio"]');
-                    items.forEach(item => {
-                        const text = item.textContent.toLowerCase();
-                        item.style.display = text.includes(searchText) ? 'block' : 'none';
-                    });
+            // --- Lógica del botón de búsqueda ---
+            if (btnBuscar) {
+                btnBuscar.addEventListener('click', () => {
+                    applyFilters();
                 });
             }
 
-            const searchPlanes = document.getElementById('searchPlanes');
-            if (searchPlanes) {
-                searchPlanes.addEventListener('input', function(e) {
-                    const searchText = e.target.value.toLowerCase();
-                    const items = document.querySelectorAll('#planesDropdown div[onclick*="selectPlan"]');
-                    items.forEach(item => {
-                        const text = item.textContent.toLowerCase();
-                        item.style.display = text.includes(searchText) ? 'block' : 'none';
-                    });
+            // --- Lógica del botón de limpiar ---
+            if (btnLimpiar) {
+                btnLimpiar.addEventListener('click', () => {
+                    resetFilters();
                 });
             }
+
+            // --- Lógica de Eventos Globales (Delegación de eventos) ---
+            document.addEventListener('click', function(event) {
+                const target = event.target;
+
+                // --- Lógica para el Dropdown de Opciones ---
+                const dropdownButton = target.closest('.btn-opciones');
+                if (dropdownButton) {
+                    event.preventDefault();
+                    const currentDropdownMenu = dropdownButton.nextElementSibling;
+                    
+                    // Cerrar otros dropdowns abiertos antes de abrir el nuevo
+                    document.querySelectorAll('.dropdown-menu-custom.show').forEach(menu => {
+                        if (menu !== currentDropdownMenu) {
+                            menu.classList.remove('show');
+                        }
+                    });
+
+                    currentDropdownMenu.classList.toggle('show');
+                    return; // Importante para no activar el cierre global inmediatamente
+                }
+
+                // --- Lógica para acciones del dropdown (usando data-attributes) ---
+                const dropdownItem = target.closest('.dropdown-item-custom');
+                if (dropdownItem) {
+                    event.preventDefault();
+                    const action = dropdownItem.dataset.action;
+                    if (action === 'recepcionar') {
+                        window.location.href = 'sgs-recepcion-muestras.html';
+                    } else if (action === 'verDetalle') {
+                        alert('Mostrando detalle del documento...');
+                    }
+                }
+
+                // --- Cerrar todos los dropdowns si se hace clic fuera de ellos ---
+                if (!target.closest('.dropdown')) {
+                    document.querySelectorAll('.dropdown-menu-custom.show').forEach(menu => {
+                        menu.classList.remove('show');
+                    });
+                }
+            });
+
+            // Inicializar el total de la paginación al cargar
+            paginationTotal.textContent = documentCards.length;
         });
     </script>
 </body>
