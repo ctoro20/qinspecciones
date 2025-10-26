@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGS - Qinspecciones</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #ebe7e0;
+            overflow-x: hidden;
+        }
+
+        .wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 200px;
+            background: #66615B;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s;
+            overflow-y: auto;
+        }
+
+        .sidebar .logo {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .sidebar .logo h2 {
+            color: #9e9e9e;
+            margin: 0;
+            font-size: 28px;
+            font-weight: 300;
+        }
+
+        .sidebar .user {
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar .user i {
+            font-size: 24px;
+        }
+
+        .sidebar .user .info {
+            font-size: 12px;
+        }
+
+        .sidebar .user .info .name {
+            font-weight: 500;
+        }
+
+        .sidebar .nav {
+            margin-top: 15px;
+            padding: 0;
+            list-style: none;
+        }
+
+        .sidebar .nav li a {
+            color: rgba(255,255,255,0.8);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .sidebar .nav li a i {
+            font-size: 16px;
+            width: 20px;
+        }
+
+        .sidebar .nav li a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .sidebar .nav li.active a {
+            color: #51cbce;
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Main Panel */
+        .main-panel {
+            flex: 1;
+            margin-left: 200px;
+            width: calc(100% - 200px);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: white;
+            border: 0;
+            margin: 0;
+            padding: 15px 20px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            justify-content: flex-start;
+        }
+
+        .navbar .btn-menu {
+            background: #ef8157;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .navbar h5 {
+            margin: 0;
+            color: #66615B;
+            font-size: 18px;
+            font-weight: 400;
+            font-family: Muli, Arial, sans-serif;
+            text-align: left;
+        }
+
+        /* Content */
+        .content {
+            flex: 1;
+            padding: 15px;
+            width: 100%;
+        }
+
+        .card {
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 6px 10px -4px rgba(0,0,0,0.15);
+            margin-bottom: 12px;
+            border: none;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .card-content label {
+            font-family: Muli, Arial, sans-serif;
+            font-size: 11px;
+            color: #252422;
+            font-weight: normal;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .form-control {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 6px 12px;
+            font-size: 14px;
+            background-color: #ebe7e0;
+            height: 38px;
+            width: 100%;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #51cbce;
+            background-color: #ebe7e0;
+            box-shadow: none;
+        }
+
+        .mb-3 {
+            margin-bottom: 0.8rem;
+        }
+
+        .mb-3 label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Buttons */
+        .btn-buscar {
+            background-color: #ef8157;
+            border-color: #ef8157;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: normal;
+            height: 38px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .btn-buscar:hover {
+            background-color: #e96342;
+        }
+
+        .btn-opciones {
+            background-color: #ef8157;
+            border-color: #ef8157;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: normal;
+            height: 38px;
+            width: 100%;
+        }
+
+        .btn-opciones:hover {
+            background-color: #e96342;
+        }
+
+        .btn-limpiar {
+            background-color: #a49e93;
+            color: white;
+            border: none;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .btn-limpiar:hover {
+            background-color: #8a847c;
+        }
+
+        .btn-ver-mas {
+            background-color: #51cbce;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 400;
+            height: 38px;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+
+        .btn-ver-mas:hover {
+            background-color: #3db0b3;
+        }
+
+        .btn-ver-mas i {
+            margin-right: 5px;
+            transition: transform 0.3s;
+        }
+
+        .btn-ver-mas.expanded i {
+            transform: rotate(180deg);
+        }
+
+        .filtros-adicionales {
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            max-height: 0;
+            opacity: 0;
+        }
+
+        .filtros-adicionales.show {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        .btn-opciones i {
+            margin-left: 5px;
+        }
+
+        .btn-recepcionar {
+            background-color: #ef8157;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 400;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .btn-recepcionar:hover {
+            background-color: #e96342;
+        }
+
+        .btn-recepcionar i {
+            margin-right: 5px;
+        }
+
+        /* Document Cards */
+        .document-card {
+            margin-bottom: 8px;
+        }
+
+        .document-card .card-body {
+            padding: 10px 15px;
+        }
+
+        .document-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .document-title-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .document-oi {
+            font-size: 18px;
+            font-weight: 600;
+            color: #252422;
+        }
+
+        .document-oi-label {
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .document-actions-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .badge-status {
+            background-color: #e0e0e0;
+            color: #66615B;
+            padding: 6px 15px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .document-info-line {
+            display: flex;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 6px;
+            row-gap: 4px;
+            font-size: 12px;
+            color: #66615B;
+        }
+
+        .document-info-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11.5px;
+        }
+
+        /* Ocultar iconos de OL y Cliente */
+        .document-info-item.ol-item i,
+        .document-info-item.cliente-item i {
+            display: none;
+        }
+
+        /* OL y Cliente con letra más grande y en la misma línea */
+        .document-info-item.ol-item,
+        .document-info-item.cliente-item {
+            font-size: 14px;
+        }
+
+        /* Elemento para forzar un salto de línea en flexbox */
+        .flex-break {
+            flex-basis: 100%;
+            height: 0;
+        }
+
+        .document-info-item i {
+            color: #9a9a9a;
+            font-size: 14px;
+        }
+
+        .info-label-inline {
+            font-weight: 600;
+            color: #666666;
+        }
+
+        .info-value-inline {
+            color: #66615B;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            width: 120px;
+        }
+
+        .dropdown-menu-custom {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+
+        .dropdown-menu-custom.show {
+            display: block;
+        }
+
+        .dropdown-item-custom {
+            color: #66615B;
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+            cursor: pointer;
+            font-size: 13px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item-custom:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item-custom:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Holding Time Alert */
+        .holding-time-alert {
+            padding: 8px 12px;
+            margin-top: 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .holding-time-alert.alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+
+        .holding-time-alert.alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .holding-time-alert.alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .holding-time-alert i {
+            font-size: 14px;
+        }
+
+
+        /* Badges */
+        .badge {
+            border-radius: 10px;
+            padding: 3px 8px;
+            font-size: 9px;
+            font-weight: 500;
+            text-transform: uppercase;
+            line-height: 1.2;
+            margin: 0 2px;
+            display: inline-block;
+        }
+
+        .badge-success {
+            background-color: #6bd098;
+            color: #ffffff;
+        }
+
+        .badge-warning {
+            background-color: #ef8157;
+            color: #ffffff;
+        }
+
+        .badge-info {
+            background-color: #51cbce;
+            color: #ffffff;
+        }
+
+        .badge-secondary {
+            background-color: #a49e93;
+            color: #ffffff;
+        }
+
+        /* Pagination */
+        .pagination-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 6px 10px -4px rgba(0,0,0,0.15);
+        }
+
+        .pagination-info {
+            color: #66615B;
+            font-size: 12px;
+            font-family: Muli, Arial, sans-serif;
+        }
+
+        .pagination-info select {
+            display: inline-block;
+            width: auto;
+            height: 28px;
+            padding: 2px 6px;
+            margin: 0 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #ebe7e0;
+            font-size: 12px;
+        }
+
+        .pagination .page-link {
+            border: 1px solid #ddd;
+            color: #66615B;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin: 0 2px;
+            background-color: white;
+            font-size: 12px;
+        }
+
+        .pagination .page-link:hover {
+            background-color: #51cbce;
+            border-color: #51cbce;
+            color: white;
+        }
+
+        .pagination .page-item.disabled .page-link {
+            background-color: #f5f5f5;
+            border-color: #ddd;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .sidebar {
+                transform: translate3d(-200px, 0, 0);
+            }
+
+            .sidebar.show {
+                transform: translate3d(0, 0, 0);
+            }
+
+            .main-panel {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .btn-buscar {
+                flex: 1;
+            }
+        }
+
+        /* Scrollbar styling */
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: #5a5550;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #7a7570;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <h2>SGS</h2>
+            </div>
+
+            <div class="user">
+                <i class="fa fa-user-circle"></i>
+                <div class="info">
+                    <div class="name">ARIEL ENRIQUE</div>
+                    <div>DIAPRESMONT</div>
+                </div>
+            </div>
+
+             <ul class="nav">
+                <li>
+                    <a href="index.html">
+                        <i class="fa fa-home"></i>
+                        <span>INICIO</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="listado-recepcion-muestras.html">
+                        <i class="fa fa-inbox"></i>
+                        <span>RECEPCIÓN DE MUESTRAS DE AIRE</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="listado-documentos-aire.html">
+                        <i class="fa fa-file-alt"></i>
+                        <span>DOCUMENTOS DE AIRE</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Panel -->
+        <div class="main-panel">
+            <!-- Navbar -->
+            <nav class="navbar">
+                <button class="btn-menu" aria-label="Toggle sidebar">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <h5>Búsqueda y Recepción de Muestras de Aire</h5>
+            </nav>
+
+            <!-- Content -->
+            <div class="content">
+                <!-- Filters Card -->
+                <div class="card">
+                    <div class="card-content">
+                        <!-- Fila principal de filtro (siempre visible) -->
+                        <div class="row align-items-end">
+                            <div class="col-lg-5 col-md-6 col-12 mb-3">
+                                <label for="filter-folio">Folio (OI)</label>
+                                <input type="text" id="filter-folio" class="form-control" placeholder="Buscar por N° de Folio (OI)">
+                            </div>
+                            <div class="col-lg-7 col-md-6 col-12 mb-3">
+                                <label class="d-none d-md-block">&nbsp;</label>
+                                <div style="display: flex; gap: 10px;">
+                                    <button class="btn-buscar">
+                                        <i class="fa fa-search"></i> Buscar
+                                    </button>
+                                    <button class="btn-limpiar" title="Restablecer filtros">
+                                        <i class="fa fa-undo"></i>
+                                    </button>
+                                    <button id="btn-ver-mas" class="btn-ver-mas" title="Ver más filtros">
+                                        <i class="fa fa-chevron-down"></i> Ver más
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Filtros adicionales (inicialmente ocultos) -->
+                        <div id="filtros-adicionales" class="filtros-adicionales">
+                            <hr style="margin: 15px 0; border-color: #e0e0e0;">
+                            
+                            <!-- Primera fila de filtros adicionales -->
+                            <div class="row">
+                                <div class="col-md-3 col-6 mb-3">
+                                    <label for="filter-tipo-muestreo">Tipo de Muestreo</label>
+                                    <select id="filter-tipo-muestreo" class="form-control">
+                                        <option>Todos</option>
+                                        <option>FILTRO</option>
+                                        <option>MPS</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 col-6 mb-3">
+                                    <label for="filter-ol">Buscar OL</label>
+                                    <input type="text" id="filter-ol" class="form-control" placeholder="Buscar OL">
+                                </div>
+                                <div class="col-md-3 col-6 mb-3">
+                                    <label for="filter-proyecto">Proyecto</label>
+                                    <input type="text" id="filter-proyecto" class="form-control" placeholder="Buscar proyecto">
+                                </div>
+                                <div class="col-md-3 col-6 mb-3">
+                                    <label for="filter-matriz">Matriz</label>
+                                    <select id="filter-matriz" class="form-control">
+                                        <option>Todos</option>
+                                        <option>AIRE_MP_FILTRO_47MM</option>
+                                        <option>AIRE_MP_FILTRO_HVOL</option>
+                                        <option>AIRE_MP_FILTRO_37MM</option>
+                                        <option>POLVO_SEDIMENTABLE</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Segunda fila de filtros adicionales -->
+                            <div class="row">
+                                <div class="col-md-3 col-6 mb-3">
+                                    <label for="filter-desde">Desde</label>
+                                    <input type="date" id="filter-desde" class="form-control">
+                                </div>
+                                <div class="col-md-3 col-6 mb-3">
+                                    <label for="filter-hasta">Hasta</label>
+                                    <input type="date" id="filter-hasta" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Document List -->
+                <div id="documentList">
+                <div id="documentList">
+                    <!-- Document 1 -->
+                    <div class="card document-card" 
+                         data-oi="213210" 
+                         data-tipo-muestreo="FILTRO" 
+                         data-ol="700415" 
+                         data-estado="Por Ingresar" 
+                         data-matriz="AIRE_MP_FILTRO_HVOL"
+                         data-enviado="2025-12-23"
+                         data-termino-muestreo="2025-12-23T14:00:00">
+                        <div class="card-body">
+                            <div class="document-card-header">
+                                <div class="document-title-section">
+                                    <span class="document-oi">
+                                        <span class="document-oi-label">OI</span> 213210
+                                    </span>
+                                    <span class="badge badge-info">FILTRO</span><span class="badge badge-success">MP10</span>
+                                </div>
+                                <div class="document-actions-header">
+                                    <button class="btn-recepcionar" data-action="recepcionar">
+                                        <i class="fa fa-box"></i> Recepcionar
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="document-info-line">
+                                <div class="document-info-item ol-item">
+                                    <i class="fa fa-cube"></i>
+                                    <span><span class="info-label-inline">OL:</span> <span class="info-value-inline">700415</span></span>
+                                </div>
+                                <div class="document-info-item cliente-item">
+                                    <i class="fa fa-user"></i>
+                                    <span><span class="info-label-inline">Cliente:</span> <span class="info-value-inline">MINERA ESCONDIDA LTDA</span></span>
+                                </div>
+                                <div class="flex-break"></div> <!-- Fuerza un salto de línea aquí -->
+                                <div class="document-info-item">
+                                    <i class="fa fa-hands"></i>
+                                    <span><span class="info-label-inline">Muestreado por:</span> <span class="info-value-inline">SGS</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar"></i>
+                                    <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">23-12-2025</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar-check"></i>
+                                    <span><span class="info-label-inline">Recepción:</span> <span class="info-value-inline">pendiente</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-layer-group"></i>
+                                    <span><span class="info-label-inline">Matriz:</span> <span class="info-value-inline">AIRE_MP_FILTRO_HVOL</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-vial"></i>
+                                    <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">20</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-info-circle"></i>
+                                    <span><span class="info-label-inline">Estado:</span> <span class="info-value-inline">Por Ingresar</span></span>
+                                </div>
+                            </div>
+                            <div class="holding-time-container"></div>
+                        </div>
+                    </div>
+
+                    <!-- Document 2 -->
+                    <div class="card document-card"
+                         data-oi="213211"
+                         data-tipo-muestreo="MPS"
+                         data-ol="801598"
+                         data-estado="Recepcionado"
+                         data-matriz="POLVO_SEDIMENTABLE"
+                         data-enviado="2025-12-22"
+                         data-termino-muestreo="2025-12-20T09:30:00">
+                        <div class="card-body">
+                            <div class="document-card-header">
+                                <div class="document-title-section">
+                                    <span class="document-oi">
+                                        <span class="document-oi-label">OI</span> 213211
+                                    </span>
+                                    <span class="badge badge-info">MPS</span>
+                                </div>
+                                <div class="document-actions-header">
+                                    <button class="btn-recepcionar" data-action="recepcionar">
+                                        <i class="fa fa-box"></i> Recepcionar
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="document-info-line">
+                                <div class="document-info-item ol-item">
+                                    <i class="fa fa-cube"></i>
+                                    <span><span class="info-label-inline">OL:</span> <span class="info-value-inline">801598</span></span>
+                                </div>
+                                <div class="document-info-item cliente-item">
+                                    <i class="fa fa-user"></i>
+                                    <span><span class="info-label-inline">Cliente:</span> <span class="info-value-inline">CODELCO CHILE</span></span>
+                                </div>
+                                <div class="flex-break"></div> <!-- Fuerza un salto de línea aquí -->
+                                <div class="document-info-item">
+                                    <i class="fa fa-hands"></i>
+                                    <span><span class="info-label-inline">Muestreado por:</span> <span class="info-value-inline">Cliente</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar"></i>
+                                    <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">22-12-2025</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar-check"></i>
+                                    <span><span class="info-label-inline">Recepción:</span> <span class="info-value-inline">23-12-2025</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-layer-group"></i>
+                                    <span><span class="info-label-inline">Matriz:</span> <span class="info-value-inline">POLVO_SEDIMENTABLE</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-vial"></i>
+                                    <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">15</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-info-circle"></i>
+                                    <span><span class="info-label-inline">Estado:</span> <span class="info-value-inline">Por Ingresar</span></span>
+                                </div>
+                            </div>
+                            <div class="holding-time-container"></div>
+                        </div>
+                    </div>
+
+                    <!-- Document 3 -->
+                    <div class="card document-card"
+                         data-oi="213209"
+                         data-tipo-muestreo="FILTRO"
+                         data-ol="700416"
+                         data-estado="Por Ingresar"
+                         data-matriz="AIRE_MP_FILTRO_47MM"
+                         data-enviado="2025-12-20"
+                         data-termino-muestreo="2025-12-20T18:00:00">
+                        <div class="card-body">
+                            <div class="document-card-header">
+                                <div class="document-title-section">
+                                    <span class="document-oi">
+                                        <span class="document-oi-label">OI</span> 213209
+                                    </span><span class="badge badge-info">FILTRO</span><span class="badge badge-success">MP10</span>
+                                </div>
+                                <div class="document-actions-header">
+                                    <button class="btn-recepcionar" data-action="recepcionar">
+                                        <i class="fa fa-box"></i> Recepcionar
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="document-info-line">
+                                <div class="document-info-item ol-item">
+                                    <i class="fa fa-cube"></i>
+                                    <span><span class="info-label-inline">OL:</span> <span class="info-value-inline">700416</span></span>
+                                </div>
+                                <div class="document-info-item cliente-item">
+                                    <i class="fa fa-user"></i>
+                                    <span><span class="info-label-inline">Cliente:</span> <span class="info-value-inline">MINERA ESCONDIDA LTDA</span></span>
+                                </div>
+                                <div class="flex-break"></div> <!-- Fuerza un salto de línea aquí -->
+                                <div class="document-info-item">
+                                    <i class="fa fa-hands"></i>
+                                    <span><span class="info-label-inline">Muestreado por:</span> <span class="info-value-inline">Cliente</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar"></i>
+                                    <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">20-12-2025</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar-check"></i>
+                                    <span><span class="info-label-inline">Recepción:</span> <span class="info-value-inline">pendiente</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-layer-group"></i>
+                                    <span><span class="info-label-inline">Matriz:</span> <span class="info-value-inline">AIRE_MP_FILTRO_47MM</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-vial"></i>
+                                    <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">15</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-info-circle"></i>
+                                    <span><span class="info-label-inline">Estado:</span> <span class="info-value-inline">Por Ingresar</span></span>
+                                </div>
+                            </div>
+                            <div class="holding-time-container"></div>
+                        </div>
+                    </div>
+
+                    <!-- Document 4 -->
+                    <div class="card document-card"
+                         data-oi="213208"
+                         data-tipo-muestreo="FILTRO"
+                         data-ol="700416"
+                         data-estado="Por Ingresar"
+                         data-matriz="AIRE_MP_FILTRO_37MM"
+                         data-enviado="2025-12-19"
+                         data-termino-muestreo="2025-12-19T11:00:00">
+                        <div class="card-body">
+                            <div class="document-card-header">
+                                <div class="document-title-section">
+                                    <span class="document-oi">
+                                        <span class="document-oi-label">OI</span> 213208
+                                    </span>
+                                    <span class="badge badge-info">FILTRO</span><span class="badge badge-secondary">MP2.5</span>
+                                </div>
+                                <div class="document-actions-header">
+                                    <button class="btn-recepcionar" data-action="recepcionar">
+                                        <i class="fa fa-box"></i> Recepcionar
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="document-info-line">
+                                <div class="document-info-item ol-item">
+                                    <i class="fa fa-cube"></i>
+                                    <span><span class="info-label-inline">OL:</span> <span class="info-value-inline">700416</span></span>
+                                </div>
+                                <div class="document-info-item cliente-item">
+                                    <i class="fa fa-user"></i>
+                                    <span><span class="info-label-inline">Cliente:</span> <span class="info-value-inline">MINERA ESCONDIDA LTDA</span></span>
+                                </div>
+                                <div class="flex-break"></div> <!-- Fuerza un salto de línea aquí -->
+                                <div class="document-info-item">
+                                    <i class="fa fa-hands"></i>
+                                    <span><span class="info-label-inline">Muestreado por:</span> <span class="info-value-inline">Cliente</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar"></i>
+                                    <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">19-12-2025</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar-check"></i>
+                                    <span><span class="info-label-inline">Recepción:</span> <span class="info-value-inline">pendiente</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-layer-group"></i>
+                                    <span><span class="info-label-inline">Matriz:</span> <span class="info-value-inline">AIRE_MP_FILTRO_37MM</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-vial"></i>
+                                    <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">12</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-info-circle"></i>
+                                    <span><span class="info-label-inline">Estado:</span> <span class="info-value-inline">Por Ingresar</span></span>
+                                </div>
+                            </div>
+                            <div class="holding-time-container"></div>
+                        </div>
+                    </div>
+
+                    <!-- Document 5 -->
+                    <div class="card document-card"
+                         data-oi="213207"
+                         data-tipo-muestreo="MPS"
+                         data-ol="801599"
+                         data-estado="Recepcionado"
+                         data-matriz="POLVO_SEDIMENTABLE"
+                         data-enviado="2025-12-18"
+                         data-termino-muestreo="2025-12-18T16:00:00">
+                        <div class="card-body">
+                            <div class="document-card-header">
+                                <div class="document-title-section">
+                                    <span class="document-oi">
+                                        <span class="document-oi-label">OI</span> 213207
+                                    </span>
+                                    <span class="badge badge-info">MPS</span>
+                                </div>
+                                <div class="document-actions-header">
+                                    <button class="btn-recepcionar" data-action="recepcionar">
+                                        <i class="fa fa-box"></i> Recepcionar
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="document-info-line">
+                                <div class="document-info-item ol-item">
+                                    <i class="fa fa-cube"></i>
+                                    <span><span class="info-label-inline">OL:</span> <span class="info-value-inline">801599</span></span>
+                                </div>
+                                <div class="document-info-item cliente-item">
+                                    <i class="fa fa-user"></i>
+                                    <span><span class="info-label-inline">Cliente:</span> <span class="info-value-inline">CODELCO CHILE</span></span>
+                                </div>
+                                <div class="flex-break"></div> <!-- Fuerza un salto de línea aquí -->
+                                <div class="document-info-item">
+                                    <i class="fa fa-hands"></i>
+                                    <span><span class="info-label-inline">Muestreado por:</span> <span class="info-value-inline">SGS</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar"></i>
+                                    <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">18-12-2025</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar-check"></i>
+                                    <span><span class="info-label-inline">Recepción:</span> <span class="info-value-inline">19-12-2025</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-layer-group"></i>
+                                    <span><span class="info-label-inline">Matriz:</span> <span class="info-value-inline">POLVO_SEDIMENTABLE</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-vial"></i>
+                                    <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">25</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-info-circle"></i>
+                                    <span><span class="info-label-inline">Estado:</span> <span class="info-value-inline">Por Ingresar</span></span>
+                                </div>
+                            </div>
+                            <div class="holding-time-container"></div>
+                        </div>
+                    </div>
+                </div> <!-- Fin de documentList -->
+
+                <!-- Pagination -->
+                <div class="pagination-wrapper">
+                    <div class="pagination-info">
+                        Mostrando <span id="pagination-count">5</span> de <span id="pagination-total">5</span>
+                    </div>
+                    <ul class="pagination mb-0">
+
+                <!-- Pagination -->
+                <div class="pagination-wrapper">
+                    <div class="pagination-info">
+                        Mostrando <span id="pagination-count">5</span> de <span id="pagination-total">5</span>
+                    </div>
+                    <ul class="pagination mb-0">
+                        <li class="page-item disabled"><a class="page-link" href="#">‹</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">›</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebar = document.getElementById('sidebar');
+            const btnMenu = document.querySelector('.btn-menu');
+            const btnBuscar = document.querySelector('.btn-buscar');
+            const btnLimpiar = document.querySelector('.btn-limpiar');
+            const btnVerMas = document.getElementById('btn-ver-mas');
+            const filtrosAdicionales = document.getElementById('filtros-adicionales');
+            const filterForm = document.querySelector('.card-content');
+            const documentCards = document.querySelectorAll('.document-card');
+            const paginationCount = document.getElementById('pagination-count');
+            const paginationTotal = document.getElementById('pagination-total');
+
+            // --- Lógica del botón "Ver más" ---
+            if (btnVerMas) {
+                btnVerMas.addEventListener('click', function() {
+                    const isExpanded = filtrosAdicionales.classList.contains('show');
+                    
+                    if (isExpanded) {
+                        filtrosAdicionales.classList.remove('show');
+                        btnVerMas.classList.remove('expanded');
+                        btnVerMas.innerHTML = '<i class="fa fa-chevron-down"></i> Ver más';
+                    } else {
+                        filtrosAdicionales.classList.add('show');
+                        btnVerMas.classList.add('expanded');
+                        btnVerMas.innerHTML = '<i class="fa fa-chevron-up"></i> Ver menos';
+                    }
+                });
+            }
+
+            // --- Lógica de Filtros ---
+            function resetFilters() {
+                // Resetear todos los inputs y selects del formulario
+                filterForm.querySelectorAll('input, select').forEach(field => {
+                    if (field.type === 'text' || field.type === 'date') {
+                        field.value = '';
+                    } else if (field.tagName === 'SELECT') {
+                        field.selectedIndex = 0;
+                    }
+                });
+                // Volver a aplicar los filtros (que ahora están vacíos) para mostrar todo
+                applyFilters();
+            }
+
+            function applyFilters() {
+                const filters = {
+                    tipoMuestreo: document.getElementById('filter-tipo-muestreo').value,
+                    folio: document.getElementById('filter-folio').value.toLowerCase(),
+                    ol: document.getElementById('filter-ol').value.toLowerCase(),
+                    desde: document.getElementById('filter-desde').value, // Formato YYYY-MM-DD
+                    hasta: document.getElementById('filter-hasta').value, // Formato YYYY-MM-DD
+                };
+
+                let visibleCount = 0;
+
+                documentCards.forEach(card => {
+                    const cardData = {
+                        tipoMuestreo: card.dataset.tipoMuestreo,
+                        folio: card.dataset.oi.toLowerCase(),
+                        ol: card.dataset.ol.toLowerCase(),
+                        enviado: card.dataset.enviado, // Formato YYYY-MM-DD
+                    };
+
+                    const showCard = 
+                        (filters.tipoMuestreo === 'Todos' || filters.tipoMuestreo === cardData.tipoMuestreo) &&
+                        (cardData.folio.includes(filters.folio)) &&
+                        (cardData.ol.includes(filters.ol)) &&
+                        // Comprobación de fechas (funciona con strings en formato YYYY-MM-DD)
+                        (!filters.desde || cardData.enviado >= filters.desde) &&
+                        (!filters.hasta || cardData.enviado <= filters.hasta);
+
+                    if (showCard) {
+                        card.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // Actualizar contador de paginación
+                const total = documentCards.length;
+                paginationCount.textContent = visibleCount;
+                paginationTotal.textContent = total;
+            }
+
+            // --- Lógica del Sidebar ---
+            if (btnMenu) {
+                btnMenu.addEventListener('click', () => {
+                    sidebar.classList.toggle('show');
+                });
+            }
+
+            document.querySelectorAll('.sidebar .nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Solo prevenir comportamiento default si es un ancla (#)
+                    const href = this.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        e.preventDefault();
+                    }
+                    
+                    // Cerrar sidebar en móvil al seleccionar una opción
+                    if (window.innerWidth <= 991 && sidebar.classList.contains('show')) {
+                        sidebar.classList.remove('show');
+                    }
+                });
+            });
+
+            // --- Lógica del botón de búsqueda ---
+            if (btnBuscar) {
+                btnBuscar.addEventListener('click', () => {
+                    applyFilters();
+                });
+            }
+
+            // --- Lógica del botón de limpiar ---
+            if (btnLimpiar) {
+                btnLimpiar.addEventListener('click', () => {
+                    resetFilters();
+                });
+            }
+
+            // --- Lógica de Eventos Globales (Delegación de eventos) ---
+            document.addEventListener('click', function(event) {
+                const target = event.target;
+
+                // --- Lógica para el botón Recepcionar ---
+                const btnRecepcionar = target.closest('.btn-recepcionar');
+                if (btnRecepcionar) {
+                    event.preventDefault();
+                    const card = btnRecepcionar.closest('.document-card');
+                    const tipoMuestreo = card.dataset.tipoMuestreo.toLowerCase(); // 'filtro' o 'mps'
+                    window.location.href = `formulario-recepcion-muestras.html?tipo=${tipoMuestreo}`;
+                }
+            });
+
+            // Inicializar el total de la paginación al cargar
+            paginationTotal.textContent = documentCards.length;
+
+            // --- Lógica de Alerta de Holding Time ---
+            function checkHoldingTime() {
+                const ahora = new Date();
+                const holdingTimeMaxHoras = 96;
+
+                documentCards.forEach((card, index) => { // El 'index' es para la simulación
+                    const terminoMuestreoStr = card.dataset.terminoMuestreo;
+                    if (!terminoMuestreoStr) return;
+
+                    // --- SIMULACIÓN PARA MAQUETA ---
+                    // Para que las alertas sean visibles, ajustamos las fechas de ejemplo
+                    // para que sean relativas a la fecha actual.
+                    let terminoMuestreo = new Date(); // Empezamos con la fecha y hora de hoy para simular
+                    if (index === 0) { // Documento 1: OK (verde)
+                        terminoMuestreo.setHours(terminoMuestreo.getHours() - (holdingTimeMaxHoras - 25)); // Quedan 25 horas
+                    } else if (index === 1) { // Documento 2: Advertencia (amarillo)
+                        terminoMuestreo.setHours(terminoMuestreo.getHours() - (holdingTimeMaxHoras - 4)); // Quedan 4 horas
+                    } else if (index === 2) { // Documento 3: Peligro (rojo)
+                        terminoMuestreo.setHours(terminoMuestreo.getHours() - (holdingTimeMaxHoras + 5)); // Venció hace 5 horas
+                    }
+                    // Los demás documentos no mostrarán alerta, ya que su fecha simulada es la actual.
+                    // ---------------------------------
+
+                    const tiempoLimite = new Date(terminoMuestreo.getTime() + holdingTimeMaxHoras * 60 * 60 * 1000);
+
+                    const diffMilisegundos = tiempoLimite - ahora;
+                    const diffHoras = diffMilisegundos / (1000 * 60 * 60);
+
+                    const container = card.querySelector('.holding-time-container');
+                    container.innerHTML = ''; // Limpiar alertas previas
+
+                    let alertHtml = '';
+
+                    if (diffHoras < 0) {
+                        // Tiempo excedido
+                        const horasExcedidas = Math.abs(Math.round(diffHoras));
+                        alertHtml = `
+                            <div class="holding-time-alert alert-danger">
+                                <i class="fa fa-exclamation-triangle"></i>
+                                <span>Holding time excedido por ${horasExcedidas} hs.</span>
+                            </div>`;
+                    } else if (diffHoras <= 6) {
+                        // Tiempo restante es 6 horas o menos (amarillo)
+                        const horasRestantes = Math.floor(diffHoras);
+                        const minutosRestantes = Math.floor((diffHoras - horasRestantes) * 60);
+                        alertHtml = `
+                            <div class="holding-time-alert alert-warning">
+                                <i class="fa fa-clock"></i>
+                                <span>Quedan ${horasRestantes}h ${minutosRestantes}m para cumplir holding time.</span>
+                            </div>`;
+                    } else {
+                        // Queda más de 6 horas (verde)
+                        const diasRestantes = Math.floor(diffHoras / 24);
+                        const horasRestantes = Math.floor(diffHoras) % 24;
+                        let tiempoStr = diasRestantes > 0 ? 
+                            `Quedan ${diasRestantes}d y ${horasRestantes}h para cumplir holding time.` :
+                            `Quedan ${horasRestantes}h para cumplir holding time.`;
+                        alertHtml = `
+                            <div class="holding-time-alert alert-success">
+                                <i class="fa fa-check-circle"></i>
+                                <span>${tiempoStr}</span>
+                            </div>`;
+                    }
+                    
+                    if (alertHtml) {
+                        container.innerHTML = alertHtml;
+                    }
+                });
+            }
+
+            // Ejecutar la comprobación al cargar la página
+            checkHoldingTime();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGS - Recepción de Muestras</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #ebe7e0;
+            overflow-x: hidden;
+        }
+
+        .wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 200px;
+            background: #66615B;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s;
+            overflow-y: auto;
+        }
+
+        .sidebar .logo {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .sidebar .logo h2 {
+            color: #9e9e9e;
+            margin: 0;
+            font-size: 28px;
+            font-weight: 300;
+        }
+
+        .sidebar .user {
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar .user i {
+            font-size: 24px;
+        }
+
+        .sidebar .user .info {
+            font-size: 12px;
+        }
+
+        .sidebar .user .info .name {
+            font-weight: 500;
+        }
+
+        .sidebar .nav {
+            margin-top: 15px;
+            padding: 0;
+            list-style: none;
+        }
+
+        .sidebar .nav li a {
+            color: rgba(255,255,255,0.8);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .sidebar .nav li a i {
+            font-size: 16px;
+            width: 20px;
+        }
+
+        .sidebar .nav li a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .sidebar .nav li.active a {
+            color: #51cbce;
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Main Panel */
+        .main-panel {
+            flex: 1;
+            margin-left: 200px;
+            width: calc(100% - 200px);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: white;
+            border: 0;
+            margin: 0;
+            padding: 15px 20px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            justify-content: flex-start;
+        }
+
+        .navbar .btn-menu {
+            background: #ef8157;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .navbar h5 {
+            margin: 0;
+            color: #66615B;
+            font-size: 18px;
+            font-weight: 400;
+            font-family: Muli, Arial, sans-serif;
+            text-align: left;
+        }
+
+        /* Content */
+        .content {
+            flex: 1;
+            padding: 15px;
+            width: 100%;
+        }
+
+        .card {
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 6px 10px -4px rgba(0,0,0,0.15);
+            margin-bottom: 15px;
+            border: none;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .card-content label {
+            font-family: Muli, Arial, sans-serif;
+            font-size: 11px;
+            color: #252422;
+            font-weight: normal;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .form-control {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 6px 12px;
+            font-size: 14px;
+            background-color: #ebe7e0;
+            height: 38px;
+            width: 100%;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #51cbce;
+            background-color: #ebe7e0;
+            box-shadow: none;
+        }
+
+        .mb-3 {
+            margin-bottom: 0.8rem;
+        }
+
+        .mb-3 label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Buttons */
+        .btn-recepcionar {
+            background-color: #ef8157;
+            border-color: #ef8157;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: normal;
+            height: 38px;
+            width: 100%;
+        }
+
+        .btn-recepcionar:hover {
+            background-color: #e96342;
+        }
+
+        /* Nuevos estilos para la visualización del documento (basado en la imagen) */
+        .document-header {
+            background-color: white;
+            padding: 15px;
+            border-radius: 6px;
+            box-shadow: 0 6px 10px -4px rgba(0,0,0,0.15);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        /* Holding Time Alert */
+        .holding-time-alert {
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .holding-time-alert.alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+
+        .holding-time-alert.alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .holding-time-alert.alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .holding-time-alert i {
+            font-size: 14px;
+        }
+
+        .document-header-main {
+            display: flex;
+            align-items: center;
+        }
+
+        .document-folio {
+            color: #ef8157;
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0;
+            font-family: Muli, Arial, sans-serif;
+        }
+        
+        /* Estilos para las tarjetas de información (Info general, Cliente, etc) */
+        .info-card {
+            margin-bottom: 20px;
+        }
+
+        .info-card .card-header {
+            background-color: #f7f7f7;
+            padding: 10px 15px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #66615B;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-card .card-content {
+            padding: 15px;
+        }
+
+        .info-item-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        /* Contenedores de datos - Label arriba, Value abajo (como en la imagen) */
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            padding: 5px 0;
+        }
+        
+        .info-label {
+            font-size: 10px;
+            color: #252422;
+            text-transform: uppercase;
+            font-weight: normal;
+            margin-bottom: 2px;
+            opacity: 0.7;
+        }
+        
+        .info-value {
+            font-size: 13px;
+            color: #333;
+            font-weight: 500;
+            word-break: break-word;
+        }
+        
+        /* Estilos específicos para los cards de Puntos de Muestreo */
+        .puntos-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .punto-card {
+            background: white;
+            border: 2px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 18px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .punto-card.validated {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-color: #6bd098;
+            box-shadow: 0 2px 8px rgba(107, 208, 152, 0.2);
+            animation: validateCard 0.4s ease;
+        }
+
+        @keyframes validateCard {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .punto-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .punto-card.validated .punto-card-header {
+            border-bottom-color: #6bd098;
+        }
+
+        .punto-card-id {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .punto-numero {
+            background: #66615B;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .punto-card.validated .punto-numero {
+            background: #6bd098;
+        }
+
+        .punto-id-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #66615B;
+        }
+
+        .punto-card.validated .punto-id-text {
+            color: #059669;
+        }
+
+        .punto-card-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .checkbox-validar-punto {
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            accent-color: #6bd098;
+            border-radius: 4px;
+        }
+
+        .punto-card-body {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .punto-info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .punto-info-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: #666;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .punto-card.validated .punto-info-label {
+            color: #059669;
+        }
+
+        .punto-info-value {
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .punto-card.validated .punto-info-value {
+            color: #065f46;
+        }
+
+        /* Estilos para muestras rechazadas */
+        .punto-card.rejected {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe6e6 100%);
+            border: 2px solid #dc3545;
+            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+            animation: rejectCard 0.4s ease;
+        }
+
+        @keyframes rejectCard {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.98); }
+            100% { transform: scale(1); }
+        }
+
+        .punto-card.rejected .punto-card-header {
+            border-bottom-color: #dc3545;
+        }
+
+        .punto-card.rejected .punto-numero {
+            background: #dc3545;
+        }
+
+        .punto-card.rejected .punto-id-text {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        .punto-card.rejected .punto-info-label {
+            color: #dc3545;
+        }
+
+        .punto-card.rejected .punto-info-value {
+            color: #721c24;
+        }
+
+        .texto-rechazada {
+            color: #721c24;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 8px;
+            padding: 8px 12px;
+            background-color: #f8d7da;
+            border: 1px solid #dc3545;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Estilos para resumen de recepción */
+        .resumen-recepcion {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #e8e8e8;
+        }
+
+        .contador-muestras {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #6bd098;
+        }
+
+        .contador-muestras i {
+            font-size: 24px;
+            color: #6bd098;
+        }
+
+        .contador-muestras span {
+            font-size: 14px;
+            color: #66615B;
+        }
+
+        .contador-muestras strong {
+            color: #059669;
+            font-size: 16px;
+        }
+
+        .datos-transporte {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .transporte-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .transporte-item {
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+        }
+
+        .transporte-item.full-width {
+            flex: 1 1 100%;
+        }
+
+        .transporte-label {
+            font-size: 12px;
+            color: #666;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .transporte-value {
+            font-size: 13px;
+            color: #333;
+        }
+
+        /* Estilos para radio buttons */
+        .radio-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .radio-group-vertical {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .radio-option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #ef8157;
+        }
+
+        .radio-option span {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .radio-option-block {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            border: 2px solid #e8e8e8;
+            border-radius: 6px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .radio-option-block:hover {
+            border-color: #ef8157;
+            background-color: #fef9f6;
+        }
+
+        .radio-option-block input[type="radio"]:checked + span {
+            font-weight: 600;
+            color: #ef8157;
+        }
+
+        .radio-option-block:has(input[type="radio"]:checked) {
+            border-color: #ef8157;
+            background-color: #fef9f6;
+        }
+
+        .radio-option-block input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #ef8157;
+        }
+
+        .radio-option-block span {
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Estilo para textarea */
+        textarea.form-control {
+            resize: vertical;
+            min-height: 80px;
+            font-family: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* Botón de finalizar ingreso */
+        .btn-finalizar {
+            background-color: #ef8157;
+            color: white;
+            border: none;
+            padding: 14px 50px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 8px rgba(239, 129, 87, 0.3);
+            min-width: 280px;
+        }
+
+        .btn-finalizar:hover {
+            background-color: #e96342;
+            box-shadow: 0 4px 12px rgba(239, 129, 87, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-finalizar:active {
+            transform: translateY(0);
+        }
+
+        .btn-volver {
+            background-color: #a49e93;
+            color: white;
+            border: none;
+            padding: 14px 50px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 8px rgba(164, 158, 147, 0.3);
+            min-width: 280px;
+        }
+
+        .btn-volver:hover {
+            background-color: #8a847c;
+            box-shadow: 0 4px 12px rgba(164, 158, 147, 0.4);
+        }
+
+        .btn-finalizar i {
+            font-size: 18px;
+        }
+
+        /* Estilos para secciones de material */
+        .material-section {
+            margin-bottom: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .material-section:has(.material-checkbox:checked) {
+            border-color: #999;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .material-header {
+            padding: 15px 20px;
+            background: #fafafa;
+            border-bottom: 1px solid #e8e8e8;
+            transition: all 0.3s ease;
+        }
+
+        .material-section:has(.material-checkbox:checked) .material-header {
+            background: #f5f5f5;
+            border-bottom-color: #999;
+        }
+
+        .checkbox-material {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            user-select: none;
+            margin: 0;
+        }
+
+        .material-checkbox {
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            accent-color: #66615B;
+        }
+
+        .material-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #66615B;
+            transition: color 0.3s ease;
+        }
+
+        .material-section:has(.material-checkbox:checked) .material-label {
+            color: #333;
+        }
+
+        .material-label i {
+            font-size: 18px;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+
+        .material-section:has(.material-checkbox:checked) .material-label i {
+            color: #66615B;
+        }
+
+        .material-fields {
+            padding: 20px;
+            background: #fafafa;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Estilos para la tabla de cantidad de muestras */
+        .table-cantidad {
+            width: 100%;
+            margin-bottom: 0;
+        }
+
+        /* Badge de estado INGRESADO */
+        .badge-ingresado {
+            background-color: #6bd098;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Estilo para la sección de cantidad de muestras (sin grid) */
+        .info-vertical {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Estilos para la tabla de cantidad de muestras (más simple) */
+        .table-cantidad td {
+            font-size: 13px;
+            color: #444;
+            padding: 5px 0;
+            vertical-align: top;
+        }
+        .table-cantidad td:first-child {
+             font-weight: 600;
+             width: 150px; /* Ancho fijo para las etiquetas */
+        }
+
+        /* Estilos para checkbox de Emergencia */
+        .checkbox-emergencia {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #ef8157;
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Estilos para el combo de validación especial - solo iconos */
+        .validation-combo {
+            position: relative;
+            display: inline-flex;
+            width: auto;
+            justify-content: center;
+        }
+
+        .validation-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            border: 2px solid #bbb;
+            border-radius: 50%;
+            background-color: #e8e8e8;
+            color: #999;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            position: relative;
+        }
+
+        .validation-button:hover {
+            background-color: #d5d5d5;
+            border-color: #aaa;
+        }
+
+        .validation-button.approved {
+            background-color: #6bd098;
+            border-color: #6bd098;
+            color: white;
+        }
+
+        .validation-button.approved:hover {
+            background-color: #5bc088;
+        }
+
+        .validation-button.rejected {
+            background-color: #ef8157;
+            border-color: #ef8157;
+            color: white;
+        }
+
+        .validation-button.rejected:hover {
+            background-color: #df7147;
+        }
+
+        .validation-button .icon {
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .validation-button .arrow {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            font-size: 8px;
+            transition: transform 0.3s;
+            opacity: 0.6;
+        }
+
+        .validation-button .arrow.open {
+            transform: rotate(180deg);
+        }
+
+        .validation-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            margin-top: 8px;
+            z-index: 1000;
+            display: none;
+            min-width: 50px;
+        }
+
+        .validation-dropdown.show {
+            display: block;
+        }
+
+        .validation-option {
+            padding: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: background-color 0.2s;
+        }
+
+        .validation-option:first-child {
+            border-radius: 8px 8px 0 0;
+        }
+
+        .validation-option:last-child {
+            border-radius: 0 0 8px 8px;
+        }
+
+        .validation-option:hover {
+            background-color: #f5f5f5;
+        }
+
+        .validation-option.approved-option {
+            color: #6bd098;
+        }
+
+        .validation-option.approved-option:hover {
+            background-color: #e8f7ed;
+        }
+
+        .validation-option.rejected-option {
+            color: #ef8157;
+        }
+
+        .validation-option.rejected-option:hover {
+            background-color: #fef0ec;
+        }
+
+        .validation-option .icon {
+            font-size: 22px;
+        }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .sidebar {
+                transform: translate3d(-200px, 0, 0);
+            }
+
+            .sidebar.show {
+                transform: translate3d(0, 0, 0);
+            }
+
+            .main-panel {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .punto-card-body {
+                grid-template-columns: 1fr;
+            }
+            
+            .transporte-row {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .transporte-item {
+                flex-direction: column;
+                gap: 4px;
+            }
+            
+            .radio-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn-finalizar {
+                width: 100%;
+                justify-content: center;
+                min-width: auto;
+            }
+            
+            .material-fields .row {
+                flex-direction: column;
+            }
+        }
+
+        /* Scrollbar styling */
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: #5a5550;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #7a7570;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <h2>SGS</h2>
+            </div>
+
+            <div class="user">
+                <i class="fa fa-user-circle"></i>
+                <div class="info">
+                    <div class="name">ARIEL ENRIQUE</div>
+                    <div>DIAPRESMONT</div>
+                </div>
+            </div>
+
+            <ul class="nav">
+                <li class="">
+                    <a href="index.html">
+                        <i class="fa fa-home"></i>
+                        <span>INICIO</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="listado-recepcion-muestras.html">
+                        <i class="fa fa-inbox"></i>
+                        <span>RECEPCIÓN DE MUESTRAS DE AIRE</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="listado-documentos-aire.html">
+                        <i class="fa fa-file-alt"></i>
+                        <span>DOCUMENTOS DE AIRE</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main-panel">
+            <nav class="navbar">
+                <button class="btn-menu" id="btn-menu" aria-label="Toggle sidebar">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <h5>Recepción de Muestras de Aire</h5>
+            </nav>
+
+            <div class="content">
+
+
+                <div id="resultado-recepcion"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Función para renderizar el detalle del documento basado en la imagen
+        function mostrarDetalleDocumento(data, isReadonly = false) {
+            const resultadoDiv = document.getElementById('resultado-recepcion');
+            
+            // Renderiza los cards de Puntos de Muestreo
+            const puntosMuestreoHtml = data.puntosMuestreo.map((p, index) => `
+                <div class="punto-card" data-index="${index}">
+                    <div class="punto-card-header">
+                        <div class="punto-card-id">
+                            <div class="punto-numero">${index + 1}</div>
+                            <div class="punto-id-text">
+                                ${p.id}
+                                ${p.descripcion ? `<div style="font-size: 11px; color: #999; font-weight: normal; margin-top: 2px;">${p.descripcion}</div>` : ''}
+                            </div>
+                        </div>
+                        <div class="punto-card-actions">
+                            <input type="checkbox" class="checkbox-validar-punto" id="validar-punto-${index}" title="Validar punto completo" ${isReadonly ? 'disabled' : ''}>
+                        </div>
+                    </div>
+                    
+                    <div class="punto-card-body">
+                        <div class="punto-info-item">
+                            <span class="punto-info-label">Lugar de Muestreo</span>
+                            <span class="punto-info-value">${p.lugar}</span>
+                        </div>
+                        <div class="punto-info-item">
+                            <span class="punto-info-label">Fecha/Hora Inicio</span>
+                            <span class="punto-info-value">${p.fechaInicio} • ${p.horaInicio || 'N/A'}</span>
+                        </div>
+                        <div class="punto-info-item">
+                            <span class="punto-info-label">Fecha/Hora Término</span>
+                            <span class="punto-info-value">${p.fechaTermino} • ${p.horaTermino || 'N/A'}</span>
+                        </div>
+                        <div class="punto-info-item">
+                            <span class="punto-info-label">Comentarios</span>
+                            <span class="punto-info-value">${p.comentarios}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="texto-rechazada-container" style="display: none; padding: 10px 15px;">
+                        <span class="texto-rechazada">⚠️ Muestra rechazada</span>
+                    </div>
+                </div>
+            `).join('');
+
+            resultadoDiv.innerHTML = `
+                <div class="document-header">
+                    <div class="document-header-main">
+                        <h3 class="document-folio">Folio (OI) ${data.folio}</h3>
+                        <div id="holding-time-header-alert" class="ml-3"></div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <span class="badge-ingresado">INGRESADO &nbsp;&nbsp;Fecha: ${data.fechaIngreso}</span>
+                    </div>
+                </div>
+
+                <div class="card info-card">
+                    <div class="card-header">Información General del Cliente</div>
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="info-item">
+                                    <span class="info-label">Cliente</span>
+                                    <span class="info-value">${data.cliente}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info-item">
+                                    <span class="info-label">OL</span>
+                                    <span class="info-value">${data.ol}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info-item">
+                                    <span class="info-label">Proyecto</span>
+                                    <span class="info-value">${data.proyecto}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info-item">
+                                    <span class="info-label">Atención a</span>
+                                    <span class="info-value">${data.atencionA}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info-item">
+                                    <span class="info-label">Solicitado por</span>
+                                    <span class="info-value">${data.solicitadoPor}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info-item">
+                                    <span class="info-label">ADC Responsable</span>
+                                    <span class="info-value">${data.adcResponsable}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card info-card">
+                    <div class="card-header">Información general de Ingreso</div>
+                    <div class="card-content">
+                        <div class="info-item-container" style="grid-template-columns: 1fr 1fr;">
+                            <div class="info-item">
+                                <span class="info-label">Tipo Muestreo</span>
+                                <span class="info-value">${data.tipoMuestreo}</span>
+                            </div>
+                            ${data.tipoFiltro ? `
+                            <div class="info-item">
+                                <span class="info-label">Tipo de Filtro</span>
+                                <span class="info-value">${data.tipoFiltro}</span>
+                            </div>
+                            ` : ''}
+                            <div class="info-item">
+                                <span class="info-label">Muestreado por</span>
+                                <span class="info-value">${data.muestreadoPor}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Matriz</span>
+                                <span class="info-value">${data.matriz}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Plan</span>
+                                <span class="info-value">${data.plan}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Generación de JOB</span>
+                                <span class="info-value">Generar un JOB por punto ingresado</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card info-card">
+                    <div class="card-header">Muestras por Recepcionar</div>
+                    <div class="card-content">
+                        <div class="puntos-container">
+                            ${puntosMuestreoHtml}
+                        </div>
+                        
+                        <div class="resumen-recepcion">
+                            <div class="contador-muestras">
+                                <i class="fa fa-flask"></i>
+                                <span>Cantidad de muestras recepcionadas: <strong id="contador-recepcionadas">0 de ${data.puntosMuestreo.length}</strong></span>
+                            </div>
+                            
+                            <div class="datos-transporte">
+                                <div class="transporte-row">
+                                    <div class="transporte-item">
+                                        <span class="transporte-label">Responsable de Muestreo:</span>
+                                        <span class="transporte-value">${data.infoMuestras.responsable}</span>
+                                    </div>
+                                    <div class="transporte-item">
+                                        <span class="transporte-label">Fecha Transporte:</span>
+                                        <span class="transporte-value">${data.infoMuestras.fechaTransporte}</span>
+                                    </div>
+                                    <div class="transporte-item">
+                                        <span class="transporte-label">Hora Transporte:</span>
+                                        <span class="transporte-value">${data.infoMuestras.horaTransporte}</span>
+                                    </div>
+                                </div>
+                                <div class="transporte-row">
+                                    <div class="transporte-item full-width">
+                                        <span class="transporte-label">Observaciones de terreno:</span>
+                                        <span class="transporte-value">${data.infoMuestras.obsTerreno}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card info-card">
+                    <div class="card-header">Datos de Recepción</div>
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label>Laboratorio de Ingreso</label>
+                                <select class="form-control" id="laboratorio-ingreso" ${isReadonly ? 'disabled' : ''}>
+                                    <option value="santiago" selected>Santiago</option>
+                                    <option value="antofagasta">Antofagasta</option>
+                                    <option value="puerto-varas">Puerto Varas</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label>Fecha Recepción</label>
+                                <input type="date" class="form-control" id="fecha-recepcion" value="2025-10-24" ${isReadonly ? 'readonly' : ''}>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label>Hora Recepción</label>
+                                <input type="time" class="form-control" id="hora-recepcion" ${isReadonly ? 'readonly' : ''}>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label>Responsable de Recepción</label>
+                                <input type="text" class="form-control" id="responsable-recepcion" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                ${data.tipoMuestreo === 'MPS' ? `
+                <div class="card info-card">
+                    <div class="card-header">Temperatura de Testigo</div>
+                    <div class="card-content">
+
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label>Termómetro Utilizado (Código Equipo)</label>
+                                <select class="form-control" id="termometro-utilizado" ${isReadonly ? 'disabled' : ''}>
+                                    <option value="TERM-001" selected>TERM-001 - Termómetro Digital Principal</option>
+                                    <option value="TERM-002">TERM-002 - Termómetro Infrarrojo</option>
+                                    <option value="TERM-003">TERM-003 - Termómetro Analógico</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label style="display: block; margin-bottom: 15px; font-weight: 600; color: #66615B;">Material del Testigo</label>
+                            
+                            <!-- Testigo de Plástico -->
+                            <div class="material-section">
+                                <div class="material-header">
+                                    <span class="material-label">
+                                        <i class="fa fa-vial"></i>
+                                        Plástico
+                                    </span>
+                                </div>
+                                <div class="material-fields" id="fields-plastico">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label>T leída (°C)</label>
+                                            <input type="number" step="0.1" class="form-control" id="temp-leida-plastico" placeholder="Ej: 4.5" ${isReadonly ? 'value="5.1" readonly' : ''}>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>T contrastada (°C)</label>
+                                            <input type="number" step="0.1" class="form-control" id="temp-contrastada-plastico" placeholder="Ej: 4.2" ${isReadonly ? 'value="4.8" readonly' : ''}>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>Hora</label>
+                                            <input type="time" class="form-control" id="hora-plastico" ${isReadonly ? 'readonly' : ''}>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                ` : ''}
+
+                <div class="card info-card">
+                    <div class="card-header">Criterio de Aceptación</div>
+                    <div class="card-content">
+                        <div class="mb-3">
+                            <label style="display: block; margin-bottom: 10px;">Criterio de aceptación</label>
+                            <div class="radio-group-vertical">
+                                <label class="radio-option-block">
+                                    <input type="radio" name="criterio-aceptacion" value="aceptadas" ${isReadonly ? 'disabled' : 'checked'}>
+                                    <span>Muestras aceptadas</span>
+                                </label>
+                                <label class="radio-option-block">
+                                    <input type="radio" name="criterio-aceptacion" value="aceptadas-observacion" ${isReadonly ? 'checked disabled' : 'disabled'}>
+                                    <span>Muestras aceptadas (con observación)</span>
+                                </label>
+                                <label class="radio-option-block">
+                                    <input type="radio" name="criterio-aceptacion" value="rechazadas" ${isReadonly ? 'disabled' : ''}>
+                                    <span>Muestras rechazadas</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Comentarios</label>
+                            <textarea class="form-control" id="comentarios-temperatura" rows="3" placeholder="Ingrese comentarios adicionales..." ${isReadonly ? 'disabled' : ''}>${isReadonly ? 'Una de las muestras (MPS-CDL-002) llegó con el sello de seguridad dañado, pero se acepta para análisis.' : ''}</textarea>
+                        </div>
+
+                        <div style="text-align: center; margin-top: 30px;">
+                            ${isReadonly ? `
+                                <button class="btn-volver" id="btn-volver">
+                                    <i class="fa fa-arrow-left"></i> Volver
+                                </button>
+                            ` : `
+                                <button class="btn-finalizar" id="btn-finalizar-ingreso">
+                                    <i class="fa fa-check-circle"></i>
+                                    Finalizar ingreso
+                                </button>
+                            `}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Inicializar validación de puntos
+            initializePuntoValidation(isReadonly);
+        }
+        
+        // Función para manejar la validación completa del punto
+        function initializePuntoValidation(isReadonly = false) {
+            const contadorElement = document.getElementById('contador-recepcionadas');
+            
+            function actualizarContador() {
+                const checkboxes = document.querySelectorAll('.checkbox-validar-punto');
+                const total = checkboxes.length;
+                const marcados = Array.from(checkboxes).filter(cb => cb.checked).length;
+                contadorElement.textContent = `${marcados} de ${total}`;
+            }
+            
+            function actualizarCriterioAceptacion() {
+                const checkboxes = document.querySelectorAll('.checkbox-validar-punto');
+                const total = checkboxes.length;
+                const marcados = Array.from(checkboxes).filter(cb => cb.checked).length;
+                
+                const radioAceptadas = document.querySelector('input[name="criterio-aceptacion"][value="aceptadas"]');
+                const radioAceptadasObservacion = document.querySelector('input[name="criterio-aceptacion"][value="aceptadas-observacion"]');
+                const radioRechazadas = document.querySelector('input[name="criterio-aceptacion"][value="rechazadas"]');
+                
+                if (marcados === total) {
+                    // Todas las muestras seleccionadas
+                    radioAceptadas.checked = true;
+                } else if (marcados === 0) {
+                    // Ninguna muestra seleccionada
+                    radioRechazadas.checked = true;
+                } else {
+                    // Algunas seleccionadas y otras no
+                    radioAceptadasObservacion.checked = true;
+                }
+            }
+            
+            document.querySelectorAll('.checkbox-validar-punto').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const card = this.closest('.punto-card');
+                    const textoRechazadaContainer = card.querySelector('.texto-rechazada-container');
+                    
+                    if (this.checked) {
+                        // Muestra aceptada
+                        card.classList.add('validated');
+                        card.classList.remove('rejected');
+                        textoRechazadaContainer.style.display = 'none';
+                    } else {
+                        // Muestra rechazada
+                        card.classList.remove('validated');
+                        card.classList.add('rejected');
+                        textoRechazadaContainer.style.display = 'block';
+                    }
+                    
+                    // Actualizar el contador
+                    actualizarContador();
+                    
+                    // Actualizar criterio de aceptación automáticamente
+                    actualizarCriterioAceptacion();
+                });
+            });
+            
+            if (isReadonly) {
+                // En modo readonly, simular que una muestra está rechazada
+                const primerCheckbox = document.querySelector('.checkbox-validar-punto');
+                if (primerCheckbox) primerCheckbox.checked = true;
+                
+                const segundoCheckbox = document.querySelectorAll('.checkbox-validar-punto')[1];
+                if (segundoCheckbox) {
+                    segundoCheckbox.checked = false;
+                    segundoCheckbox.dispatchEvent(new Event('change')); // Simular el cambio para aplicar estilos
+                }
+            } else {
+                // Preseleccionar automáticamente todas las muestras en modo normal
+                document.querySelectorAll('.checkbox-validar-punto').forEach(checkbox => {
+                    checkbox.checked = true;
+                    checkbox.dispatchEvent(new Event('change'));
+                });
+            }
+            
+            // Inicializar el contador al cargar
+            actualizarContador();
+            
+            // Inicializar el criterio de aceptación
+            actualizarCriterioAceptacion();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebar = document.getElementById('sidebar');
+            const btnMenu = document.getElementById('btn-menu');
+
+            // --- Lógica del Sidebar ---
+            if (btnMenu) {
+                btnMenu.addEventListener('click', () => {
+                    sidebar.classList.toggle('show');
+                });
+            }
+
+            document.querySelectorAll('.sidebar .nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Solo prevenir comportamiento default si es un ancla (#)
+                    const href = this.getAttribute('href');
+                    if (href && href.startsWith('#')) { 
+                        e.preventDefault(); 
+                    }
+                    
+                    // No es necesario gestionar la clase 'active' aquí,
+                    // ya que se establece en el HTML de cada página.
+                    if (window.innerWidth <= 991 && sidebar.classList.contains('show')) {
+                        sidebar.classList.remove('show');
+                    }
+                });
+            });
+
+            // --- Función para obtener parámetros del querystring ---
+            function getQueryParam(param) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            }
+
+            // --- Detectar modo readonly ---
+            const mode = getQueryParam('mode');
+            const isReadonly = mode === 'readonly';
+            if (isReadonly) {
+                document.querySelector('.navbar h5').textContent = 'Detalle de Ingreso (Solo Lectura)';
+            }
+            // --- Datos de Muestra tipo MPS ---
+            const dataMPS = {
+                folio: '293404',
+                cliente: '61704000-K - CORP NACIONAL DEL COBRE DE CHILE',
+                ol: '801598',
+                proyecto: 'Default project',
+                solicitadoPor: 'grunovero',
+                atencionA: 'Juan Pérez',
+                adcResponsable: 'kgizarro',
+                
+                fechaIngreso: '23-10-2025',
+                terminoMuestreo: '2025-10-21T08:00:00', // Fecha más temprana de término
+                tipoMuestreo: 'MPS',
+                tipoFiltro: null,
+                matriz: 'POLVO_SEDIMENTABLE',
+                muestreadoPor: 'SGS Chile',
+                plan: 'AIRE_001_A',
+                cantMuestras: 2,
+                
+                puntosMuestreo: [
+                    { id: 'MPS-CDL-001', descripcion: null, lugar: 'Planta Concentradora, Sector Norte, Chuquicamata', fechaInicio: '2025-10-20', horaInicio: '08:00', fechaTermino: '2025-10-21', horaTermino: '08:00', comentarios: 'Sin comentario' },
+                    { id: 'MPS-CDL-002', descripcion: null, lugar: 'Área de Chancado, Sector Este, Chuquicamata', fechaInicio: '2025-10-20', horaInicio: '09:30', fechaTermino: '2025-10-21', horaTermino: '09:30', comentarios: 'Sin comentario' }
+                ],
+                
+                infoMuestras: {
+                    responsable: 'N/A',
+                    fechaTransporte: '2025-10-19',
+                    horaTransporte: '21:38',
+                    obsTerreno: 'N/A'
+                }
+            };
+
+            // --- Datos de Muestra tipo Filtros ---
+            const dataFiltros = {
+                folio: '118563',
+                cliente: '61704000-K - CORP NACIONAL DEL COBRE DE CHILE',
+                ol: '801598',
+                proyecto: 'Default project',
+                solicitadoPor: 'gnunovero',
+                atencionA: 'Juan Pérez',
+                adcResponsable: 'kpizarro',
+                
+                fechaIngreso: '25-10-2025',
+                terminoMuestreo: '2025-10-25T13:00:00', // Fecha más temprana de término
+                tipoMuestreo: 'Filtro',
+                tipoFiltro: 'MP10',
+                matriz: 'AIRE_MP_FILTRO_47MM',
+                muestreadoPor: 'SGS Chile',
+                plan: 'Seleccione un Plan',
+                cantMuestras: 2,
+                
+                puntosMuestreo: [
+                    { id: 'FLT-MP10-CDL-001', descripcion: 'Filtro MP10 - Creado: 2025-10-01', lugar: 'Sector Alto', fechaInicio: '2025-10-25', horaInicio: '12:56', fechaTermino: '2025-10-25', horaTermino: '13:00', comentarios: 'filtros sin problemas' },
+                    { id: 'FLT-MP10-CDL-002', descripcion: 'Filtro MP10 - Creado: 2025-10-02', lugar: 'Sector Alto', fechaInicio: '2025-10-25', horaInicio: '15:57', fechaTermino: '2025-10-25', horaTermino: '16:57', comentarios: 'Al filtro se le aplicó la norma 2025F' }
+                ],
+                
+                infoMuestras: {
+                    responsable: 'Juan Muestreo',
+                    fechaTransporte: '2025-10-19',
+                    horaTransporte: '21:38',
+                    obsTerreno: 'N/A'
+                }
+            };
+            // -------------------------------------------------------------
+
+            // Detectar tipo desde querystring y cargar datos correspondientes
+            const tipoMuestreo = getQueryParam('tipo') || 'mps'; // Por defecto MPS
+            let dataDocumento;
+            
+            if (tipoMuestreo.toLowerCase() === 'filtro') {
+                dataDocumento = dataFiltros;
+            } else {
+                dataDocumento = dataMPS;
+            }
+
+            // Cargar automáticamente al inicio
+            mostrarDetalleDocumento(dataDocumento, isReadonly);
+
+            // --- Lógica de Alerta de Holding Time en Cabecera ---
+            function checkHeaderHoldingTime(terminoMuestreoStr) {
+                const ahora = new Date();
+                const holdingTimeMaxHoras = 96;
+
+                if (!terminoMuestreoStr) return;
+
+                // --- SIMULACIÓN PARA MAQUETA ---
+                // Para que la alerta sea visible, ajustamos la fecha de ejemplo
+                // para que sea relativa a la fecha actual.
+                let terminoMuestreo = new Date();
+                // Simulamos que quedan 4 horas para que se vea la alerta amarilla
+                terminoMuestreo.setHours(terminoMuestreo.getHours() - (holdingTimeMaxHoras - 4));
+                // ---------------------------------
+
+                const tiempoLimite = new Date(terminoMuestreo.getTime() + holdingTimeMaxHoras * 60 * 60 * 1000);
+                const diffMilisegundos = tiempoLimite - ahora;
+                const diffHoras = diffMilisegundos / (1000 * 60 * 60);
+
+                const container = document.getElementById('holding-time-header-alert');
+                if (!container) return;
+                container.innerHTML = ''; // Limpiar alertas previas
+
+                let alertHtml = '';
+
+                if (diffHoras < 0) {
+                    const horasExcedidas = Math.abs(Math.round(diffHoras));
+                    alertHtml = `<div class="holding-time-alert alert-danger"><i class="fa fa-exclamation-triangle"></i><span>Holding time excedido por ${horasExcedidas} hs.</span></div>`;
+                } else if (diffHoras <= 6) {
+                    const horasRestantes = Math.floor(diffHoras);
+                    const minutosRestantes = Math.floor((diffHoras - horasRestantes) * 60);
+                    alertHtml = `<div class="holding-time-alert alert-warning"><i class="fa fa-clock"></i><span>Quedan ${horasRestantes}h ${minutosRestantes}m para cumplir.</span></div>`;
+                } else {
+                    const diasRestantes = Math.floor(diffHoras / 24);
+                    const horasRestantes = Math.floor(diffHoras) % 24;
+                    let tiempoStr = diasRestantes > 0 ?
+                        `Quedan ${diasRestantes}d y ${horasRestantes}h para cumplir holding time.` :
+                        `Quedan ${horasRestantes}h para cumplir holding time.`;
+                    alertHtml = `<div class="holding-time-alert alert-success"><i class="fa fa-check-circle"></i><span>${tiempoStr}</span></div>`;
+                }
+
+                if (alertHtml) {
+                    container.innerHTML = alertHtml;
+                }
+            }
+
+            // Ejecutar la comprobación para la cabecera
+            checkHeaderHoldingTime(dataDocumento.terminoMuestreo);
+
+            
+            // Prellenar hora actual
+            const now = isReadonly ? new Date('2025-10-24T10:30:00') : new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const horaActual = `${hours}:${minutes}`;
+            document.getElementById('hora-recepcion').value = horaActual;
+            
+            // Prellenar hora de temperatura (solo si existe el campo - tipo MPS)
+            const horaPlasticoInput = document.getElementById('hora-plastico');
+            if (horaPlasticoInput) {
+                horaPlasticoInput.value = horaActual;
+            }
+            
+            // Sincronizar hora de recepción con horas de temperatura (solo si existe el campo - tipo MPS)
+            document.getElementById('hora-recepcion').addEventListener('change', function() {
+                const nuevaHora = this.value;
+                const horaPlasticoInput = document.getElementById('hora-plastico');
+                if (horaPlasticoInput) {
+                    horaPlasticoInput.value = nuevaHora;
+                }
+            });
+
+            // Asignar responsable de recepción
+            const userName = document.querySelector('.sidebar .user .info .name').textContent;
+            const responsableInput = document.getElementById('responsable-recepcion');
+            if (responsableInput) {
+                responsableInput.value = userName;
+            }
+            
+            if (isReadonly) {
+                // Funcionalidad del botón "Volver"
+                const btnVolver = document.getElementById('btn-volver');
+                if (btnVolver) {
+                    btnVolver.addEventListener('click', function() {
+                        history.back();
+                    });
+                }
+            } else {
+                // Funcionalidad del botón finalizar ingreso (solo en modo normal)
+                const btnFinalizar = document.getElementById('btn-finalizar-ingreso');
+                if (btnFinalizar) {
+                    btnFinalizar.addEventListener('click', function() {
+                        // Verificar que todos los puntos estén validados
+                        const checkboxes = document.querySelectorAll('.checkbox-validar-punto');
+                        const total = checkboxes.length;
+                        const marcados = Array.from(checkboxes).filter(cb => cb.checked).length;
+                        
+                        if (marcados < total) {
+                            const confirmar = confirm(`⚠️ Atención\n\nHas recepcionado ${marcados} de ${total} muestras.\n\n¿Deseas finalizar el ingreso de todas formas?`);
+                            if (!confirmar) {
+                                return;
+                            }
+                        }
+                        
+                        // Validar campos de temperatura para Plástico (solo si es tipo MPS)
+                        const tempLeidaPlasticoInput = document.getElementById('temp-leida-plastico');
+                        const tempContrastadaPlasticoInput = document.getElementById('temp-contrastada-plastico');
+                        
+                        if (tempLeidaPlasticoInput && tempContrastadaPlasticoInput) {
+                            const tempLeidaPlastico = tempLeidaPlasticoInput.value;
+                            const tempContrastadaPlastico = tempContrastadaPlasticoInput.value;
+                            if (!tempLeidaPlastico || !tempContrastadaPlastico) {
+                                alert('⚠️ Por favor completa todos los campos de temperatura para Plástico.');
+                                return;
+                            }
+                        }
+                        
+                        // Recopilar datos
+                        const datosRecepcion = {
+                            laboratorio: document.getElementById('laboratorio-ingreso').value,
+                            fechaRecepcion: document.getElementById('fecha-recepcion').value,
+                            horaRecepcion: document.getElementById('hora-recepcion').value,
+                            responsable: document.getElementById('responsable-recepcion').value,
+                            criterioAceptacion: document.querySelector('input[name="criterio-aceptacion"]:checked').value,
+                            comentarios: document.getElementById('comentarios-temperatura').value,
+                            muestrasRecepcionadas: marcados,
+                            totalMuestras: total
+                        };
+                        
+                        // Agregar datos de temperatura solo si es tipo MPS
+                        const termometroInput = document.getElementById('termometro-utilizado');
+                        if (termometroInput) {
+                            datosRecepcion.termometro = termometroInput.value;
+                            datosRecepcion.materiales = {
+                                plastico: {
+                                    tempLeida: document.getElementById('temp-leida-plastico').value,
+                                    tempContrastada: document.getElementById('temp-contrastada-plastico').value,
+                                    hora: document.getElementById('hora-plastico').value
+                                }
+                            };
+                        }
+                        
+                        console.log('Datos de recepción:', datosRecepcion);
+                        
+                        // Mostrar mensaje de éxito
+                        alert('✅ Ingreso finalizado correctamente!\n\n' + 
+                              'Muestras recepcionadas: ' + marcados + ' de ' + total + '\n' +
+                              'Laboratorio: ' + document.querySelector('#laboratorio-ingreso option:checked').text + '\n' +
+                              'Criterio: ' + document.querySelector('input[name="criterio-aceptacion"]:checked + span').textContent);
+                        
+                        // Aquí iría la lógica para enviar los datos al servidor
+                        // window.location.href = '/confirmacion-recepcion';
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
