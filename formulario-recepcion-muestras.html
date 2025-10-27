@@ -1024,6 +1024,31 @@
             background: #7a7570;
             border-radius: 4px;
         }
+
+        /* Estilos para el Modal */
+        .modal-header {
+            background-color: #66615B;
+            color: white;
+            border-bottom: none;
+        }
+        .modal-header .close {
+            color: white;
+            opacity: 0.8;
+        }
+        .modal-body {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+        }
+        #btn-aceptar-exito { /* Naranja principal */
+            background-color: #ef8157;
+            border-color: #ef8157;
+            color: white;
+        }
+        #btn-aceptar-exito:hover { /* Naranja oscuro en hover */
+            background-color: #e96342;
+            border-color: #e96342;
+        }
     </style>
 </head>
 
@@ -1077,6 +1102,47 @@
 
                 <div id="resultado-recepcion"></div>
 
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación para Ingreso Parcial -->
+    <div class="modal fade" id="confirmacionModal" tabindex="-1" aria-labelledby="confirmacionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmacionModalLabel"><i class="fa fa-exclamation-triangle"></i> Atención</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="confirmacionModalBody">
+                    <!-- Contenido dinámico -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-warning" id="btn-confirmar-ingreso-modal">Confirmar Ingreso</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Éxito -->
+    <div class="modal fade" id="exitoModal" tabindex="-1" aria-labelledby="exitoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #f7f7f7; color: #66615B; border-bottom: 1px solid #eee;">
+                    <h5 class="modal-title" id="exitoModalLabel"><i class="fa fa-check-circle"></i> Ingreso Finalizado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="exitoModalBody">
+                    <!-- Contenido dinámico -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" id="btn-aceptar-exito">Aceptar</button>
+                </div>
             </div>
         </div>
     </div>
@@ -1670,70 +1736,82 @@
                     });
                 }
             } else {
-                // Funcionalidad del botón finalizar ingreso (solo en modo normal)
-                const btnFinalizar = document.getElementById('btn-finalizar-ingreso');
-                if (btnFinalizar) {
-                    btnFinalizar.addEventListener('click', function() {
-                        // Verificar que todos los puntos estén validados
-                        const checkboxes = document.querySelectorAll('.checkbox-validar-punto');
-                        const total = checkboxes.length;
-                        const marcados = Array.from(checkboxes).filter(cb => cb.checked).length;
-                        
+                // --- Lógica de finalización de ingreso con modales ---
+                const btnFinalizarIngreso = document.getElementById('btn-finalizar-ingreso');
+                const btnConfirmarModal = document.getElementById('btn-confirmar-ingreso-modal');
+                const btnAceptarExito = document.getElementById('btn-aceptar-exito');
+
+                function procederConFinalizacion() {
+                    // Validar campos de temperatura para Plástico (solo si es tipo MPS)
+                    const tempLeidaPlasticoInput = document.getElementById('temp-leida-plastico');
+                    const tempContrastadaPlasticoInput = document.getElementById('temp-contrastada-plastico');
+
+                    if (tempLeidaPlasticoInput && tempContrastadaPlasticoInput) {
+                        const tempLeidaPlastico = tempLeidaPlasticoInput.value;
+                        const tempContrastadaPlastico = tempContrastadaPlasticoInput.value;
+                        if (!tempLeidaPlastico || !tempContrastadaPlastico) {
+                            alert('⚠️ Por favor completa todos los campos de temperatura para Plástico.');
+                            return;
+                        }
+                    }
+
+                    // Recopilar datos
+                    const marcados = Array.from(document.querySelectorAll('.checkbox-validar-punto')).filter(cb => cb.checked).length;
+                    const total = document.querySelectorAll('.checkbox-validar-punto').length;
+                    const datosRecepcion = {
+                        laboratorio: document.getElementById('laboratorio-ingreso').value,
+                        fechaRecepcion: document.getElementById('fecha-recepcion').value,
+                        horaRecepcion: document.getElementById('hora-recepcion').value,
+                        responsable: document.getElementById('responsable-recepcion').value,
+                        criterioAceptacion: document.querySelector('input[name="criterio-aceptacion"]:checked').value,
+                        comentarios: document.getElementById('comentarios-temperatura').value,
+                        muestrasRecepcionadas: marcados,
+                        totalMuestras: total
+                    };
+
+                    console.log('Datos de recepción:', datosRecepcion);
+
+                    // Preparar y mostrar modal de éxito
+                    const exitoModalBody = document.getElementById('exitoModalBody');
+                    exitoModalBody.innerHTML = `
+                        <p>El ingreso se ha registrado correctamente.</p>
+                        <ul class="list-unstyled">
+                            <li><strong>Muestras recepcionadas:</strong> ${marcados} de ${total}</li>
+                            <li><strong>Laboratorio:</strong> ${document.querySelector('#laboratorio-ingreso option:checked').text}</li>
+                            <li><strong>Criterio:</strong> ${document.querySelector('input[name="criterio-aceptacion"]:checked + span').textContent.trim()}</li>
+                        </ul>
+                    `;
+                    $('#exitoModal').modal('show');
+                }
+
+                if (btnFinalizarIngreso) {
+                    btnFinalizarIngreso.addEventListener('click', function() {
+                        const total = document.querySelectorAll('.checkbox-validar-punto').length;
+                        const marcados = Array.from(document.querySelectorAll('.checkbox-validar-punto')).filter(cb => cb.checked).length;
+
                         if (marcados < total) {
-                            const confirmar = confirm(`⚠️ Atención\n\nHas recepcionado ${marcados} de ${total} muestras.\n\n¿Deseas finalizar el ingreso de todas formas?`);
-                            if (!confirmar) {
-                                return;
-                            }
+                            // Mostrar modal de confirmación para ingreso parcial
+                            const confirmacionModalBody = document.getElementById('confirmacionModalBody');
+                            confirmacionModalBody.textContent = `Has recepcionado ${marcados} de ${total} muestras. ¿Deseas finalizar el ingreso de todas formas?`;
+                            $('#confirmacionModal').modal('show');
+                        } else {
+                            // Si todas las muestras están marcadas, proceder directamente
+                            procederConFinalizacion();
                         }
-                        
-                        // Validar campos de temperatura para Plástico (solo si es tipo MPS)
-                        const tempLeidaPlasticoInput = document.getElementById('temp-leida-plastico');
-                        const tempContrastadaPlasticoInput = document.getElementById('temp-contrastada-plastico');
-                        
-                        if (tempLeidaPlasticoInput && tempContrastadaPlasticoInput) {
-                            const tempLeidaPlastico = tempLeidaPlasticoInput.value;
-                            const tempContrastadaPlastico = tempContrastadaPlasticoInput.value;
-                            if (!tempLeidaPlastico || !tempContrastadaPlastico) {
-                                alert('⚠️ Por favor completa todos los campos de temperatura para Plástico.');
-                                return;
-                            }
-                        }
-                        
-                        // Recopilar datos
-                        const datosRecepcion = {
-                            laboratorio: document.getElementById('laboratorio-ingreso').value,
-                            fechaRecepcion: document.getElementById('fecha-recepcion').value,
-                            horaRecepcion: document.getElementById('hora-recepcion').value,
-                            responsable: document.getElementById('responsable-recepcion').value,
-                            criterioAceptacion: document.querySelector('input[name="criterio-aceptacion"]:checked').value,
-                            comentarios: document.getElementById('comentarios-temperatura').value,
-                            muestrasRecepcionadas: marcados,
-                            totalMuestras: total
-                        };
-                        
-                        // Agregar datos de temperatura solo si es tipo MPS
-                        const termometroInput = document.getElementById('termometro-utilizado');
-                        if (termometroInput) {
-                            datosRecepcion.termometro = termometroInput.value;
-                            datosRecepcion.materiales = {
-                                plastico: {
-                                    tempLeida: document.getElementById('temp-leida-plastico').value,
-                                    tempContrastada: document.getElementById('temp-contrastada-plastico').value,
-                                    hora: document.getElementById('hora-plastico').value
-                                }
-                            };
-                        }
-                        
-                        console.log('Datos de recepción:', datosRecepcion);
-                        
-                        // Mostrar mensaje de éxito
-                        alert('✅ Ingreso finalizado correctamente!\n\n' + 
-                              'Muestras recepcionadas: ' + marcados + ' de ' + total + '\n' +
-                              'Laboratorio: ' + document.querySelector('#laboratorio-ingreso option:checked').text + '\n' +
-                              'Criterio: ' + document.querySelector('input[name="criterio-aceptacion"]:checked + span').textContent);
-                        
-                        // Aquí iría la lógica para enviar los datos al servidor
-                        // window.location.href = '/confirmacion-recepcion';
+                    });
+                }
+
+                if (btnConfirmarModal) {
+                    btnConfirmarModal.addEventListener('click', function() {
+                        $('#confirmacionModal').modal('hide');
+                        procederConFinalizacion();
+                    });
+                }
+
+                if (btnAceptarExito) {
+                    btnAceptarExito.addEventListener('click', function() {
+                        // Redireccionar a la página de listado
+                        window.location.href = 'listado-recepcion-muestras.html';
                     });
                 }
             }

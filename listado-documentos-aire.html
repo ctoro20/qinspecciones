@@ -590,6 +590,644 @@
             background: #7a7570;
             border-radius: 4px;
         }
+
+        /* ========== MODAL DE SELECCIÓN DE MUESTRAS ========== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9998;
+        }
+
+        .modal-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            max-width: 900px;
+            width: 90%;
+            max-height: 85vh;
+            overflow: hidden;
+        }
+
+        .modal-header-custom {
+            background-color: #f7f7f7;
+            color: #66615B;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-header-custom h3 {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: #66615B;
+            font-size: 28px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .modal-close:hover {
+            opacity: 1;
+        }
+
+        .modal-body-custom {
+            padding: 20px 25px;
+            overflow-y: auto;
+            max-height: calc(85vh - 180px);
+        }
+
+        .info-section {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .info-section h4 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            font-size: 13px;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 5px;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .tipo-generacion-selector {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border: 1px solid #ffc107;
+        }
+
+        .tipo-generacion-selector label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #856404;
+        }
+
+        .tipo-generacion-selector select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ffc107;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+        }
+
+        .muestras-list h4 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+
+        /* Estilos para la cabecera de información en el modal */
+        .modal-info-header {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+
+        .modal-info-header-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .modal-info-oi {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .modal-info-badges .badge {
+            font-size: 10px;
+        }
+
+        .modal-info-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px 15px;
+            font-size: 11px;
+            color: #666;
+            padding-top: 10px;
+            border-top: 1px solid #e9ecef;
+        }
+        .modal-info-details strong {
+            color: #444;
+        }
+        /* Buscador en modal */
+        .modal-search-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .modal-search-container .form-control {
+            padding-left: 35px;
+            background-color: white;
+        }
+        .modal-search-container .fa-search {
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            color: #aaa;
+        }
+        /* Estilos para cards de muestras individuales (por-punto) */
+        .muestra-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+        }
+
+        .muestra-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .muestra-card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .muestra-card-id {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .muestra-card-id .index {
+            background: #667eea;
+            color: white;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 11px;
+            margin-right: 8px;
+            display: inline-block;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .muestra-detalle {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .muestra-card-details-line {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 11px;
+            color: #666;
+            flex-wrap: wrap;
+        }
+
+        .muestra-campo {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .muestra-campo-label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .muestra-campo-valor {
+            font-size: 13px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .muestra-job-highlight {
+            background: #f0f4ff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            margin: 12px 0;
+        }
+
+        .muestra-job-highlight i {
+            color: #667eea;
+            margin-right: 8px;
+        }
+
+        .muestra-job-code {
+            font-size: 16px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .muestra-card-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        /* Modal simple para "mismo-job" */
+        .modal-simple {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .job-simple-display {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 100%);
+            border: 3px solid #667eea;
+            border-radius: 16px;
+            padding: 40px 30px;
+            margin: 30px 0;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
+        }
+
+        .job-simple-label {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .job-simple-code {
+            font-size: 42px;
+            font-weight: 900;
+            color: #667eea;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
+        }
+
+        .job-simple-icon {
+            font-size: 60px;
+            color: #667eea;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .muestras-count {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+            font-size: 14px;
+            color: #856404;
+        }
+
+        .muestras-count strong {
+            font-weight: 700;
+        }
+
+        /* Estilos para items antiguos (por si se necesitan) */
+
+        .muestra-item {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .muestra-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+        }
+
+        .muestra-info {
+            flex: 1;
+        }
+
+        .muestra-id {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .muestra-job {
+            color: #667eea;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .muestra-aceptada {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .muestra-aceptada.si {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .muestra-aceptada.no {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .muestra-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-modal {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-preview {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-preview:hover {
+            background: #138496;
+            transform: translateY(-2px);
+        }
+
+        .btn-download {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-download:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .modal-footer-custom {
+            padding: 20px 30px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            background: #f8f9fa;
+        }
+
+        .btn-modal-footer {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-cancel {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-cancel:hover {
+            background: #5a6268;
+        }
+
+        .btn-preview-all {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-preview-all:hover {
+            background: #138496;
+            transform: translateY(-2px);
+        }
+
+        .btn-download-all {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-download-all:hover {
+            transform: translateY(-2px);
+        }
+
+        .info-mensaje {
+            background: #d1ecf1;
+            border-left: 4px solid #0c5460;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            color: #0c5460;
+            font-size: 13px;
+        }
+
+        /* Modal de Preview del PDF */
+        .modal-preview {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .preview-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .preview-header {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2px;
+        }
+
+        .preview-header h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .preview-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .pdf-preview-page {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            padding: 10mm 15mm 15mm 15mm;
+            margin: 0 auto 20px;
+        }
+
+        /* Estilos para el PDF Preview (copiados del preview) */
+        .pdf-preview-page .cabecera {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10pt;
+        }
+
+        .pdf-preview-page .logo-sgs {
+            font-size: 27pt;
+            font-weight: 300;
+            color: #9e9e9e;
+            letter-spacing: 2pt;
+        }
+
+        .pdf-preview-page .titulo-centro {
+            text-align: center;
+            flex: 1;
+        }
+
+        .pdf-preview-page .titulo-principal {
+            font-size: 13pt;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+
+        .pdf-preview-page .codigo-documento {
+            font-size: 6pt;
+            font-weight: normal;
+            margin-top: 2pt;
+            color: #000;
+        }
+
+        .pdf-preview-page .seccion-titulo {
+            font-size: 10pt;
+            font-weight: bold;
+            margin-top: 8pt;
+            margin-bottom: 6pt;
+            padding-bottom: 2pt;
+            border-bottom: 0.5pt solid #d0d0d0;
+        }
+
+        .pdf-preview-page .data-row {
+            font-size: 8pt;
+            margin-bottom: 5pt;
+            display: flex;
+        }
+
+        .pdf-preview-page .data-label {
+            min-width: 60mm;
+            font-weight: normal;
+        }
+
+        .pdf-preview-page .data-separator {
+            margin: 0 2pt;
+        }
+
+        .pdf-preview-page .data-value {
+            font-weight: normal;
+        }
+
+        .pdf-preview-page table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 6pt 0;
+            font-size: 6pt;
+        }
+
+        .pdf-preview-page table.tabla-recepcion {
+            font-size: 7pt;
+        }
+
+        .pdf-preview-page th {
+            background-color: #dcdcdc;
+            color: black;
+            font-weight: bold;
+            padding: 4pt;
+            border: 0.5pt solid #000;
+            text-align: center;
+        }
+
+        .pdf-preview-page td {
+            padding: 4pt;
+            border: 0.5pt solid #000;
+            color: black;
+        }
+
+        .pdf-preview-page td.center {
+            text-align: center;
+        }
+
+        .pdf-preview-page .footer {
+            position: absolute;
+            bottom: 8mm;
+            left: 15mm;
+            right: 15mm;
+            font-size: 6pt;
+            color: black;
+            line-height: 1.4;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -687,8 +1325,8 @@
                                     <input type="text" id="filter-ol" class="form-control" placeholder="Buscar OL">
                                 </div>
                                 <div class="col-md-3 col-6 mb-3">
-                                    <label for="filter-proyecto">Proyecto</label>
-                                    <input type="text" id="filter-proyecto" class="form-control" placeholder="Buscar proyecto">
+                                    <label for="filter-cliente">Cliente</label>
+                                    <input type="text" id="filter-cliente" class="form-control" placeholder="Buscar por cliente">
                                 </div>
                                 <div class="col-md-3 col-6 mb-3">
                                     <label for="filter-matriz">Matriz</label>
@@ -727,7 +1365,10 @@
                          data-ol="700415"
                          data-estado="Ingresado"
                          data-matriz="AIRE_MP_FILTRO_HVOL"
-                         data-enviado="2025-12-23">
+                         data-enviado="2025-12-23"
+                         data-generacion-job="por-punto"
+                         data-cliente="MINERA ESCONDIDA LTDA"
+                         >
                         <div class="card-body">
                             <div class="document-card-header">
                                 <div class="document-title-section">
@@ -787,6 +1428,10 @@
                                     <i class="fa fa-check-square"></i>
                                     <span><span class="info-label-inline">Criterio Aceptación:</span> <span class="info-value-inline">Aceptadas</span></span>
                                 </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-barcode"></i>
+                                    <span><span class="info-label-inline">JOB:</span> <span class="info-value-inline">Por Punto</span></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -798,7 +1443,10 @@
                          data-ol="801598" 
                          data-estado="Ingresado"
                          data-matriz="POLVO_SEDIMENTABLE"
-                         data-enviado="2025-12-22">
+                         data-enviado="2025-12-22"
+                         data-generacion-job="por-punto"
+                         data-cliente="CODELCO CHILE"
+                         >
                         <div class="card-body">
                             <div class="document-card-header">
                                 <div class="document-title-section">
@@ -858,6 +1506,10 @@
                                     <i class="fa fa-check-square"></i>
                                     <span><span class="info-label-inline">Criterio Aceptación:</span> <span class="info-value-inline">Aceptadas (con observación)</span></span>
                                 </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-barcode"></i>
+                                    <span><span class="info-label-inline">JOB:</span> <span class="info-value-inline">Por Punto</span></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -869,7 +1521,10 @@
                          data-ol="700416" 
                          data-estado="Ingresado"
                          data-matriz="AIRE_MP_FILTRO_47MM"
-                         data-enviado="2025-12-20">
+                         data-enviado="2025-12-20"
+                         data-generacion-job="mismo-job"
+                         data-cliente="MINERA ESCONDIDA LTDA"
+                         >
                         <div class="card-body">
                             <div class="document-card-header">
                                 <div class="document-title-section">
@@ -928,6 +1583,10 @@
                                     <i class="fa fa-check-square"></i>
                                     <span><span class="info-label-inline">Criterio Aceptación:</span> <span class="info-value-inline">Aceptadas</span></span>
                                 </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-barcode"></i>
+                                    <span><span class="info-label-inline">JOB:</span> <span class="info-value-inline">Totalidad Puntos</span></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -939,7 +1598,10 @@
                          data-ol="700416" 
                          data-estado="Ingresado"
                          data-matriz="AIRE_MP_FILTRO_37MM"
-                         data-enviado="2025-12-19">
+                         data-enviado="2025-12-19"
+                         data-generacion-job="por-punto"
+                         data-cliente="MINERA ESCONDIDA LTDA"
+                         >
                         <div class="card-body">
                             <div class="document-card-header">
                                 <div class="document-title-section">
@@ -999,6 +1661,10 @@
                                     <i class="fa fa-check-square"></i>
                                     <span><span class="info-label-inline">Criterio Aceptación:</span> <span class="info-value-inline">Aceptadas</span></span>
                                 </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-barcode"></i>
+                                    <span><span class="info-label-inline">JOB:</span> <span class="info-value-inline">Por Punto</span></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1010,7 +1676,10 @@
                          data-ol="801599" 
                          data-estado="Ingresado"
                          data-matriz="POLVO_SEDIMENTABLE"
-                         data-enviado="2025-12-18">
+                         data-enviado="2025-12-18"
+                         data-generacion-job="por-punto"
+                         data-cliente="CODELCO CHILE"
+                         >
                         <div class="card-body">
                             <div class="document-card-header">
                                 <div class="document-title-section">
@@ -1070,9 +1739,14 @@
                                     <i class="fa fa-check-square"></i>
                                     <span><span class="info-label-inline">Criterio Aceptación:</span> <span class="info-value-inline">Rechazadas</span></span>
                                 </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-barcode"></i>
+                                    <span><span class="info-label-inline">JOB:</span> <span class="info-value-inline">Por Punto</span></span>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div> <!-- Fin de documentList -->
                 </div> <!-- Fin de documentList -->
 
                 <!-- Pagination -->
@@ -1100,6 +1774,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -1150,6 +1826,7 @@
                     tipoMuestreo: document.getElementById('filter-tipo-muestreo').value,
                     folio: document.getElementById('filter-folio').value.toLowerCase(),
                     ol: document.getElementById('filter-ol').value.toLowerCase(),
+                    cliente: document.getElementById('filter-cliente').value.toLowerCase(), // Leer el nuevo campo
                     desde: document.getElementById('filter-desde').value, // Formato YYYY-MM-DD
                     hasta: document.getElementById('filter-hasta').value, // Formato YYYY-MM-DD
                 };
@@ -1161,6 +1838,7 @@
                         tipoMuestreo: card.dataset.tipoMuestreo,
                         folio: card.dataset.oi.toLowerCase(),
                         ol: card.dataset.ol.toLowerCase(),
+                        cliente: card.dataset.cliente.toLowerCase(),
                         enviado: card.dataset.enviado, // Formato YYYY-MM-DD
                     };
 
@@ -1168,6 +1846,7 @@
                         (filters.tipoMuestreo === 'Todos' || filters.tipoMuestreo === cardData.tipoMuestreo) &&
                         (cardData.folio.includes(filters.folio)) &&
                         (cardData.ol.includes(filters.ol)) &&
+                        (cardData.cliente.includes(filters.cliente)) && // Aplicar el filtro de cliente
                         // Comprobación de fechas (funciona con strings en formato YYYY-MM-DD)
                         (!filters.desde || cardData.enviado >= filters.desde) &&
                         (!filters.hasta || cardData.enviado <= filters.hasta);
@@ -1225,6 +1904,10 @@
                 });
             }
 
+            // --- Lógica para botones del modal de muestras ---
+            document.querySelector('#modalMuestras .modal-close').addEventListener('click', cerrarModalMuestras);
+            document.querySelector('#modalMuestras .btn-cancel').addEventListener('click', cerrarModalMuestras);
+            document.getElementById('btnDescargarModal').addEventListener('click', descargarPDFModal);
             // --- Lógica de Eventos Globales (Delegación de eventos) ---
             document.addEventListener('click', function(event) {
                 const target = event.target;
@@ -1257,7 +1940,8 @@
                     event.preventDefault();
                     const action = dropdownItem.dataset.action;
                     if (action === 'descargar') {
-                        alert('Acción: Descargar Cadena de Custodia (próximamente)');
+                        const card = dropdownItem.closest('.document-card');
+                        generarPDFCadenaCustodia(card);
                     } else if (action === 'verDetalle') {
                         const card = dropdownItem.closest('.document-card');
                         const tipoMuestreo = card.dataset.tipoMuestreo.toLowerCase();
@@ -1268,7 +1952,766 @@
 
             // Inicializar el total de la paginación al cargar
             paginationTotal.textContent = documentCards.length;
+
+            // Función para generar PDF de Cadena de Custodia
+            function generarPDFCadenaCustodia(card) {
+                // Nueva función que abre el modal en lugar de generar directamente el PDF
+                // Guardar los datos del card actual
+                currentCardData = {
+                    oi: card.dataset.oi,
+                    tipoMuestreo: card.dataset.tipoMuestreo,
+                    ol: card.dataset.ol,
+                    estado: card.dataset.estado,
+                    matriz: card.dataset.matriz,
+                    enviado: card.dataset.enviado,
+                    generacionJob: card.dataset.generacionJob
+                };
+                
+                // Extraer datos del DOM
+                const cardBody = card.querySelector('.document-info-line');
+                const infoItems = cardBody.querySelectorAll('.document-info-item');
+                
+                infoItems.forEach(item => {
+                    const text = item.textContent;
+                    if (text.includes('Cliente:')) {
+                        currentCardData.cliente = text.split('Cliente:')[1].trim();
+                    } else if (text.includes('Muestreado por:')) {
+                        currentCardData.muestreadoPor = text.split('Muestreado por:')[1].trim();
+                    } else if (text.includes('Recepción:')) {
+                        currentCardData.recepcion = text.split('Recepción:')[1].trim();
+                    } else if (text.includes('Muestras:')) {
+                        currentCardData.muestras = text.split('Muestras:')[1].trim();
+                    } else if (text.includes('Criterio Aceptación:')) {
+                        currentCardData.criterioAceptacion = text.split('Criterio Aceptación:')[1].trim();
+                    }
+                });
+                
+                const badgeText = card.querySelector('.badge')?.textContent || '';
+                currentCardData.plan = badgeText;
+                currentCardData.badgesHTML = card.querySelector('.document-title-section').innerHTML;
+                
+                // Abrir el modal
+                abrirModalMuestras();
+            }
+
+            // ========== VARIABLES GLOBALES DEL MODAL ==========
+            let currentCardData = {};
+
+            // ========== ABRIR Y CERRAR MODAL ==========
+            function abrirModalMuestras() {
+                if (!currentCardData) return;
+                const modal = document.getElementById('modalMuestras');
+                const overlay = document.getElementById('modalOverlay');
+                
+                // Generar contenido del modal
+                generarContenidoModal();
+                
+                // Mostrar modal
+                modal.style.display = 'block';
+                overlay.style.display = 'block';
+            }
+
+            function cerrarModalMuestras() {
+                const modal = document.getElementById('modalMuestras');
+                const overlay = document.getElementById('modalOverlay');
+                
+                modal.style.display = 'none';
+                overlay.style.display = 'none';
+            }
+
+            // ========== GENERAR CONTENIDO DEL MODAL ==========
+            function generarContenidoModal() {
+                const modalBody = document.getElementById('modalBody');
+                const numMuestras = parseInt(currentCardData.muestras, 10) || 0;
+                const generacionJob = currentCardData.generacionJob;
+                
+                // Generar lista de muestras simuladas
+                // Esta función ahora usa `currentCardData` directamente
+                const muestras = generarMuestrasSimuladas(numMuestras);
+                
+                // Información del ingreso (común para ambos tipos)
+                const infoHeaderHTML = `
+                    <div class="modal-info-header">
+                        <div class="modal-info-header-line">
+                            <div class="modal-info-oi">
+                                ${currentCardData.badgesHTML.replace(/<span class="document-oi-label">OI<\/span>/, '<strong>OI</strong>')}
+                            </div>
+                        </div>
+                        <div class="modal-info-details">
+                            <span><strong>OL:</strong> ${currentCardData.ol}</span>
+                            <span><strong>Cliente:</strong> ${currentCardData.cliente}</span>
+                            <span><strong>Matriz:</strong> ${currentCardData.matriz}</span>
+                            <span><strong>Muestras:</strong> ${numMuestras}</span>
+                            <span><strong>Estado:</strong> ${currentCardData.estado}</span>
+                            <span><strong>Criterio:</strong> ${currentCardData.criterioAceptacion}</span>
+                            <span><strong>JOB:</strong> ${generacionJob === 'por-punto' ? 'Por Punto' : 'Totalidad Puntos'}</span>
+
+                        </div>
+                    </div>
+                `;
+                
+                let contenidoHTML = '';
+                
+                // ============ MODAL TIPO 1: JOB POR PUNTO (Cards individuales) ============
+                if (generacionJob === 'por-punto') {
+                    
+                    let muestrasCardsHTML = `${infoHeaderHTML}
+                        <div class="modal-search-container">
+                            <i class="fa fa-search"></i>
+                            <input type="text" class="form-control" id="modalMuestraSearch" placeholder="Buscar por ID de muestra...">
+                        </div>
+                        <div class="muestras-list">
+                    `;
+
+                    muestras.forEach((muestra, index) => {
+                        const aceptadaClass = muestra.aceptada ? 'si' : 'no';
+                        const aceptadaTexto = muestra.aceptada ? 'Aceptada' : 'No Aceptada';
+                        const botonDescargaHTML = muestra.aceptada 
+                            ? `<button class="btn-modal btn-download">
+                                   <i class="fa fa-download"></i> Descargar
+                               </button>`
+                            : '';
+                        
+                        muestrasCardsHTML += `
+                            <div class="muestra-card" data-muestra-id="${muestra.id.toLowerCase()}" data-index="${index}">
+                                <div class="muestra-card-info">
+                                    <div class="muestra-card-id">
+                                        <span class="index">${index + 1}</span>
+                                        ${muestra.id}
+                                    </div>
+                                    <div class="muestra-card-details-line">
+                                        <span><i class="fa fa-map-marker-alt"></i> ${muestra.lugar}</span>
+                                    <span><i class="fa fa-calendar-alt"></i> Inicio: ${muestra.fechaInicio}</span>
+                                    <span><i class="fa fa-calendar-check"></i> Término: ${muestra.fechaTermino}</span>
+                                        <span><i class="fa fa-barcode"></i> <strong>JOB:</strong> ${muestra.job}</span>
+                                        <span class="muestra-aceptada ${aceptadaClass}">
+                                            ${aceptadaTexto}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="muestra-actions">
+                                    ${botonDescargaHTML}
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    muestrasCardsHTML += '</div>';
+                    contenidoHTML = muestrasCardsHTML;
+                    
+                    // Ocultar el contenedor del JOB de totalidad y el botón de descarga general
+                    document.getElementById('jobTotalidadContainer').style.display = 'none';
+                    document.getElementById('btnDescargarModal').style.display = 'none';
+                }
+                // ============ MODAL TIPO 2: MISMO JOB (Modal simple) ============
+                else {
+                    const jobUnico = muestras.length > 0 ? muestras[0].job : 'N/A';
+                    
+                    let muestrasCardsHTML = `
+                        ${infoHeaderHTML}
+                        <div class="modal-search-container">
+                            <i class="fa fa-search"></i>
+                            <input type="text" class="form-control" id="modalMuestraSearch" placeholder="Buscar por ID de muestra...">
+                        </div>
+                        <div class="muestras-list">
+                    `;
+
+                    muestras.forEach((muestra, index) => {
+                        const aceptadaClass = muestra.aceptada ? 'si' : 'no';
+                        const aceptadaTexto = muestra.aceptada ? 'Aceptada' : 'No Aceptada';
+                        
+                        // No hay botón de descarga individual en esta vista
+                        muestrasCardsHTML += `
+                            <div class="muestra-card" data-muestra-id="${muestra.id.toLowerCase()}" data-index="${index}" style="cursor: default; transform: none;">
+                                <div class="muestra-card-info">
+                                    <div class="muestra-card-id">
+                                        <span class="index">${index + 1}</span>
+                                        ${muestra.id}
+                                    </div>
+                                    <div class="muestra-card-details-line">
+                                        <span><i class="fa fa-map-marker-alt"></i> ${muestra.lugar}</span>
+                                    <span><i class="fa fa-calendar-alt"></i> Inicio: ${muestra.fechaInicio}</span>
+                                    <span><i class="fa fa-calendar-check"></i> Término: ${muestra.fechaTermino}</span>
+                                        <span class="muestra-aceptada ${aceptadaClass}">
+                                            ${aceptadaTexto}
+                                        </span>
+                                    </div>
+                                </div>
+                                <!-- Sin acciones de descarga individual -->
+                            </div>
+                        `;
+                    });
+                    
+                    muestrasCardsHTML += '</div>';
+                    contenidoHTML = muestrasCardsHTML;
+                    
+                    // Mostrar y rellenar el contenedor del JOB de totalidad
+                    const jobContainer = document.getElementById('jobTotalidadContainer');
+                    if (jobContainer) {
+                        jobContainer.style.display = 'flex';
+                        jobContainer.querySelector('.job-code').textContent = jobUnico;
+                    }
+
+                    // Mostrar el botón de descarga general
+                    document.getElementById('btnDescargarModal').style.display = 'inline-block';
+                }
+                
+                // Insertar contenido en el modal
+                modalBody.innerHTML = contenidoHTML;
+
+                // Añadir listener para el buscador si existe
+                const searchInput = document.getElementById('modalMuestraSearch');
+                if (searchInput) {
+                    searchInput.addEventListener('keyup', () => {
+                        const searchTerm = searchInput.value.toLowerCase();
+                        document.querySelectorAll('.muestra-card').forEach(card => {
+                            const muestraId = card.dataset.muestraId;
+                            if (muestraId.includes(searchTerm)) {
+                                card.style.display = 'flex';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
+                    });
+                }
+
+                // Añadir listeners para los botones de descarga individuales (solo para por-punto)
+                document.querySelectorAll('.muestra-card .btn-download').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const card = e.target.closest('.muestra-card');
+                        const index = parseInt(card.dataset.index, 10);
+                        const generacionJob = currentCardData.generacionJob;
+
+                        if (generacionJob === 'por-punto') {
+                            descargarPDFMuestra(index); // Llama a la función de descarga individual
+                        }
+                        // No hay caso para 'mismo-job' aquí porque el botón no existe
+                    });
+                });
+            }
+
+            // ========== GENERAR MUESTRAS SIMULADAS ==========
+            function generarMuestrasSimuladas(numMuestras) {
+                const muestras = [];
+                let jobBase = 8458;
+                const tipoMuestra = currentCardData.tipoMuestreo;
+                const oi = currentCardData.oi;                
+                const generacionJob = currentCardData.generacionJob;
+                
+                // Para MPS siempre es 1 muestra
+                const cantidadMuestras = (tipoMuestra === 'MPS' && numMuestras > 0) ? 1 : numMuestras;
+                
+                const jobUnico = `EA25-0${jobBase}`; // Para 'mismo-job'
+
+                for (let i = 1; i <= cantidadMuestras; i++) {
+                    let jobAsignado;
+                    if (generacionJob === 'por-punto') {
+                        jobAsignado = `EA25-0${jobBase + i - 1}`; // JOB diferente para cada muestra
+                    } else {
+                        jobAsignado = jobUnico; // Mismo JOB para todas
+                    }
+
+                    const muestra = {
+                        id: `${tipoMuestra}-${oi}-${String(i).padStart(3, '0')}`,
+                        lugar: 'Sector Alto',
+                        fechaInicio: '23-12-2025 12:30',
+                        fechaTermino: '23-12-2025 13:30',
+                        aceptada: i <= Math.floor(cantidadMuestras * 0.9), // 90% aceptadas
+                        job: jobAsignado,
+                        comentarios: 'filtro sin problemas'
+                    };
+                    muestras.push(muestra);
+                }
+                
+                return muestras;
+            }
+
+            // ========== GENERAR HTML DEL PDF ==========
+            function generarHTMLPDF() {
+                const muestras = generarMuestrasSimuladas(parseInt(currentCardData.muestras));
+                const tipoMuestra = currentCardData.tipoMuestreo;
+                const numAceptadas = muestras.filter(m => m.aceptada).length;
+                
+                // Generar texto de generación de JOB
+                let textoGeneracionJob = '';
+                if (currentCardData.generacionJob === 'por-punto') {
+                    textoGeneracionJob = 'Generar un Job por punto ingresado';                    
+                } else if (currentCardData.generacionJob === 'mismo-job') {
+                    textoGeneracionJob = 'Un Job para todas las muestras';
+                } else { // Incluye MPS
+                    textoGeneracionJob = currentCardData.generacionJob === 'por-punto' 
+                        ? 'Generar un Job por punto ingresado'
+                        : 'Un Job para todas las muestras';
+                }
+                
+                // Generar filas de la tabla
+                let filasTabla = '';
+                muestras.forEach((muestra, index) => {
+                    filasTabla += `
+                        <tr>
+                            <td class="center">${index + 1}</td>
+                            <td>${muestra.id}<br>${muestra.lugar}</td>
+                            <td class="center">${muestra.fechaInicio}</td>
+                            <td class="center">${muestra.fechaTermino}</td>
+                            <td class="center">${muestra.aceptada ? 'Si' : 'No'}</td>
+                            <td class="center">${muestra.job}</td>
+                            <td>${muestra.comentarios}</td>
+                        </tr>
+                    `;
+                });
+                
+                // Sección de testigos (solo para MPS)
+                const seccionTestigos = tipoMuestra === 'MPS' ? `
+                    <table class="tabla-recepcion">
+                        <thead>
+                            <tr>
+                                <th>Testigo</th>
+                                <th>Temperatura Leída</th>
+                                <th>Temperatura Contratada</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Plástico</td>
+                                <td class="center">7.7°C</td>
+                                <td class="center">8°C</td>
+                                <td class="center">24-12-2025</td>
+                                <td class="center">13:00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="data-row">
+                        <span class="data-label">Termómetro</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">LAB-ITR-352-AN</span>
+                    </div>
+                ` : '';
+                
+                const tituloRecepcion = tipoMuestra === 'MPS' ? 'Datos de Recepción e Ingreso de Muestras' : 'Datos de Recepción';
+                
+                // HTML completo del PDF
+                return `
+                    <!-- CABECERA -->
+                    <div class="cabecera">
+                        <div>
+                            <div class="logo-sgs">SGS</div>
+                            <div class="codigo-documento">R6-I-GL-LAB-011 REV 00 ED 00 10/2024</div>
+                        </div>
+                        <div class="titulo-centro">
+                            <div class="titulo-principal">CADENA DE CUSTODIA N° ${currentCardData.oi}</div>
+                        </div>
+                    </div>
+
+                    <!-- INFORMACIÓN CLIENTE -->
+                    <div class="seccion-titulo">Información Cliente</div>
+                    
+                    <div class="data-row">
+                        <span class="data-label">SOLICITANTE</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${currentCardData.cliente}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">ADC Responsable</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">kpizarro</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">OL</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${currentCardData.ol}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Folio OI</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${currentCardData.oi}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Contacto</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">Cristian Escobar</span>
+                    </div>
+
+                    <!-- INFORMACIÓN GENERAL -->
+                    <div class="seccion-titulo">Información General</div>
+                    
+                    <div class="data-row">
+                        <span class="data-label">Tipo de muestra</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${tipoMuestra}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Origen de las muestras (Matriz)</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${currentCardData.matriz}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Muestreados por</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${currentCardData.muestreadoPor}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Destino de la muestra</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">Laboratorio SGS Santiago</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Número de muestras (aceptadas)</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${numAceptadas} de ${muestras.length}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Proyecto</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">Default project</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Plan</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${currentCardData.plan}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Generación de JOB</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${textoGeneracionJob}</span>
+                    </div>
+
+                    <!-- LISTADO DE MUESTRAS -->
+                    <div class="seccion-titulo">Listado de Muestras</div>
+                    
+                    <table class="tabla-puntos">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>ID MUESTRA / LUGAR DE MUESTREO</th>
+                                <th>FECHA/HORA INICIO</th>
+                                <th>FECHA/HORA TÉRMINO</th>
+                                <th>ACEPTADA</th>
+                                <th>JOB</th>
+                                <th>COMENTARIOS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${filasTabla}
+                        </tbody>
+                    </table>
+
+                    <div class="data-row">
+                        <span class="data-label">Fecha y hora del transporte</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">24-12-2025 10:30</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Responsable del monitoreo</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">Juan Muestras</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Observaciones de Terreno</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">N/A</span>
+                    </div>
+
+                    <!-- DATOS DE RECEPCIÓN -->
+                    <div class="seccion-titulo">${tituloRecepcion}</div>
+                    
+                    ${seccionTestigos}
+
+                    <div class="data-row">
+                        <span class="data-label">Fecha de Recepción</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${currentCardData.recepcion}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Responsable de Recepción</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">ARIEL ENRIQUE</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Criterios de Aceptación</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${currentCardData.criterioAceptacion}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Observaciones de Recepción</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">Muestras aceptadas</span>
+                    </div>
+
+                    <!-- FOOTER -->
+                    <div class="footer">
+                        SGS Chile Ltda. Santiago: Puerto Madero #130, Pudahuel | Antofagasta: Av. Pedro Aguirre Cerda #7367 | Concepción: Av. Américo Vespucio #820 | Pto. Varas: Ruta 5 Sur KM 103<br>
+                        T (56-2) 289 89500, (56-2) 289 89512, (56-55) 223 4098, (56-41) 241 6577. www.sgs.com
+                    </div>
+                `;
+            }
+
+            // ========== DESCARGAR PDF DESDE MODAL ==========
+            function descargarPDFModal() {
+                alert('Función de descarga de PDF con jsPDF - Por implementar');
+                // Aquí se implementará la descarga real con jsPDF
+            }
+
+            // ========== FUNCIONES PARA MUESTRAS INDIVIDUALES ==========
+            // Variable global para almacenar el índice de la muestra seleccionada
+            let muestraSeleccionadaIndex = null;
+
+            function previsualizarPDFMuestra(index) {
+                muestraSeleccionadaIndex = index;
+                const modalPreview = document.getElementById('modalPreview');
+                const previewContent = document.getElementById('pdfPreviewContent');
+                
+                // Generar contenido del PDF para la muestra específica
+                previewContent.innerHTML = generarHTMLPDFMuestra(index);
+                
+                // Mostrar modal de preview
+                modalPreview.style.display = 'block';
+            }
+
+            function descargarPDFMuestra(index) {
+                muestraSeleccionadaIndex = index;
+                alert(`Descargando PDF de la muestra #${index + 1} - Por implementar con jsPDF`);
+                // Aquí se implementará la descarga real con jsPDF
+            }
+
+            function generarHTMLPDFMuestra(index) {
+                const muestras = generarMuestrasSimuladas(parseInt(currentCardData.muestras));
+                const muestra = muestras[index];
+                const tipoMuestra = currentCardData.tipoMuestreo;
+                
+                // Para "por-punto" solo mostramos 1 muestra
+                const filasTabla = `
+                    <tr>
+                        <td class="center">1</td>
+                        <td>${muestra.id}<br>${muestra.lugar}</td>
+                        <td class="center">${muestra.fechaInicio}</td>
+                        <td class="center">${muestra.fechaTermino}</td>
+                        <td class="center">${muestra.aceptada ? 'Si' : 'No'}</td>
+                        <td class="center">${muestra.job}</td>
+                        <td>${muestra.comentarios}</td>
+                    </tr>
+                `;
+                
+                // Generar texto de generación de JOB
+                const textoGeneracionJob = 'Generar un Job por punto ingresado';
+                
+                // Sección de testigos (solo para MPS)
+                const seccionTestigos = tipoMuestra === 'MPS' ? `
+                    <table class="tabla-recepcion">
+                        <thead>
+                            <tr>
+                                <th>Testigo</th>
+                                <th>Temperatura Leída</th>
+                                <th>Temperatura Contratada</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Plástico</td>
+                                <td class="center">7.7°C</td>
+                                <td class="center">8°C</td>
+                                <td class="center">24-12-2025</td>
+                                <td class="center">13:00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="data-row">
+                        <span class="data-label">Termómetro</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">LAB-ITR-352-AN</span>
+                    </div>
+                ` : '';
+                
+                const tituloRecepcion = tipoMuestra === 'MPS' ? 'Datos de Recepción e Ingreso de Muestras' : 'Datos de Recepción';
+                
+                // HTML completo del PDF
+                return `
+                    <!-- CABECERA -->
+                    <div class="cabecera">
+                        <div>
+                            <div class="logo-sgs">SGS</div>
+                            <div class="codigo-documento">R6-I-GL-LAB-011 REV 00 ED 00 10/2024</div>
+                        </div>
+                        <div class="titulo-centro">
+                            <div class="titulo-principal">CADENA DE CUSTODIA N° ${currentCardData.oi}</div>
+                        </div>
+                    </div>
+
+                    <!-- INFORMACIÓN CLIENTE -->
+                    <div class="seccion-titulo">Información Cliente</div>
+                    
+                    <div class="data-row">
+                        <span class="data-label">SOLICITANTE</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${currentCardData.cliente}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">ADC Responsable</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">kpizarro</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">OL</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${currentCardData.ol}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Folio OI</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${currentCardData.oi}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Contacto</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">Cristian Escobar</span>
+                    </div>
+
+                    <!-- INFORMACIÓN GENERAL -->
+                    <div class="seccion-titulo">Información General</div>
+                    
+                    <div class="data-row">
+                        <span class="data-label">Tipo de muestra</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${tipoMuestra}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Origen de las muestras (Matriz)</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${currentCardData.matriz}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Muestreados por</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${currentCardData.muestreadoPor}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Destino de la muestra</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">Laboratorio SGS Santiago</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Número de muestras (aceptadas)</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${muestra.aceptada ? '1' : '0'} de 1</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Proyecto</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">Default project</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Plan</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${currentCardData.plan}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Generación de JOB</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${textoGeneracionJob}</span>
+                    </div>
+
+                    <!-- LISTADO DE MUESTRAS -->
+                    <div class="seccion-titulo">Listado de Muestras</div>
+                    
+                    <table class="tabla-puntos">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>ID MUESTRA / LUGAR DE MUESTREO</th>
+                                <th>FECHA/HORA INICIO</th>
+                                <th>FECHA/HORA TÉRMINO</th>
+                                <th>ACEPTADA</th>
+                                <th>JOB</th>
+                                <th>COMENTARIOS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${filasTabla}
+                        </tbody>
+                    </table>
+
+                    <div class="data-row">
+                        <span class="data-label">Fecha y hora del transporte</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">24-12-2025 10:30</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Responsable del monitoreo</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">Juan Muestras</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Observaciones de Terreno</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">N/A</span>
+                    </div>
+
+                    <!-- DATOS DE RECEPCIÓN -->
+                    <div class="seccion-titulo">${tituloRecepcion}</div>
+                    
+                    ${seccionTestigos}
+
+                    <div class="data-row">
+                        <span class="data-label">Fecha de Recepción</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${currentCardData.recepcion}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Responsable de Recepción</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">ARIEL ENRIQUE</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Criterios de Aceptación</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">${currentCardData.criterioAceptacion}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Observaciones de Recepción</span>
+                        <span class="data-separator">:</span>
+                        <span class="data-value">Muestras aceptadas</span>
+                    </div>
+
+                    <!-- FOOTER -->
+                    <div class="footer">
+                        SGS Chile Ltda. Santiago: Puerto Madero #130, Pudahuel | Antofagasta: Av. Pedro Aguirre Cerda #7367 | Concepción: Av. Américo Vespucio #820 | Pto. Varas: Ruta 5 Sur KM 103<br>
+                        T (56-2) 289 89500, (56-2) 289 89512, (56-55) 223 4098, (56-41) 241 6577. www.sgs.com
+                    </div>
+                `;
+            }
         });
     </script>
+
+    <!-- ========== MODAL DE SELECCIÓN DE MUESTRAS ========== -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="modal-container" id="modalMuestras">
+        <div class="modal-header-custom">
+            <h3>Descargar Cadena de Custodia</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body-custom" id="modalBody">
+            <!-- El contenido se genera dinámicamente -->
+        </div>
+        <div class="modal-footer-custom">
+            <button class="btn-modal btn-cancel">
+                <i class="fa fa-times"></i> Cancelar
+            </button>
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <div id="jobTotalidadContainer" style="display: none; align-items: center; gap: 8px;">
+                    <span style="font-size: 12px; color: #666; font-weight: 600;">JOB:</span>
+                    <span class="job-code" style="font-size: 16px; font-weight: 700; color: #333;"></span>
+                </div>
+                <button class="btn-modal btn-download" id="btnDescargarModal">
+                    <i class="fa fa-download"></i> Descargar
+                </button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
