@@ -219,6 +219,12 @@
             height: 38px;
         }
 
+        .button-group-filters {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
         .button-group {
             display: flex;
             gap: 8px;
@@ -291,6 +297,29 @@
 
         .btn-ver-mas.expanded i {
             transform: rotate(180deg);
+        }
+
+        .btn-holding-time {
+            background-color: #a49e93;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 400;
+            height: 38px;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+        .btn-holding-time:hover {
+            background-color: #8a847c;
+        }
+        .btn-holding-time.active {
+            background-color: #ef8157;
+        }
+        .btn-holding-time i {
+            margin-right: 5px;
         }
 
         .filtros-adicionales {
@@ -606,6 +635,11 @@
         @media (max-width: 768px) {
             .btn-buscar {
                 flex: 1;
+                min-width: 100%; /* Ocupa toda la primera fila */
+            }
+            .button-group-filters {
+                flex-wrap: wrap; /* Permite que los botones salten a la siguiente línea */
+                justify-content: flex-start;
             }
         }
 
@@ -686,16 +720,28 @@
                             </div>
                             <div class="col-lg-7 col-md-6 col-12 mb-3">
                                 <label class="d-none d-md-block">&nbsp;</label>
-                                <div style="display: flex; gap: 10px;">
+                                <div class="button-group-filters">
                                     <button class="btn-buscar">
                                         <i class="fa fa-search"></i> Buscar
                                     </button>
                                     <button class="btn-limpiar" title="Restablecer filtros">
                                         <i class="fa fa-undo"></i>
                                     </button>
-                                    <button id="btn-ver-mas" class="btn-ver-mas" title="Ver más filtros">
+                                    <button id="btn-ver-mas" class="btn-ver-mas" title="Ver más filtros" style="flex-shrink: 0;">
                                         <i class="fa fa-chevron-down"></i> Ver más
                                     </button>
+                                    <button id="btn-holding-time" class="btn-holding-time" title="Filtrar por Holding Time crítico">
+                                        <i class="fa fa-clock"></i> Holding Time (<span id="holding-time-count">0</span>)
+                                    </button>
+                                    <div class="form-group mb-0 ml-auto">
+                                        <label for="sort-select" class="sr-only">Ordenar por</label>
+                                        <select id="sort-select" class="form-control" title="Ordenar resultados" style="height: 38px;">
+                                            <option value="default">Ordenar por...</option>
+                                            <option value="fecha-antiguo">Fecha de envío (antiguo)</option>
+                                            <option value="holding-time">Prioridad Holding Time</option>
+                                            <option value="oi">Número de OI</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -751,7 +797,6 @@
 
                 <!-- Document List -->
                 <div id="documentList">
-                <div id="documentList">
                     <!-- Document 1 -->
                     <div class="card document-card" 
                          data-oi="213210" 
@@ -787,16 +832,8 @@
                                 </div>
                                 <div class="flex-break"></div> <!-- Fuerza un salto de línea aquí -->
                                 <div class="document-info-item">
-                                    <i class="fa fa-hands"></i>
-                                    <span><span class="info-label-inline">Muestreado por:</span> <span class="info-value-inline">SGS</span></span>
-                                </div>
-                                <div class="document-info-item">
                                     <i class="fa fa-calendar"></i>
                                     <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">23-12-2025</span></span>
-                                </div>
-                                <div class="document-info-item">
-                                    <i class="fa fa-calendar-check"></i>
-                                    <span><span class="info-label-inline">Recepción:</span> <span class="info-value-inline">pendiente</span></span>
                                 </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-layer-group"></i>
@@ -850,16 +887,8 @@
                                 </div>
                                 <div class="flex-break"></div> <!-- Fuerza un salto de línea aquí -->
                                 <div class="document-info-item">
-                                    <i class="fa fa-hands"></i>
-                                    <span><span class="info-label-inline">Muestreado por:</span> <span class="info-value-inline">Cliente</span></span>
-                                </div>
-                                <div class="document-info-item">
                                     <i class="fa fa-calendar"></i>
                                     <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">22-12-2025</span></span>
-                                </div>
-                                <div class="document-info-item">
-                                    <i class="fa fa-calendar-check"></i>
-                                    <span><span class="info-label-inline">Recepción:</span> <span class="info-value-inline">23-12-2025</span></span>
                                 </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-layer-group"></i>
@@ -912,16 +941,8 @@
                                 </div>
                                 <div class="flex-break"></div> <!-- Fuerza un salto de línea aquí -->
                                 <div class="document-info-item">
-                                    <i class="fa fa-hands"></i>
-                                    <span><span class="info-label-inline">Muestreado por:</span> <span class="info-value-inline">Cliente</span></span>
-                                </div>
-                                <div class="document-info-item">
                                     <i class="fa fa-calendar"></i>
                                     <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">20-12-2025</span></span>
-                                </div>
-                                <div class="document-info-item">
-                                    <i class="fa fa-calendar-check"></i>
-                                    <span><span class="info-label-inline">Recepción:</span> <span class="info-value-inline">pendiente</span></span>
                                 </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-layer-group"></i>
@@ -975,16 +996,8 @@
                                 </div>
                                 <div class="flex-break"></div> <!-- Fuerza un salto de línea aquí -->
                                 <div class="document-info-item">
-                                    <i class="fa fa-hands"></i>
-                                    <span><span class="info-label-inline">Muestreado por:</span> <span class="info-value-inline">Cliente</span></span>
-                                </div>
-                                <div class="document-info-item">
                                     <i class="fa fa-calendar"></i>
                                     <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">19-12-2025</span></span>
-                                </div>
-                                <div class="document-info-item">
-                                    <i class="fa fa-calendar-check"></i>
-                                    <span><span class="info-label-inline">Recepción:</span> <span class="info-value-inline">pendiente</span></span>
                                 </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-layer-group"></i>
@@ -1038,16 +1051,8 @@
                                 </div>
                                 <div class="flex-break"></div> <!-- Fuerza un salto de línea aquí -->
                                 <div class="document-info-item">
-                                    <i class="fa fa-hands"></i>
-                                    <span><span class="info-label-inline">Muestreado por:</span> <span class="info-value-inline">SGS</span></span>
-                                </div>
-                                <div class="document-info-item">
                                     <i class="fa fa-calendar"></i>
                                     <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">18-12-2025</span></span>
-                                </div>
-                                <div class="document-info-item">
-                                    <i class="fa fa-calendar-check"></i>
-                                    <span><span class="info-label-inline">Recepción:</span> <span class="info-value-inline">19-12-2025</span></span>
                                 </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-layer-group"></i>
@@ -1056,6 +1061,53 @@
                                 <div class="document-info-item">
                                     <i class="fa fa-vial"></i>
                                     <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">25</span></span>
+                                </div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-info-circle"></i>
+                                    <span><span class="info-label-inline">Estado:</span> <span class="info-value-inline">Por Ingresar</span></span>
+                                </div>
+                            </div>
+                            <div class="holding-time-container"></div>
+                        </div>
+                    </div>
+
+                    <!-- Document 6 (NUEVO) -->
+                    <div class="card document-card"
+                         data-oi="213206"
+                         data-tipo-muestreo="FILTRO"
+                         data-ol="700417"
+                         data-estado="Por Ingresar"
+                         data-matriz="AIRE_MP_FILTRO_HIG"
+                         data-enviado="2025-12-17"
+                         data-termino-muestreo="2025-12-17T10:00:00">
+                        <div class="card-body">
+                            <div class="document-card-header">
+                                <div class="document-title-section">
+                                    <span class="document-oi">
+                                        <span class="document-oi-label">OI</span> 213206
+                                    </span>
+                                    <span class="badge badge-info">FILTRO</span><span class="badge badge-warning">HIG</span>
+                                </div>
+                                <div class="document-actions-header">
+                                    <button class="btn-recepcionar" data-action="recepcionar">
+                                        <i class="fa fa-box"></i> Recepcionar
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="document-info-line">
+                                <div class="document-info-item ol-item">
+                                    <i class="fa fa-cube"></i>
+                                    <span><span class="info-label-inline">OL:</span> <span class="info-value-inline">700417</span></span>
+                                </div>
+                                <div class="document-info-item cliente-item">
+                                    <i class="fa fa-user"></i>
+                                    <span><span class="info-label-inline">Cliente:</span> <span class="info-value-inline">ANGLO AMERICAN</span></span>
+                                </div>
+                                <div class="flex-break"></div>
+                                <div class="document-info-item">
+                                    <i class="fa fa-calendar"></i>
+                                    <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">17-12-2025</span></span>
                                 </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-info-circle"></i>
@@ -1077,7 +1129,7 @@
                 <!-- Pagination -->
                 <div class="pagination-wrapper">
                     <div class="pagination-info">
-                        Mostrando <span id="pagination-count">5</span> de <span id="pagination-total">5</span>
+                        Mostrando <span id="pagination-count">6</span> de <span id="pagination-total">6</span>
                     </div>
                     <ul class="pagination mb-0">
                         <li class="page-item disabled"><a class="page-link" href="#">‹</a></li>
@@ -1100,11 +1152,17 @@
             const btnBuscar = document.querySelector('.btn-buscar');
             const btnLimpiar = document.querySelector('.btn-limpiar');
             const btnVerMas = document.getElementById('btn-ver-mas');
+            const btnHoldingTime = document.getElementById('btn-holding-time');
             const filtrosAdicionales = document.getElementById('filtros-adicionales');
             const filterForm = document.querySelector('.card-content');
+            const documentList = document.getElementById('documentList');
             const documentCards = document.querySelectorAll('.document-card');
             const paginationCount = document.getElementById('pagination-count');
             const paginationTotal = document.getElementById('pagination-total');
+            const sortSelect = document.getElementById('sort-select');
+
+            // Guardar el orden original para el orden por defecto
+            const originalOrder = Array.from(documentCards);
 
             // --- Lógica del botón "Ver más" ---
             if (btnVerMas) {
@@ -1127,6 +1185,7 @@
             function resetFilters() {
                 // Resetear todos los inputs y selects del formulario
                 filterForm.querySelectorAll('input, select').forEach(field => {
+                    if (field.id === 'sort-select') return; // No resetear el dropdown de orden
                     if (field.type === 'text' || field.type === 'date') {
                         field.value = '';
                     } else if (field.tagName === 'SELECT') {
@@ -1144,6 +1203,7 @@
                     ol: document.getElementById('filter-ol').value.toLowerCase(),
                     desde: document.getElementById('filter-desde').value, // Formato YYYY-MM-DD
                     hasta: document.getElementById('filter-hasta').value, // Formato YYYY-MM-DD
+                    holdingTimeActivo: btnHoldingTime.classList.contains('active')
                 };
 
                 let visibleCount = 0;
@@ -1155,12 +1215,14 @@
                         ol: card.dataset.ol.toLowerCase(),
                         enviado: card.dataset.enviado, // Formato YYYY-MM-DD
                     };
+                    
+                    const tieneAlertaCritica = card.classList.contains('alerta-holding-time');
 
                     const showCard = 
                         (filters.tipoMuestreo === 'Todos' || filters.tipoMuestreo === cardData.tipoMuestreo) &&
                         (cardData.folio.includes(filters.folio)) &&
                         (cardData.ol.includes(filters.ol)) &&
-                        // Comprobación de fechas (funciona con strings en formato YYYY-MM-DD)
+                        (!filters.holdingTimeActivo || tieneAlertaCritica) && // Filtra por alerta de holding time si el botón está activo
                         (!filters.desde || cardData.enviado >= filters.desde) &&
                         (!filters.hasta || cardData.enviado <= filters.hasta);
 
@@ -1177,6 +1239,40 @@
                 paginationCount.textContent = visibleCount;
                 paginationTotal.textContent = total;
             }
+
+            // --- Lógica de Ordenamiento ---
+            function sortDocuments() {
+                const sortBy = sortSelect.value;
+                let cards = Array.from(documentCards);
+
+                if (sortBy === 'default') {
+                    cards = originalOrder;
+                } else if (sortBy === 'fecha-antiguo') {
+                    cards.sort((a, b) => new Date(a.dataset.enviado) - new Date(b.dataset.enviado));
+                } else if (sortBy === 'oi') {
+                    cards.sort((a, b) => parseInt(a.dataset.oi) - parseInt(b.dataset.oi));
+                } else if (sortBy === 'holding-time') {
+                    cards.sort((a, b) => {
+                        const priorityA = parseInt(a.dataset.holdingTimePriority || '3');
+                        const priorityB = parseInt(b.dataset.holdingTimePriority || '3');
+                        if (priorityA !== priorityB) {
+                            return priorityA - priorityB;
+                        }
+                        // Si la prioridad es la misma, ordenar por el tiempo restante (menor tiempo primero)
+                        const timeA = parseFloat(a.dataset.holdingTimeRemaining || Infinity);
+                        const timeB = parseFloat(b.dataset.holdingTimeRemaining || Infinity);
+                        return timeA - timeB;
+                    });
+                }
+
+                // Re-adjuntar las tarjetas ordenadas al contenedor
+                cards.forEach(card => documentList.appendChild(card));
+            }
+
+            if (sortSelect) {
+                sortSelect.addEventListener('change', sortDocuments);
+            }
+
 
             // --- Lógica del Sidebar ---
             if (btnMenu) {
@@ -1214,6 +1310,14 @@
                 });
             }
 
+            // --- Lógica del botón de Holding Time ---
+            if (btnHoldingTime) {
+                btnHoldingTime.addEventListener('click', () => {
+                    btnHoldingTime.classList.toggle('active');
+                    applyFilters();
+                });
+            }
+
             // --- Lógica de Eventos Globales (Delegación de eventos) ---
             document.addEventListener('click', function(event) {
                 const target = event.target;
@@ -1235,37 +1339,58 @@
             function checkHoldingTime() {
                 const ahora = new Date();
                 const holdingTimeMaxHoras = 96;
+                let contadorAlertas = 0;
 
                 documentCards.forEach((card, index) => { // El 'index' es para la simulación
+                    // Asignar una prioridad y tiempo por defecto
+                    card.dataset.holdingTimePriority = '3'; // 3 = Sin alerta/No aplica
+                    card.dataset.holdingTimeRemaining = Infinity;
+
+                    const tipoMuestreo = card.dataset.tipoMuestreo;
+                    const badges = card.querySelectorAll('.badge');
+                    let tipoFiltro = '';
+                    badges.forEach(badge => {
+                        const text = badge.textContent.toUpperCase();
+                        if (['MP10', 'MP2.5'].includes(text)) {
+                            tipoFiltro = text;
+                        }
+                    });
+
+                    // La alerta solo aplica a FILTRO con tipo MP10 o MP2.5
+                    if (tipoMuestreo !== 'FILTRO' || !['MP10', 'MP2.5'].includes(tipoFiltro)) {
+                        return; // No hacer nada para esta tarjeta
+                    }
+
                     const terminoMuestreoStr = card.dataset.terminoMuestreo;
                     if (!terminoMuestreoStr) return;
 
                     // --- SIMULACIÓN PARA MAQUETA ---
-                    // Para que las alertas sean visibles, ajustamos las fechas de ejemplo
-                    // para que sean relativas a la fecha actual.
-                    let terminoMuestreo = new Date(); // Empezamos con la fecha y hora de hoy para simular
+                    let terminoMuestreo = new Date();
                     if (index === 0) { // Documento 1: OK (verde)
-                        terminoMuestreo.setHours(terminoMuestreo.getHours() - (holdingTimeMaxHoras - 25)); // Quedan 25 horas
+                        terminoMuestreo.setHours(terminoMuestreo.getHours() - (holdingTimeMaxHoras - 25));
                     } else if (index === 1) { // Documento 2: Advertencia (amarillo)
-                        terminoMuestreo.setHours(terminoMuestreo.getHours() - (holdingTimeMaxHoras - 4)); // Quedan 4 horas
+                        terminoMuestreo.setHours(terminoMuestreo.getHours() - (holdingTimeMaxHoras - 4));
                     } else if (index === 2) { // Documento 3: Peligro (rojo)
-                        terminoMuestreo.setHours(terminoMuestreo.getHours() - (holdingTimeMaxHoras + 5)); // Venció hace 5 horas
-                    }
-                    // Los demás documentos no mostrarán alerta, ya que su fecha simulada es la actual.
+                        terminoMuestreo.setHours(terminoMuestreo.getHours() - (holdingTimeMaxHoras + 5));
+                    } 
                     // ---------------------------------
 
                     const tiempoLimite = new Date(terminoMuestreo.getTime() + holdingTimeMaxHoras * 60 * 60 * 1000);
-
                     const diffMilisegundos = tiempoLimite - ahora;
                     const diffHoras = diffMilisegundos / (1000 * 60 * 60);
+                    
+                    card.dataset.holdingTimeRemaining = diffHoras;
 
                     const container = card.querySelector('.holding-time-container');
                     container.innerHTML = ''; // Limpiar alertas previas
+                    card.classList.remove('alerta-holding-time');
 
                     let alertHtml = '';
 
                     if (diffHoras < 0) {
-                        // Tiempo excedido
+                        contadorAlertas++;
+                        card.classList.add('alerta-holding-time');
+                        card.dataset.holdingTimePriority = '0'; // 0 = Peligro
                         const horasExcedidas = Math.abs(Math.round(diffHoras));
                         alertHtml = `
                             <div class="holding-time-alert alert-danger">
@@ -1273,7 +1398,9 @@
                                 <span>Holding time excedido por ${horasExcedidas} hs.</span>
                             </div>`;
                     } else if (diffHoras <= 6) {
-                        // Tiempo restante es 6 horas o menos (amarillo)
+                        contadorAlertas++;
+                        card.classList.add('alerta-holding-time');
+                        card.dataset.holdingTimePriority = '1'; // 1 = Advertencia
                         const horasRestantes = Math.floor(diffHoras);
                         const minutosRestantes = Math.floor((diffHoras - horasRestantes) * 60);
                         alertHtml = `
@@ -1282,7 +1409,7 @@
                                 <span>Quedan ${horasRestantes}h ${minutosRestantes}m para cumplir holding time.</span>
                             </div>`;
                     } else {
-                        // Queda más de 6 horas (verde)
+                        card.dataset.holdingTimePriority = '2'; // 2 = OK
                         const diasRestantes = Math.floor(diffHoras / 24);
                         const horasRestantes = Math.floor(diffHoras) % 24;
                         let tiempoStr = diasRestantes > 0 ? 
@@ -1299,10 +1426,15 @@
                         container.innerHTML = alertHtml;
                     }
                 });
+
+                // Actualizar el contador en el botón
+                document.getElementById('holding-time-count').textContent = contadorAlertas;
             }
 
             // Ejecutar la comprobación al cargar la página
             checkHoldingTime();
+            // Ordenar inicialmente por defecto (orden original del DOM)
+            sortDocuments();
         });
     </script>
 </body>

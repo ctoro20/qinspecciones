@@ -1286,11 +1286,19 @@
                     <div class="card-content">
                         <!-- Fila principal de filtro (siempre visible) -->
                         <div class="row align-items-end">
-                            <div class="col-lg-5 col-md-6 col-12 mb-3">
-                                <label for="filter-folio">Folio (OI)</label>
-                                <input type="text" id="filter-folio" class="form-control" placeholder="Buscar por N° de Folio (OI)">
+                            <div class="col-lg-6 col-md-6 col-12 mb-3">
+                                <div class="row">
+                                    <div class="col-sm-6 col-6">
+                                        <label for="filter-folio">Folio (OI)</label>
+                                        <input type="text" id="filter-folio" class="form-control" placeholder="Buscar por N° de Folio (OI)">
+                                    </div>
+                                    <div class="col-sm-6 col-6">
+                                        <label for="filter-job">Job</label>
+                                        <input type="text" id="filter-job" class="form-control" placeholder="Buscar por Job">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-lg-7 col-md-6 col-12 mb-3">
+                            <div class="col-lg-6 col-md-6 col-12 mb-3">
                                 <label class="d-none d-md-block">&nbsp;</label>
                                 <div style="display: flex; gap: 10px;">
                                     <button class="btn-buscar">
@@ -1401,14 +1409,6 @@
                                 </div>
                                 <div class="flex-break"></div> <!-- Fuerza un salto de línea aquí -->
                                 <div class="document-info-item">
-                                    <i class="fa fa-hands"></i>
-                                    <span><span class="info-label-inline">Muestreado por:</span> <span class="info-value-inline">SGS</span></span>
-                                </div>
-                                <div class="document-info-item">
-                                    <i class="fa fa-calendar"></i>
-                                    <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">23-12-2025</span></span>
-                                </div>
-                                <div class="document-info-item">
                                     <i class="fa fa-calendar-check"></i>
                                     <span><span class="info-label-inline">Recepción:</span> <span class="info-value-inline">24-12-2025</span></span>
                                 </div>
@@ -1418,7 +1418,7 @@
                                 </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-vial"></i>
-                                    <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">20</span></span>
+                                    <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">20 aceptadas de 20</span></span>
                                 </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-info-circle"></i>
@@ -1426,10 +1426,6 @@
                                 </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-check-square"></i>
-                                    <span><span class="info-label-inline">Criterio Aceptación:</span> <span class="info-value-inline">Aceptadas</span></span>
-                                </div>
-                                <div class="document-info-item">
-                                    <i class="fa fa-barcode"></i>
                                     <span><span class="info-label-inline">JOB:</span> <span class="info-value-inline">Por Punto</span></span>
                                 </div>
                             </div>
@@ -1479,14 +1475,6 @@
                                 </div>
                                 <div class="flex-break"></div> <!-- Fuerza un salto de línea aquí -->
                                 <div class="document-info-item">
-                                    <i class="fa fa-hands"></i>
-                                    <span><span class="info-label-inline">Muestreado por:</span> <span class="info-value-inline">Cliente</span></span>
-                                </div>
-                                <div class="document-info-item">
-                                    <i class="fa fa-calendar"></i>
-                                    <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">22-12-2025</span></span>
-                                </div>
-                                <div class="document-info-item">
                                     <i class="fa fa-calendar-check"></i>
                                     <span><span class="info-label-inline">Recepción:</span> <span class="info-value-inline">23-12-2025</span></span>
                                 </div>
@@ -1496,7 +1484,7 @@
                                 </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-vial"></i>
-                                    <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">15</span></span>
+                                    <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">14 aceptadas de 15</span></span>
                                 </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-info-circle"></i>
@@ -1504,10 +1492,6 @@
                                 </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-check-square"></i>
-                                    <span><span class="info-label-inline">Criterio Aceptación:</span> <span class="info-value-inline">Aceptadas (con observación)</span></span>
-                                </div>
-                                <div class="document-info-item">
-                                    <i class="fa fa-barcode"></i>
                                     <span><span class="info-label-inline">JOB:</span> <span class="info-value-inline">Por Punto</span></span>
                                 </div>
                             </div>
@@ -1556,14 +1540,6 @@
                                 </div>
                                 <div class="flex-break"></div> <!-- Fuerza un salto de línea aquí -->
                                 <div class="document-info-item">
-                                    <i class="fa fa-hands"></i>
-                                    <span><span class="info-label-inline">Muestreado por:</span> <span class="info-value-inline">Cliente</span></span>
-                                </div>
-                                <div class="document-info-item">
-                                    <i class="fa fa-calendar"></i>
-                                    <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">20-12-2025</span></span>
-                                </div>
-                                <div class="document-info-item">
                                     <i class="fa fa-calendar-check"></i>
                                     <span><span class="info-label-inline">Recepción:</span> <span class="info-value-inline">21-12-2025</span></span>
                                 </div>
@@ -1573,7 +1549,7 @@
                                 </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-vial"></i>
-                                    <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">15</span></span>
+                                    <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">15 aceptadas de 15</span></span>
                                 </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-info-circle"></i>
@@ -1581,10 +1557,6 @@
                                 </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-check-square"></i>
-                                    <span><span class="info-label-inline">Criterio Aceptación:</span> <span class="info-value-inline">Aceptadas</span></span>
-                                </div>
-                                <div class="document-info-item">
-                                    <i class="fa fa-barcode"></i>
                                     <span><span class="info-label-inline">JOB:</span> <span class="info-value-inline">Totalidad Puntos</span></span>
                                 </div>
                             </div>
@@ -1634,14 +1606,6 @@
                                 </div>
                                 <div class="flex-break"></div> <!-- Fuerza un salto de línea aquí -->
                                 <div class="document-info-item">
-                                    <i class="fa fa-hands"></i>
-                                    <span><span class="info-label-inline">Muestreado por:</span> <span class="info-value-inline">Cliente</span></span>
-                                </div>
-                                <div class="document-info-item">
-                                    <i class="fa fa-calendar"></i>
-                                    <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">19-12-2025</span></span>
-                                </div>
-                                <div class="document-info-item">
                                     <i class="fa fa-calendar-check"></i>
                                     <span><span class="info-label-inline">Recepción:</span> <span class="info-value-inline">20-12-2025</span></span>
                                 </div>
@@ -1651,7 +1615,7 @@
                                 </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-vial"></i>
-                                    <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">12</span></span>
+                                    <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">12 aceptadas de 12</span></span>
                                 </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-info-circle"></i>
@@ -1659,10 +1623,6 @@
                                  </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-check-square"></i>
-                                    <span><span class="info-label-inline">Criterio Aceptación:</span> <span class="info-value-inline">Aceptadas</span></span>
-                                </div>
-                                <div class="document-info-item">
-                                    <i class="fa fa-barcode"></i>
                                     <span><span class="info-label-inline">JOB:</span> <span class="info-value-inline">Por Punto</span></span>
                                 </div>
                             </div>
@@ -1712,14 +1672,6 @@
                                 </div>
                                 <div class="flex-break"></div> <!-- Fuerza un salto de línea aquí -->
                                 <div class="document-info-item">
-                                    <i class="fa fa-hands"></i>
-                                    <span><span class="info-label-inline">Muestreado por:</span> <span class="info-value-inline">SGS</span></span>
-                                </div>
-                                <div class="document-info-item">
-                                    <i class="fa fa-calendar"></i>
-                                    <span><span class="info-label-inline">Enviado:</span> <span class="info-value-inline">18-12-2025</span></span>
-                                </div>
-                                <div class="document-info-item">
                                     <i class="fa fa-calendar-check"></i>
                                     <span><span class="info-label-inline">Recepción:</span> <span class="info-value-inline">19-12-2025</span></span>
                                 </div>
@@ -1729,7 +1681,7 @@
                                 </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-vial"></i>
-                                    <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">25</span></span>
+                                    <span><span class="info-label-inline">Muestras:</span> <span class="info-value-inline">0 aceptadas de 25</span></span>
                                 </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-info-circle"></i>
@@ -1737,10 +1689,6 @@
                                 </div>
                                 <div class="document-info-item">
                                     <i class="fa fa-check-square"></i>
-                                    <span><span class="info-label-inline">Criterio Aceptación:</span> <span class="info-value-inline">Rechazadas</span></span>
-                                </div>
-                                <div class="document-info-item">
-                                    <i class="fa fa-barcode"></i>
                                     <span><span class="info-label-inline">JOB:</span> <span class="info-value-inline">Por Punto</span></span>
                                 </div>
                             </div>
