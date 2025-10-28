@@ -1049,6 +1049,245 @@
             background-color: #e96342;
             border-color: #e96342;
         }
+
+        /* ========== ESTILOS PARA EL MODAL DE FINALIZACIÓN ========== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9998;
+        }
+
+        .modal-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            max-width: 900px;
+            width: 90%;
+            max-height: 85vh;
+            overflow: hidden;
+        }
+
+        .modal-header-custom {
+            background-color: #f7f7f7;
+            color: #66615B;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-header-custom h3 {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: #66615B;
+            font-size: 28px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .modal-close:hover {
+            opacity: 1;
+        }
+
+        .modal-body-custom {
+            padding: 20px 25px;
+            overflow-y: auto;
+            max-height: calc(85vh - 120px); /* Ajustado para footer simple */
+        }
+
+        .modal-info-header {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+
+        .modal-info-header-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .modal-info-oi {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .modal-info-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px 15px;
+            font-size: 11px;
+            color: #666;
+            padding-top: 10px;
+            border-top: 1px solid #e9ecef;
+        }
+        .modal-info-details strong {
+            color: #444;
+        }
+
+        /* Buscador en modal */
+        .modal-search-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .modal-search-container .form-control {
+            padding-left: 35px;
+            background-color: white;
+        }
+        .modal-search-container .fa-search {
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            color: #aaa;
+        }
+
+        .muestras-list h4 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .muestra-card-modal {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .muestra-card-modal:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+        }
+
+        .muestra-info {
+            flex: 1;
+        }
+
+        .muestra-id {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .muestra-job {
+            color: #667eea;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .muestra-aceptada {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .muestra-aceptada.si {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .muestra-aceptada.no {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .muestra-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-modal {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-preview {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-preview:hover {
+            background: #138496;
+            transform: translateY(-1px);
+        }
+
+        .btn-download {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-download:hover {
+            background: #218838;
+            transform: translateY(-1px);
+        }
+
+        .modal-footer-custom {
+            padding: 20px 30px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: flex-end; /* Alineado a la derecha */
+            gap: 15px;
+            background: #f8f9fa;
+        }
+
+        .btn-modal-footer {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-close-modal {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-close-modal:hover {
+            background: #5a6268;
+        }
+
+    </style>
+
     </style>
 </head>
 
@@ -1127,25 +1366,21 @@
         </div>
     </div>
 
-    <!-- Modal de Éxito -->
-    <div class="modal fade" id="exitoModal" tabindex="-1" aria-labelledby="exitoModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #f7f7f7; color: #66615B; border-bottom: 1px solid #eee;">
-                    <h5 class="modal-title" id="exitoModalLabel"><i class="fa fa-check-circle"></i> Ingreso Finalizado</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="exitoModalBody">
-                    <!-- Contenido dinámico -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn" id="btn-aceptar-exito">Aceptar</button>
-                </div>
-            </div>
+    <!-- Modal de Finalización de Ingreso -->
+    <div class="modal-overlay" id="modalFinalizacionOverlay"></div>
+    <div class="modal-container" id="modalFinalizacion">
+        <div class="modal-header-custom">
+            <h3 id="modalFinalizacionTitle"></h3>
+            <button class="modal-close" id="modalFinalizacionClose">&times;</button>
+        </div>
+        <div class="modal-body-custom" id="modalFinalizacionBody">
+            <!-- Contenido dinámico del modal -->
+        </div>
+        <div class="modal-footer-custom" id="modalFinalizacionFooter">
+            <!-- Botones dinámicos -->
         </div>
     </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -1739,49 +1974,34 @@
                 // --- Lógica de finalización de ingreso con modales ---
                 const btnFinalizarIngreso = document.getElementById('btn-finalizar-ingreso');
                 const btnConfirmarModal = document.getElementById('btn-confirmar-ingreso-modal');
-                const btnAceptarExito = document.getElementById('btn-aceptar-exito');
 
                 function procederConFinalizacion() {
-                    // Validar campos de temperatura para Plástico (solo si es tipo MPS)
-                    const tempLeidaPlasticoInput = document.getElementById('temp-leida-plastico');
-                    const tempContrastadaPlasticoInput = document.getElementById('temp-contrastada-plastico');
-
-                    if (tempLeidaPlasticoInput && tempContrastadaPlasticoInput) {
-                        const tempLeidaPlastico = tempLeidaPlasticoInput.value;
-                        const tempContrastadaPlastico = tempContrastadaPlasticoInput.value;
-                        if (!tempLeidaPlastico || !tempContrastadaPlastico) {
+                    // Validar campos de temperatura si es necesario
+                    if (dataDocumento.tipoMuestreo === 'MPS') {
+                        const tempLeidaPlasticoInput = document.getElementById('temp-leida-plastico');
+                        const tempContrastadaPlasticoInput = document.getElementById('temp-contrastada-plastico');
+                        if (!tempLeidaPlasticoInput.value || !tempContrastadaPlasticoInput.value) {
                             alert('⚠️ Por favor completa todos los campos de temperatura para Plástico.');
                             return;
                         }
                     }
 
-                    // Recopilar datos
-                    const marcados = Array.from(document.querySelectorAll('.checkbox-validar-punto')).filter(cb => cb.checked).length;
-                    const total = document.querySelectorAll('.checkbox-validar-punto').length;
+                    // Recopilar datos del formulario y de las muestras
                     const datosRecepcion = {
-                        laboratorio: document.getElementById('laboratorio-ingreso').value,
-                        fechaRecepcion: document.getElementById('fecha-recepcion').value,
-                        horaRecepcion: document.getElementById('hora-recepcion').value,
-                        responsable: document.getElementById('responsable-recepcion').value,
-                        criterioAceptacion: document.querySelector('input[name="criterio-aceptacion"]:checked').value,
-                        comentarios: document.getElementById('comentarios-temperatura').value,
-                        muestrasRecepcionadas: marcados,
-                        totalMuestras: total
+                        folio: dataDocumento.folio,
+                        ol: dataDocumento.ol,
+                        cliente: dataDocumento.cliente,
+                        matriz: dataDocumento.matriz,
+                        tipoMuestreo: dataDocumento.tipoMuestreo,
+                        muestras: Array.from(document.querySelectorAll('.punto-card')).map(card => ({
+                            id: card.querySelector('.punto-id-text').innerText.trim(),
+                            aceptada: card.querySelector('.checkbox-validar-punto').checked
+                        })),
+                        // Simulación de generación de JOB
+                        generacionJob: 'por-punto' // O 'mismo-job' según corresponda
                     };
 
-                    console.log('Datos de recepción:', datosRecepcion);
-
-                    // Preparar y mostrar modal de éxito
-                    const exitoModalBody = document.getElementById('exitoModalBody');
-                    exitoModalBody.innerHTML = `
-                        <p>El ingreso se ha registrado correctamente.</p>
-                        <ul class="list-unstyled">
-                            <li><strong>Muestras recepcionadas:</strong> ${marcados} de ${total}</li>
-                            <li><strong>Laboratorio:</strong> ${document.querySelector('#laboratorio-ingreso option:checked').text}</li>
-                            <li><strong>Criterio:</strong> ${document.querySelector('input[name="criterio-aceptacion"]:checked + span').textContent.trim()}</li>
-                        </ul>
-                    `;
-                    $('#exitoModal').modal('show');
+                    abrirModalFinalizacion(datosRecepcion);
                 }
 
                 if (btnFinalizarIngreso) {
@@ -1790,12 +2010,10 @@
                         const marcados = Array.from(document.querySelectorAll('.checkbox-validar-punto')).filter(cb => cb.checked).length;
 
                         if (marcados < total) {
-                            // Mostrar modal de confirmación para ingreso parcial
                             const confirmacionModalBody = document.getElementById('confirmacionModalBody');
                             confirmacionModalBody.textContent = `Has recepcionado ${marcados} de ${total} muestras. ¿Deseas finalizar el ingreso de todas formas?`;
                             $('#confirmacionModal').modal('show');
                         } else {
-                            // Si todas las muestras están marcadas, proceder directamente
                             procederConFinalizacion();
                         }
                     });
@@ -1808,11 +2026,127 @@
                     });
                 }
 
-                if (btnAceptarExito) {
-                    btnAceptarExito.addEventListener('click', function() {
-                        // Redireccionar a la página de listado
-                        window.location.href = 'listado-recepcion-muestras.html';
+                // --- Lógica del nuevo Modal de Finalización ---
+                let datosGlobalesModal = {};
+
+                function abrirModalFinalizacion(datos) {
+                    datosGlobalesModal = datos;
+                    const modal = document.getElementById('modalFinalizacion');
+                    const overlay = document.getElementById('modalFinalizacionOverlay');
+                    
+                    generarContenidoModalFinalizacion();
+                    
+                    modal.style.display = 'block';
+                    overlay.style.display = 'block';
+                }
+
+                function cerrarModalFinalizacion() {
+                    const modal = document.getElementById('modalFinalizacion');
+                    const overlay = document.getElementById('modalFinalizacionOverlay');
+                    modal.style.display = 'none';
+                    overlay.style.display = 'none';
+                    // Redireccionar al listado al cerrar
+                    window.location.href = 'listado-recepcion-muestras.html';
+                }
+
+                document.getElementById('modalFinalizacionClose').addEventListener('click', cerrarModalFinalizacion);
+
+                function generarJobsSimulados(muestras) {
+                    // Simula la generación de jobs. En un caso real, esto vendría del backend.
+                    return muestras.filter(m => m.aceptada).map((m, index) => ({
+                        id: m.id,
+                        job: `JOB-${datosGlobalesModal.folio}-${String(index + 1).padStart(3, '0')}`,
+                        aceptada: m.aceptada
+                    }));
+                }
+
+                function generarContenidoModalFinalizacion() {
+                    const { folio, ol, cliente, matriz, tipoMuestreo, muestras, generacionJob } = datosGlobalesModal;
+                    const modalTitle = document.getElementById('modalFinalizacionTitle');
+                    const modalBody = document.getElementById('modalFinalizacionBody');
+                    const modalFooter = document.getElementById('modalFinalizacionFooter');
+
+                    modalTitle.innerHTML = `<i class="fa fa-check-circle"></i> Ingreso Finalizado con Éxito`;
+
+                    const muestrasAceptadas = muestras.filter(m => m.aceptada);
+                    const jobsGenerados = generarJobsSimulados(muestrasAceptadas);
+
+                    const infoHeaderHTML = `
+                        <div class="modal-info-header">
+                            <div class="modal-info-header-line">
+                                <div class="modal-info-oi"><strong>OI:</strong> ${folio}</div>
+                            </div>
+                            <div class="modal-info-details">
+                                <span><strong>OL:</strong> ${ol}</span>
+                                <span><strong>Cliente:</strong> ${cliente}</span>
+                                <span><strong>Matriz:</strong> ${matriz}</span>
+                                <span><strong>Muestras Aceptadas:</strong> ${muestrasAceptadas.length} de ${muestras.length}</span>
+                            </div>
+                        </div>
+                    `;
+
+                    let muestrasHTML = `
+                        <div class="modal-search-container">
+                            <i class="fa fa-search"></i>
+                            <input type="text" class="form-control" id="modalSearch" placeholder="Buscar muestra por ID o JOB...">
+                        </div>
+                        <div class="muestras-list" id="modalMuestrasList">`;
+
+                    if (jobsGenerados.length > 0) {
+                        muestrasHTML += jobsGenerados.map((job, index) => `
+                            <div class="muestra-card-modal" data-id="${job.id}" data-job="${job.job}">
+                                <div class="muestra-info">
+                                    <div class="muestra-id">
+                                        ${job.id}
+                                        ${job.aceptada ? '<span class="muestra-aceptada si">Aceptada</span>' : '<span class="muestra-aceptada no">Rechazada</span>'}
+                                    </div>
+                                    <div class="muestra-job">
+                                        <i class="fa fa-cogs"></i> JOB: <strong>${job.job}</strong>
+                                    </div>
+                                </div>
+                                <div class="muestra-actions">
+                                    <button class="btn-modal btn-download"><i class="fa fa-download"></i> Descargar</button>
+                                </div>
+                            </div>
+                        `).join('');
+                    } else {
+                        muestrasHTML += '<p>No se generaron jobs ya que no se aceptaron muestras.</p>';
+                    }
+                    muestrasHTML += '</div>';
+
+                    modalBody.innerHTML = infoHeaderHTML + muestrasHTML;
+
+                    modalFooter.innerHTML = `
+                        <button class="btn-modal-footer btn-close-modal" id="btnCerrarFinalizacion">Cerrar</button>
+                    `;
+
+                    // Añadir listeners a los nuevos botones
+                    document.getElementById('btnCerrarFinalizacion').addEventListener('click', cerrarModalFinalizacion);
+                    
+                    // Listeners para los botones de las tarjetas de muestra
+                    modalBody.querySelectorAll('.btn-download').forEach(btn => {
+                        btn.addEventListener('click', () => alert('Función de descarga no implementada.'));
                     });
+
+                    // Lógica del buscador
+                    const modalSearchInput = document.getElementById('modalSearch');
+                    if (modalSearchInput) {
+                        modalSearchInput.addEventListener('keyup', function() {
+                            const searchTerm = this.value.toLowerCase();
+                            const muestras = modalBody.querySelectorAll('.muestra-card-modal');
+                            
+                            muestras.forEach(muestra => {
+                                const id = muestra.dataset.id.toLowerCase();
+                                const job = muestra.dataset.job.toLowerCase();
+                                
+                                if (id.includes(searchTerm) || job.includes(searchTerm)) {
+                                    muestra.style.display = 'flex';
+                                } else {
+                                    muestra.style.display = 'none';
+                                }
+                            });
+                        });
+                    }
                 }
             }
         });
